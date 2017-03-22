@@ -4,6 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 import com.vratsasoftware.spaceinvaders.runGame;
 
 public class DesktopLauncher {
@@ -13,7 +14,7 @@ public class DesktopLauncher {
 
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-<<<<<<< HEAD
+
 
 		config.addIcon("images\\iconata.png", Files.FileType.Internal);
 		config.width = WIDTH;
@@ -21,8 +22,7 @@ public class DesktopLauncher {
 		config.title = "Space Invaders";
 		new LwjglApplication(new SpaceInvaders(), config);
 
-=======
-		new LwjglApplication(new runGame(), config);
->>>>>>> 19ce4e1a5de9d972667db27094628c167a721a20
+
+		
 	}
 }
