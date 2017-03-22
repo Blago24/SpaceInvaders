@@ -3,7 +3,7 @@ package com.vratsasoftware.spaceinvaders.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.vratsasoftware.spaceinvaders.SpaceInvaders;
+import com.vratsasoftware.spaceinvaders.runGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new SpaceInvaders();
+                return new runGame();
         }
 }
