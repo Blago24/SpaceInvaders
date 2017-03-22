@@ -13,8 +13,8 @@ public class Spaceship implements Screen {
 	private SpriteBatch batch;
 	private Sprite ship;
 
-	private float xPosition = Gdx.graphics.getPpcX() / 2;
-	private float yPosition = Gdx.graphics.getPpcY() / 2;
+	private float playerX = Gdx.graphics.getPpcX() / 2;
+	private float playerY = Gdx.graphics.getPpcY() / 2;
 	private float shipMovementSpeed = 5.0f;
 	private final int LEFT_SCREEN_X_BOUND = 5;
 	private final int RIGHT_SCREEN_X_BOUND = 535;
@@ -23,10 +23,10 @@ public class Spaceship implements Screen {
 	public void show() {
 
 		batch = new SpriteBatch();
-		Texture splashTexture = new Texture("img/spaceship.jpg");
+		Texture splashTexture = new Texture("images/spaceship.jpg");
 		ship = new Sprite(splashTexture, 60, 65);
 		ship.setSize(65, 65);
-		ship.setPosition(xPosition + 250, yPosition);
+		ship.setPosition(playerX + 250, playerY);
 
 	}
 
@@ -38,18 +38,18 @@ public class Spaceship implements Screen {
 		moveShip();
 		batch.begin();
 		keepShipInBounds();
-		batch.draw(ship, xPosition, yPosition);
+		batch.draw(ship, playerX, playerY);
 		batch.end();
 
 	}
 
 	private void keepShipInBounds() {
-		if (xPosition <= LEFT_SCREEN_X_BOUND) {
-			xPosition = LEFT_SCREEN_X_BOUND;
+		if (playerX <= LEFT_SCREEN_X_BOUND) {
+			playerX = LEFT_SCREEN_X_BOUND;
 		}
 
-		if (xPosition >= RIGHT_SCREEN_X_BOUND) {
-			xPosition = RIGHT_SCREEN_X_BOUND;
+		if (playerX >= RIGHT_SCREEN_X_BOUND) {
+			playerX = RIGHT_SCREEN_X_BOUND;
 		}
 	}
 
@@ -57,13 +57,11 @@ public class Spaceship implements Screen {
 
 		if (checkForDirection() == 1) {
 			moveLeft();
+			System.out.println(playerX);
 		} else if (checkForDirection() == -1) {
+			System.out.println(playerX);
 			moveRight();
 		}
-	}
-
-	private void moveRight() {
-		xPosition += shipMovementSpeed;
 	}
 
 	private int checkForDirection() {
@@ -76,10 +74,16 @@ public class Spaceship implements Screen {
 			return 1;
 		}
 		return 0;
+
 	}
 
+
 	private void moveLeft() {
-		xPosition -= shipMovementSpeed;
+		playerX -= shipMovementSpeed;
+	}
+
+	private void moveRight() {
+		playerX += shipMovementSpeed;
 	}
 
 	@Override
