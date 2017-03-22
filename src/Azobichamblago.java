@@ -18,11 +18,19 @@ public class Azobichamblago {
 			System.out.println(i);
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 5a3dda4dd042029bd26506a9842c61bc45ac39bb
 	public static void test1(){
 		
 		System.out.println("I love Velko");
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a3dda4dd042029bd26506a9842c61bc45ac39bb
 	
 	
 	private void gosho() { 
