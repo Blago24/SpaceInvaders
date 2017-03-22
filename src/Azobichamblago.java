@@ -13,4 +13,9 @@ public class Azobichamblago {
 		System.out.println("test");
 test();
 	}
+	public static void test1(){
+		
+		System.out.println("I love Velko");
+	}
+	
 }
