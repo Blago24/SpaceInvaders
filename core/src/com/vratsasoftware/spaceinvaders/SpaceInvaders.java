@@ -1,28 +1,29 @@
 package com.vratsasoftware.spaceinvaders;
-
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.vratsasoftware.components.AllComponents;
-import com.vratsasoftware.components.Spaceship;
-import com.vratsasoftware.spaceinvaders.splash.Splash;
+import com.vratsasoftware.components.Components;
+
+import States.GameStateManager;
 
 public class SpaceInvaders extends Game {
 	
-	public static final String GAME_NAME = "Space invaders", VERSION = "1.0";
+	public static final String GAME_NAME = "Space invaders";
+	public static final int SCREEN_WIDTH = 600;
+	public static final int SCREEN_HEIGHT = 800;
+	private GameStateManager gsm;
+	public SpriteBatch batch; 
 	
 	@Override
 	public void create () {
-		setScreen(new Spaceship());
-
+		setScreen(new Components());
 	}
+
 
 	@Override
 	public void render () {
 		super.render();
 	}
+
 	
 	@Override
 	public void dispose () {
