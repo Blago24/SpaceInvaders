@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Components implements Screen {
-	private long lastShotTimer = 0;
+	
 	Ship ship;
 	Laser laser;
 	SpriteBatch batch;
@@ -60,10 +60,8 @@ public class Components implements Screen {
 	private void shootNewBullet() {
 		if (laserShot()) {
 
-			if (System.currentTimeMillis() + 2000 > lastShotTimer) {
-				currentPosition = ship.getPlayerX();
-				lasersShot.add(new Laser(currentPosition));
-			}
+			currentPosition = ship.getPlayerX();
+			lasersShot.add(new Laser(currentPosition));
 
 		}
 	}
@@ -91,7 +89,8 @@ public class Components implements Screen {
 	// applied only once;
 
 	private boolean laserShot() {
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+		
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			return true;
 		} else {
 			return false;
