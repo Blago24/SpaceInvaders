@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Components implements Screen {
- int  count=0;
+	private long lastShotTimer = 0;
 	Ship ship;
 	Laser laser;
 	SpriteBatch batch;
 	ArrayList<Laser> lasersShot;
 	private float currentPosition;
-	Aliens alien; 
+	Aliens alien;
 
 	@Override
 	public void show() {
@@ -35,16 +35,17 @@ public class Components implements Screen {
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY());
 		shootNewBullet();
 		displayLasersShot();
-		
+
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 	}
-	//TODO see how to initialize and show all the aliens
+
+	// TODO see how to initialize and show all the aliens
 	// TODO fix the laserX;
 	private void initializeAliens() {
 		for (int i = 0; i < alien.getAliens().length; i++) {
 			for (int j = 0; j < alien.getAliens()[0].length; j++) {
-				if(alien.getAliens()[i][j] == 1) { 
+				if (alien.getAliens()[i][j] == 1) {
 					batch.draw(alien.getAlien(), alien.getAlienX(), alien.getAlienY());
 					alien.setAlienX(alien.getAlienX() + 10);
 				}
@@ -53,21 +54,23 @@ public class Components implements Screen {
 				}
 			}
 		}
-		
+
 	}
 
 	private void shootNewBullet() {
 		if (laserShot()) {
-			 currentPosition = ship.getPlayerX(); 
-			lasersShot.add(new Laser(currentPosition));
-			count++;
-			System.out.println(count);
+
+			if (System.currentTimeMillis() + 2000 > lastShotTimer) {
+				currentPosition = ship.getPlayerX();
+				lasersShot.add(new Laser(currentPosition));
+			}
+
 		}
 	}
 
 	private void displayLasersShot() {
 		for (Laser laser : lasersShot) {
-			batch.draw(laser.getLaser(),  laser.getLaserX() + 25, laser.getLaserY() + 65);
+			batch.draw(laser.getLaser(), laser.getLaserX() + 25, laser.getLaserY() + 65);
 			if (!isBulletAlive()) {
 				lasersShot.remove(0);
 			}
