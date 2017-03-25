@@ -14,8 +14,8 @@ public class Laser {
 	private float laserY;
 	private final float LASER_MOVEMENT_SPEED = 7.5f;
 	
-	public Laser() {
-		laserX = ship.getPlayerX();
+	public Laser(float currentPosition) {
+		laserX = currentPosition;
 		laserY = ship.getPlayerY();
 		position = new Vector2(laserX, laserY);
 		laser = new Texture("images//laser.png");

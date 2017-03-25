@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Components implements Screen {
-
+ int  count=0;
 	Ship ship;
 	Laser laser;
 	SpriteBatch batch;
@@ -21,7 +21,7 @@ public class Components implements Screen {
 	public void show() {
 		ship = new Ship();
 		batch = new SpriteBatch();
-		laser = new Laser();
+		laser = new Laser(currentPosition);
 		lasersShot = new ArrayList<Laser>();
 		alien = new Aliens(10, 10);
 		alien.createNewAliens();
@@ -59,13 +59,15 @@ public class Components implements Screen {
 	private void shootNewBullet() {
 		if (laserShot()) {
 			 currentPosition = ship.getPlayerX(); 
-			lasersShot.add(new Laser());
+			lasersShot.add(new Laser(currentPosition));
+			count++;
+			System.out.println(count);
 		}
 	}
 
 	private void displayLasersShot() {
 		for (Laser laser : lasersShot) {
-			batch.draw(laser.getLaser(),  currentPosition + 25, laser.getLaserY() + 65);
+			batch.draw(laser.getLaser(),  laser.getLaserX() + 25, laser.getLaserY() + 65);
 			if (!isBulletAlive()) {
 				lasersShot.remove(0);
 			}
