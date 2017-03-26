@@ -30,9 +30,7 @@ public class Ship {
 
 		if (checkForDirection() == 1) {
 			moveLeft();
-			System.out.println(playerX);
 		} else if (checkForDirection() == -1) {
-			System.out.println(playerX);
 			moveRight();
 		}
 	}
@@ -47,10 +45,6 @@ public class Ship {
 			return 1;
 		}
 		
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			System.out.println("Space pressed at " + playerX);
-		}
-
 		return 0;
 		
 	}
