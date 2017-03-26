@@ -17,6 +17,7 @@ public class Components implements Screen {
 	SpriteBatch batch;
 	public ArrayList<Laser> lasersShot;
 	Aliens alien;
+	Wall wall;
 
 	@Override
 	public void show() {
@@ -26,6 +27,7 @@ public class Components implements Screen {
 		lasersShot = new ArrayList<Laser>();
 		alien = new Aliens();
 		alien.createNewAliens();
+		wall = new Wall();
 	}
 
 	@Override
@@ -37,6 +39,7 @@ public class Components implements Screen {
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		alien.showAliens(this.batch);
+		wall.display(batch);
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 	}
