@@ -18,6 +18,7 @@ public class Components implements Screen {
 	public ArrayList<Laser> lasersShot;
 	Aliens alien;
 	Wall wall;
+	Background background;
 
 	@Override
 	public void show() {
@@ -28,6 +29,7 @@ public class Components implements Screen {
 		alien = new Aliens();
 		alien.createNewAliens();
 		wall = new Wall();
+		background = new Background();
 	}
 
 	@Override
@@ -35,6 +37,7 @@ public class Components implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		laser.displayLasersShot(this.lasersShot, this.batch);
