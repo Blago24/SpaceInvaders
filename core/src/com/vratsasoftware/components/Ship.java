@@ -6,26 +6,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class Ship {
-	private Vector2 position;
-	private static final int SPEED = 10;
-	
-	private Texture ship;
-	private float playerX = Gdx.graphics.getPpcX() / 2;
-	private float playerY = Gdx.graphics.getPpcY() / 2;
+
 	private final float SHIP_MOVEMENT_SPEED = 5.0f;
 	private final int LEFT_SCREEN_X_BOUND = 5;
 	private final int RIGHT_SCREEN_X_BOUND = 535;
+
+	private Vector2 position;
+	private Texture ship;
+
+	//initialize initial values so that the ship would be centered; 
 	
+	private float playerX = Gdx.graphics.getWidth() / 2 - 30;
+	private float playerY = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - 15);
+
 	public Ship() {
-		position = new Vector2(playerX,playerY);
+		position = new Vector2(playerX, playerY);
 		ship = new Texture("images//spaceship.jpg");
 	}
-	
-	public void update(float delta) { 
+
+	public void update(float delta) {
 		keepShipInBounds();
 		moveShip();
 	}
-	
+
 	private void moveShip() {
 
 		if (checkForDirection() == 1) {
@@ -44,11 +47,11 @@ public class Ship {
 				|| Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			return 1;
 		}
-		
+
 		return 0;
-		
+
 	}
-	
+
 	private void keepShipInBounds() {
 		if (playerX <= LEFT_SCREEN_X_BOUND) {
 			playerX = LEFT_SCREEN_X_BOUND;
@@ -59,7 +62,6 @@ public class Ship {
 		}
 	}
 
-
 	private void moveLeft() {
 		playerX -= SHIP_MOVEMENT_SPEED;
 	}
@@ -67,17 +69,16 @@ public class Ship {
 	private void moveRight() {
 		playerX += SHIP_MOVEMENT_SPEED;
 	}
-	
-	public Texture getShipTexture() { 
+
+	public Texture getShipTexture() {
 		return this.ship;
 	}
-	
-	public float getPlayerX() { 
+
+	public float getPlayerX() {
 		return playerX;
 	}
-	
 
-	public float getPlayerY() { 
+	public float getPlayerY() {
 		return playerY;
 	}
 }
