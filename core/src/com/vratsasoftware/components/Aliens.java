@@ -1,39 +1,53 @@
 package com.vratsasoftware.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Aliens {
-	
-	private final int AMOUNT = 55;
+
+	private final int ALIENS_PER_ROW = 11;
+	private final int ALIENS_ROWS = 5;
 	private Vector2 aliensPosition;
-	public int[][] aliens;
+	public Aliens[][] aliens;
 	private Texture alien;
 	public float alienX;
 	public float alienY;
-	
-	
-	
-	public Aliens(float alienX, float alienY) { 
-		this.alienX = 10;
-		this.alienY = 10;
-		aliens = new int[11][5];
+
+	public Aliens() {
+		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
 		alien = new Texture("images//aliens.png");
-		
-		
 	}
+
+	protected void showAliens(SpriteBatch batch) {
+		int aliensX = Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() - 50);
+		int aliensXHolder = aliensX;
+		int aliensY = Gdx.graphics.getHeight() - 100;
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[0].length; j++) {
+				batch.draw(aliens[i][j].getAlien(), aliensX, aliensY, 35, 35);
+				aliensX += 45;
+			}
+			aliensX = aliensXHolder;
+			aliensY -= 50;
+		}
+	}
+
+	// TODO Generate a moveAliens() method;
 
 	protected void createNewAliens() {
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
-				aliens[i][j] = 1;
+				aliens[i][j] = new Aliens();
 			}
 		}
 	}
-	
-	public void update(float delta)  {
-		
+
+	public void update(float delta) {
+
 	}
+
 	public Vector2 getAliensPosition() {
 		return aliensPosition;
 	}
@@ -42,24 +56,12 @@ public class Aliens {
 		this.aliensPosition = aliensPosition;
 	}
 
-	public int[][] getAliens() {
+	public Aliens[][] getAliens() {
 		return aliens;
-	}
-
-	public void setAliens(int[][] aliens) {
-		this.aliens = aliens;
 	}
 
 	public Texture getAlien() {
 		return alien;
-	}
-
-	public void setAlien(Texture alien) {
-		this.alien = alien;
-	}
-
-	public int getAMOUNT() {
-		return AMOUNT;
 	}
 
 	public float getAlienX() {
@@ -77,5 +79,5 @@ public class Aliens {
 	public void setAlienY(float alienY) {
 		this.alienY = alienY;
 	}
-	
+
 }
