@@ -1,7 +1,7 @@
 package com.vratsasoftware.spaceinvaders;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.vratsasoftware.components.Components;
+import com.vratsasoftware.spaceinvaders.components.Components;
 
 import States.GameStateManager;
 

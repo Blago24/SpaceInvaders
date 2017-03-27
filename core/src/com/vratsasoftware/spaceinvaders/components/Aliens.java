@@ -1,4 +1,4 @@
-package com.vratsasoftware.components;
+package com.vratsasoftware.spaceinvaders.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +27,7 @@ public class Aliens {
 		aliensValue = new int[ALIENS_ROWS][ALIENS_PER_ROW];
 		aliensCoordinatesX = new int[ALIENS_ROWS][ALIENS_PER_ROW];
 		aliensCoordinatesY = new int[ALIENS_ROWS][ALIENS_PER_ROW];
-		alien = new Texture("images//aliens.png");
+		alien = new Texture("images//alien.png");
 	}
 
 	//TODO Try adding an animation to the alien 
@@ -107,6 +107,10 @@ public class Aliens {
 
 	public void setAlienY(float alienY) {
 		this.alienY = alienY;
+	}
+	
+	public void setAlien(Texture texture) {
+		this.alien = texture;
 	}
 
 }

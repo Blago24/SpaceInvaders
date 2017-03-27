@@ -1,4 +1,4 @@
-package com.vratsasoftware.components;
+package com.vratsasoftware.spaceinvaders.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

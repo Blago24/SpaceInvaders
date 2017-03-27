@@ -1,4 +1,4 @@
-package com.vratsasoftware.components;
+package com.vratsasoftware.spaceinvaders.components;
 
 import java.util.ArrayList;
 
