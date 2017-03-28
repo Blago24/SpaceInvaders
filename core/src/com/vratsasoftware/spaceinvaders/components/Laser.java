@@ -3,7 +3,6 @@ package com.vratsasoftware.spaceinvaders.components;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,30 +14,26 @@ public class Laser {
 
 	private Vector2 position;
 	private Texture laser;
-	private Ship ship = new Ship();
-
+	private Aliens alien = new Aliens();
+	
 	private float laserX;
 	private float laserY;
 
+	
+
 	public Laser(float currentPosition) {
-		laserX = currentPosition;
-		laserY = ship.getPlayerY();
+		this.laserX = currentPosition;
+		
 		position = new Vector2(laserX, laserY);
 		laser = new Texture("images//laser.png");
+		
 	}
 
 	public void update(float delta) {
 		this.laserY += LASER_MOVEMENT_SPEED;
-		checkIfLaserIsOutOfBounds(this.laserY);
-		System.out.println(this.laserY);
+		System.out.println("fasfasA" + this.laserY);
 	}
 
-	private void checkIfLaserIsOutOfBounds(float laser) {
-		if (laser >= Gdx.graphics.getHeight()) {
-
-		}
-
-	}
 
 	protected void shootNewLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 		if (laserShot()) {
@@ -55,7 +50,7 @@ public class Laser {
 			for (Laser laser : lasersShot) {
 
 				batch.draw(laser.getLaser(), laser.getLaserX() + 20, laser.getLaserY() + 60, 5, 20);
-
+				
 				if (lasersShot.get(index).getLaserY() > Gdx.graphics.getHeight()) {
 					// The height is more than the window height
 					resizeTheArrayList(lasersShot);
@@ -77,7 +72,7 @@ public class Laser {
 			lasersShot.clear();
 		} else {
 			// but if we have more than 1 , (for example : 2 ,3 ,4 ), we have to
-			// remove the first laser ,because it will 
+			// remove the first laser ,because it will
 			// pass the bound first
 			lasersShot.remove(0);
 		}
@@ -107,5 +102,28 @@ public class Laser {
 	public float getLaserY() {
 		return this.laserY;
 	}
+
+	// killAlien() {
+	// alien.killAlien[0][2];
+	// }
+
+	public void checkForCollision(float alienX, float alienY) {
+
+		for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
+			for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
+				if ((alien.getAliensCoordinatesX(i, j) == (this.laserX))) {
+					
+				}
+
+			}
+		}
+
+		// compares X and Y of the laser
+		// to the Aliens X and Y at [i][j]
+		// return true if collided;
+
+	}
+
+	
 
 }

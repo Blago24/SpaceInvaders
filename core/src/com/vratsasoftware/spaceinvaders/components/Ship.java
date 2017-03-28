@@ -53,21 +53,21 @@ public class Ship {
 	}
 
 	private void keepShipInBounds() {
-		if (playerX <= LEFT_SCREEN_X_BOUND) {
-			playerX = LEFT_SCREEN_X_BOUND;
+		if (this.playerX <= LEFT_SCREEN_X_BOUND) {
+			this.playerX = LEFT_SCREEN_X_BOUND;
 		}
 
-		if (playerX >= RIGHT_SCREEN_X_BOUND) {
-			playerX = RIGHT_SCREEN_X_BOUND;
+		if (this.playerX >= RIGHT_SCREEN_X_BOUND) {
+			this.playerX = RIGHT_SCREEN_X_BOUND;
 		}
 	}
 
 	private void moveLeft() {
-		playerX -= SHIP_MOVEMENT_SPEED;
+		this.playerX -= SHIP_MOVEMENT_SPEED;
 	}
 
 	private void moveRight() {
-		playerX += SHIP_MOVEMENT_SPEED;
+		this.playerX += SHIP_MOVEMENT_SPEED;
 	}
 
 	public Texture getShipTexture() {

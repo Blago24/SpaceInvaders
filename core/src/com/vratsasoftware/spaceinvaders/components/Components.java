@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Components implements Screen {
 
-
 	float currentShipXPosition;
 	Ship ship;
 	Laser laser;
@@ -24,7 +23,8 @@ public class Components implements Screen {
 	public void show() {
 		ship = new Ship();
 		batch = new SpriteBatch();
-		laser = new Laser(currentShipXPosition);
+		laser = new Laser(ship.getPlayerX());
+		System.out.println(currentShipXPosition);
 		lasersShot = new ArrayList<Laser>();
 		alien = new Aliens();
 		alien.createNewAliens();
@@ -43,14 +43,34 @@ public class Components implements Screen {
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		alien.showAliens(this.batch);
 		wall.display(batch);
+		currentShipXPosition = ship.getPlayerX();
+		checkForCollision();
 		ship.update(Gdx.graphics.getDeltaTime());
+		System.out.println("laszeras " + laser.getLaserY());
 		batch.end();
 	}
 
+	private boolean checkForCollision() {
+
+		float laserX = laser.getLaserX();
+		float laserY = laser.getLaserY();
+		
+		for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
+			for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
+
+				float alienX = alien.getAliensCoordinatesX(i, j);
+				float alienY = alien.getAliensCoordinatesY(i, j);
+				
+				if ((laserY == alienY)) {
+					System.out.println("hit");
+				}
+			}
+		}
+		return false;
+
+	}
 
 	// TODO see how to initialize and show all the aliens
-	
-	
 
 	// private void RemoveLaserIfOutOfBounds(Laser laser) {
 	// if (laser.getLaserY() >= Gdx.graphics.getBackBufferHeight()) {
@@ -67,8 +87,6 @@ public class Components implements Screen {
 	// return false;
 	// }
 	// }
-
-	
 
 	@Override
 	public void resize(int width, int height) {
@@ -94,7 +112,6 @@ public class Components implements Screen {
 	public void dispose() {
 
 	}
-	
 
 	public SpriteBatch getBatch() {
 		return batch;
