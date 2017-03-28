@@ -41,29 +41,61 @@ public class Components implements Screen {
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		laser.displayLasersShot(this.lasersShot, this.batch);
+
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
 		ship.update(Gdx.graphics.getDeltaTime());
-		System.out.println("laszeras " + laser.getLaserY());
+		// System.out.println("laszeras " + laser.getLaserY());
 		batch.end();
+	}
+
+	protected float checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch) {
+		if (lasersShot.size() > 0) {
+			return lasersShot.get(0).getLaserY();
+		}
+		return 0;
+	}
+
+	protected float checkTheLaserCoordinatesX(ArrayList<Laser> lasersShot, SpriteBatch batch) {
+		if (lasersShot.size() > 0) {
+			return lasersShot.get(0).getLaserX();
+		}
+		return 0;
+
 	}
 
 	private boolean checkForCollision() {
 
-		float laserX = laser.getLaserX();
-		float laserY = laser.getLaserY();
-		
+		float laserX = checkTheLaserCoordinatesX(lasersShot, batch);
+		float laserY = checkTheLaserCoordinatesY(lasersShot, batch);
+		// System.out.println("laserY2-"+laserY);
+		// System.out.println(alien.aliensCoordinatesX[0][0]);
 		for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
 			for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
 				float alienX = alien.getAliensCoordinatesX(i, j);
 				float alienY = alien.getAliensCoordinatesY(i, j);
-				
-				if ((laserY == alienY)) {
-					System.out.println("hit");
+				// System.out.println("laserY==="+laserY);
+				// if(laserY==300){
+				// System.out.println("300");
+				//
+				// }
+				// System.out.println("alienY==="+alienX);
+//				if (laserY >= alienY + 15 && laserY >= alienY - 15) {
+//					System.out.println("lY" + laserX + "aY" + alienY);
+//					System.out.println("hidat");
+//				}
+				//we have to make so changes in this if
+				//TODO change the IF
+				if (laserY == alienY + 15 && laserY >= alienY - 15) {
+					System.out.println("lY" + laserY + "aY" + alienY);
+					System.out.println("hitva");
+					alien.killAlien(i,j);
+					
 				}
+				
 			}
 		}
 		return false;

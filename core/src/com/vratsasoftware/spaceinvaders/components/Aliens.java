@@ -44,6 +44,7 @@ public class Aliens {
 					// would probably use it to detect collision
 					aliensCoordinatesX[i][j] = aliensX;
 					aliensCoordinatesY[i][j] = aliensY;
+					//System.out.println("y"+i+j+" "+aliensY);
 				}
 				aliensX += 45;
 			}
@@ -62,9 +63,7 @@ public class Aliens {
 		return aliensValue[i][j] == 1;
 	}
 
-	private void killAlien(boolean isHit) {
-
-	}
+	
 
 	public boolean isHit() {
 		boolean isHit = false;
@@ -86,6 +85,9 @@ public class Aliens {
 				// test to see if working
 			}
 		}
+	}
+	protected void killAlien(int x , int y){
+		aliensValue[x][y] = 0;
 	}
 
 	public void update(float delta) {
@@ -140,7 +142,7 @@ public class Aliens {
 		for (int i = 0; i < this.aliensCoordinatesY.length; i++) {
 			for (int j = 0; j < this.aliensCoordinatesY[0].length; j++) {
 				if ((x == i) && (y == j)) {
-					return this.aliensCoordinatesX[i][j];
+					return this.aliensCoordinatesY[i][j];
 				}
 			}
 

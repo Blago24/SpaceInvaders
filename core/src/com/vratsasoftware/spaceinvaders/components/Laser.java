@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Laser {
 
-	private final float LASER_MOVEMENT_SPEED = 7.5f;
+	private final float LASER_MOVEMENT_SPEED = 5f;
 
 	private Vector2 position;
 	private Texture laser;
@@ -31,7 +31,7 @@ public class Laser {
 
 	public void update(float delta) {
 		this.laserY += LASER_MOVEMENT_SPEED;
-		System.out.println("fasfasA" + this.laserY);
+		//System.out.println("laserY=" + this.laserY);
 	}
 
 
