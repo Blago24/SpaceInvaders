@@ -89,7 +89,7 @@ public class Components implements Screen {
 //				}
 				//we have to make so changes in this if
 				//TODO change the IF
-				if (laserY == alienY + 15 && laserY >= alienY - 15) {
+				if (laserY <= alienY + 15 && laserY >= alienY - 15) {
 					System.out.println("lY" + laserY + "aY" + alienY);
 					System.out.println("hitva");
 					alien.killAlien(i,j);
