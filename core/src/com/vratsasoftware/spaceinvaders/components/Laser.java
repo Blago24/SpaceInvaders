@@ -7,10 +7,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
 public class Laser {
-
-	private final float LASER_MOVEMENT_SPEED = 5f;
+ SpaceInvaders spaceInvader = new SpaceInvaders();
+	private final float LASER_MOVEMENT_SPEED = (float) Math.floor((float)spaceInvader.getHeight()/100);
 
 	private Vector2 position;
 	private Texture laser;

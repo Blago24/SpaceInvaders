@@ -34,6 +34,7 @@ public class Components implements Screen {
 
 	@Override
 	public void render(float delta) {
+		//System.out.println(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -81,7 +82,7 @@ public class Components implements Screen {
 
 					float alienX = alien.getAliensCoordinatesX(i, j);
 					float alienY = alien.getAliensCoordinatesY(i, j);
-System.out.println("a-"+(alienY - alien.getAlien().getHeight() + 120)+" y-"+laserY);
+System.out.println("a-"+alienY+" y-"+laserY);
 					if ((laserY == (alienY - alien.getAlien().getHeight() + 120)) && (laserX >= alienX - 20)
 							&& (laserX <= (alienX + 20)) && alien.isAlienAlive(i, j)) {
 						System.out.println("lY" + laserY + "aY" + alienY);

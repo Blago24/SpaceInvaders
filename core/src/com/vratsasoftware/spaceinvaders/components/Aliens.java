@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
 public class Aliens {
 
@@ -35,9 +36,11 @@ public class Aliens {
 	// TODO Try adding an animation to the alien
 
 	protected void showAliens(SpriteBatch batch) {
-		aliensX = Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() - 50);
+		SpaceInvaders spaceInvader = new SpaceInvaders();
+		aliensX = (float) Math.floor((float)spaceInvader.getWidth()/100);
 		aliensXHolder = aliensX;
-		aliensY = Gdx.graphics.getHeight() - 100;
+		aliensY =(float) Math.floor((float)spaceInvader.getHeight()/10*7);
+;
 		int index = 0;
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
@@ -50,10 +53,11 @@ public class Aliens {
 					aliensCoordinatesY[i][j] = aliensY;
 					
 				}
-				aliensX += 45;
+				aliensX += (float) Math.floor((float)spaceInvader.getWidth()/100*3);
 			}
 			aliensX = aliensXHolder;
-			aliensY -= 50;
+			aliensY -= (float) Math.floor((float)spaceInvader.getHeight()/100*3);
+;
 		}
 	}
 	
