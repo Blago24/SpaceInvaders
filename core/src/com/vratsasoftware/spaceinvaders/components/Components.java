@@ -51,16 +51,16 @@ public class Components implements Screen {
 		batch.end();
 	}
 
-	protected float checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch) {
+	protected float checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
 		if (lasersShot.size() > 0) {
-			return lasersShot.get(0).getLaserY();
+			return lasersShot.get(x).getLaserY();
 		}
 		return 0;
 	}
 
-	protected float checkTheLaserCoordinatesX(ArrayList<Laser> lasersShot, SpriteBatch batch) {
+	protected float checkTheLaserCoordinatesX(ArrayList<Laser> lasersShot, SpriteBatch batch,int x) {
 		if (lasersShot.size() > 0) {
-			return lasersShot.get(0).getLaserX();
+			return lasersShot.get(x).getLaserX();
 		}
 		return 0;
 
@@ -69,27 +69,28 @@ public class Components implements Screen {
 	private boolean checkForCollision() {
 		float laserX = 0;
 		float laserY = 0;
-
+//System.out.println(lasersShot.size());
 		for (int x = 0; x < lasersShot.size(); x++) {
-
-			laserX = checkTheLaserCoordinatesX(lasersShot, batch);
-			laserY = checkTheLaserCoordinatesY(lasersShot, batch);
-
+//System.out.println(x);
+			laserX = checkTheLaserCoordinatesX(lasersShot, batch,x);
+			laserY = checkTheLaserCoordinatesY(lasersShot, batch , x );
+//System.out.println(x+" "+laserY 	);
 			for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
+				System.out.println(i);
 				for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
 					float alienX = alien.getAliensCoordinatesX(i, j);
 					float alienY = alien.getAliensCoordinatesY(i, j);
-
-					if ((laserY == (alienY - alien.getAlien().getHeight() + 120)) && (laserX >= alienX - 17)
-							&& (laserX <= (alienX + 16)) && alien.isAlienAlive(i, j)) {
+System.out.println("a-"+(alienY - alien.getAlien().getHeight() + 120)+" y-"+laserY);
+					if ((laserY == (alienY - alien.getAlien().getHeight() + 120)) && (laserX >= alienX - 20)
+							&& (laserX <= (alienX + 20)) && alien.isAlienAlive(i, j)) {
 						System.out.println("lY" + laserY + "aY" + alienY);
 						System.out.println("hitva");
 						alien.killAlien(i, j);
 						if (lasersShot.size() == 1) {
 							lasersShot.clear();
 						} else {
-							lasersShot.remove(0);
+							lasersShot.remove(x);
 						}
 						break;
 					}
