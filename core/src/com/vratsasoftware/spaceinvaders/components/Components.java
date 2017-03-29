@@ -67,66 +67,39 @@ public class Components implements Screen {
 	}
 
 	private boolean checkForCollision() {
+		float laserX = 0;
+		float laserY = 0;
 
-		float laserX = checkTheLaserCoordinatesX(lasersShot, batch);
-		float laserY = checkTheLaserCoordinatesY(lasersShot, batch);
-		// System.out.println("laserY2-"+laserY);
-		// System.out.println(alien.aliensCoordinatesX[0][0]);
-		for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
-			for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
+		for (int x = 0; x < lasersShot.size(); x++) {
 
-				float alienX = alien.getAliensCoordinatesX(i, j);
-				float alienY = alien.getAliensCoordinatesY(i, j);
-				// System.out.println("laserY==="+laserY);
-				// if(laserY==300){
-				// System.out.println("300");
-				//
-				// }
-				// System.out.println("alienY==="+alienX);
-//				if (laserY >= alienY + 15 && laserY >= alienY - 15) {
-//					System.out.println("lY" + laserX + "aY" + alienY);
-//					System.out.println("hidat");
-//				}
-				//we have to make so changes in this if
-				//TODO change the IF
-				//System.out.println("AX="+alienX);
-				//System.out.println("LA="+laserX);
-				if (laserY == alienY+1  && laserX >= alienX - 25 && laserX <= alienX + 25 && alien.isAlienAlive(i,j)) {
-					System.out.println("lY" + laserY + "aY" + alienY);
-					System.out.println("hitva");
-					alien.killAlien(i,j);
-					if(lasersShot.size()==1){
-						lasersShot.clear();
-					}else{
-						lasersShot.remove(0);
+			laserX = checkTheLaserCoordinatesX(lasersShot, batch);
+			laserY = checkTheLaserCoordinatesY(lasersShot, batch);
+
+			for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
+				for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
+
+					float alienX = alien.getAliensCoordinatesX(i, j);
+					float alienY = alien.getAliensCoordinatesY(i, j);
+
+					if ((laserY == (alienY - alien.getAlien().getHeight() + 120)) && (laserX >= alienX - 17)
+							&& (laserX <= (alienX + 16)) && alien.isAlienAlive(i, j)) {
+						System.out.println("lY" + laserY + "aY" + alienY);
+						System.out.println("hitva");
+						alien.killAlien(i, j);
+						if (lasersShot.size() == 1) {
+							lasersShot.clear();
+						} else {
+							lasersShot.remove(0);
+						}
+						break;
 					}
-					
-					break;
+
 				}
-				
 			}
 		}
 		return false;
 
 	}
-
-	// TODO see how to initialize and show all the aliens
-
-	// private void RemoveLaserIfOutOfBounds(Laser laser) {
-	// if (laser.getLaserY() >= Gdx.graphics.getBackBufferHeight()) {
-	// laser.remove();
-	// }
-	// }
-	//
-	// private boolean isBulletAlive() {
-	// System.out.println("Height: " + Gdx.graphics.getHeight());
-	//
-	// if (laser.getLaserY() < Gdx.graphics.getHeight()) {
-	// return true;
-	// } else {
-	// return false;
-	// }
-	// }
 
 	@Override
 	public void resize(int width, int height) {

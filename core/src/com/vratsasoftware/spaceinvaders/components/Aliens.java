@@ -13,6 +13,10 @@ public class Aliens {
 	public Aliens[][] aliens;
 	public float alienX;
 	public float alienY;
+	
+	private float aliensX;
+	private float aliensY;
+	private float aliensXHolder;
 
 	public float[][] aliensCoordinatesX = new float[ALIENS_ROWS][ALIENS_PER_ROW];
 	public float[][] aliensCoordinatesY = new float[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -31,10 +35,33 @@ public class Aliens {
 	// TODO Try adding an animation to the alien
 
 	protected void showAliens(SpriteBatch batch) {
-		float aliensX = Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() - 50);
-		float aliensXHolder = aliensX;
-		float aliensY = Gdx.graphics.getHeight() - 100;
+		aliensX = Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() - 50);
+		aliensXHolder = aliensX;
+		aliensY = Gdx.graphics.getHeight() - 100;
 		int index = 0;
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[0].length; j++) {
+				// check if the alien is alive
+				if (isAlienAlive(i, j)) {
+					batch.draw(aliens[i][j].getAlien(), aliensX, aliensY, 35, 35);
+					// keep the X and Y coordinates for each alien
+					// would probably use it to detect collision
+					aliensCoordinatesX[i][j] = aliensX;
+					aliensCoordinatesY[i][j] = aliensY;
+					
+				}
+				aliensX += 45;
+			}
+			aliensX = aliensXHolder;
+			aliensY -= 50;
+		}
+	}
+	
+	protected void moveAliens(SpriteBatch batch) { 
+		
+		float startingPointX; 
+		float startingPointY;
+		
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
 				// check if the alien is alive
@@ -50,12 +77,6 @@ public class Aliens {
 			}
 			aliensX = aliensXHolder;
 			aliensY -= 50;
-		}
-
-		for (int i = 0; i < aliens.length; i++) {
-			for (int j = 0; j < aliens[0].length; j++) {
-
-			}
 		}
 	}
 
