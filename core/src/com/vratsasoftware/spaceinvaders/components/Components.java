@@ -48,13 +48,7 @@ public class Components implements Screen {
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		//System.out.println(superShot);
-		if (this.superShot) {
-			System.out.println("da");
-			if(laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)){
-				this.superShot = false;
-			}
-			
-		}
+		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 
 		alien.showAliens(this.batch);
@@ -65,6 +59,16 @@ public class Components implements Screen {
 		// System.out.println("laszeras " + laser.getLaserY());
 		batch.end();
 
+	}
+
+	private void superShot() {
+		if (this.superShot) {
+			System.out.println("da");
+			if(laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)){
+				this.superShot = false;
+			}
+			
+		}
 	}
 
 	protected int checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
