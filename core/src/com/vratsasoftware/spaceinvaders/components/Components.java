@@ -36,8 +36,8 @@ public class Components implements Screen {
 		// System.out.println(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		update(this.batch); 
-		
+		update(this.batch);
+
 	}
 
 	private void update(SpriteBatch batch2) {
@@ -54,7 +54,7 @@ public class Components implements Screen {
 		ship.update(Gdx.graphics.getDeltaTime());
 		// System.out.println("laszeras " + laser.getLaserY());
 		batch.end();
-		
+
 	}
 
 	protected int checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
@@ -76,6 +76,8 @@ public class Components implements Screen {
 		int laserX = 0;
 		int laserY = 0;
 		// System.out.println(lasersShot.size());
+		boolean killed = false;
+		
 		for (int x = 0; x < lasersShot.size(); x++) {
 			// System.out.println(x);
 			laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
@@ -90,17 +92,20 @@ public class Components implements Screen {
 					int alienX = alien.getAliensCoordinatesX(i, j);
 					int alienY = alien.getAliensCoordinatesY(i, j);
 
-					
-					for (int alienSize = 0; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
-						if ((laserY >= (alienY - alienSize) && (laserX >= alienX) && (laserX <= (alienX + 20))
+					for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
+						if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 30) && (laserX <= (alienX + 30))
 								&& alien.isAlienAlive(i, j))) {
 							alien.killAlien(i, j);
+							killed = true;
 							if (lasersShot.size() == 1) {
 								lasersShot.clear();
 							} else {
 								lasersShot.remove(x);
 							}
 						}
+					}
+					if (killed) {
+						killed = false;
 						break;
 					}
 				}
