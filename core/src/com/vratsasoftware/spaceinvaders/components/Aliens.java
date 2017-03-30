@@ -29,6 +29,8 @@ public class Aliens {
 	private int alienWidth = (int) ((int) SpaceInvaders.SCREEN_WIDTH * 0.065f);
 	private int alienHeight = (int) ((int) SpaceInvaders.SCREEN_HEIGHT * 0.0475f);
 
+	SpaceInvaders spaceInvader = new SpaceInvaders();
+
 	public Aliens() {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
 		aliensValue = new int[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -39,51 +41,35 @@ public class Aliens {
 	// TODO Try adding an animation to the alien
 
 	protected void showAliens(SpriteBatch batch) {
-		SpaceInvaders spaceInvader = new SpaceInvaders();
-		aliensX = (int) Math.floor((float) spaceInvader.getWidth() / 100);
-		aliensXHolder = aliensX;
-		aliensY = (int) Math.floor((float) spaceInvader.getHeight() / 10 * 7);
 
+		 float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 1000*2f);
+		float yDistance = (float) Math.floor((float) spaceInvader.getHeight() / 100 * 4f);
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
 				// check if the alien is alive
+				//checkForFirstAlive();
+			//	checkForLastAlive();
 				if (isAlienAlive(i, j)) {
-					batch.draw(aliens[i][j].getAlien(), aliensX, aliensY, alienWidth, alienHeight);
+					batch.draw(aliens[i][j].getAlien(), aliensCoordinatesX[i][j],  aliensCoordinatesY[i][j] , alienWidth,
+							alienHeight);
 					// keep the X and Y coordinates for each alien
 					// would probably use it to detect collision
-					aliensCoordinatesX[i][j] = aliensX;
-					aliensCoordinatesY[i][j] = aliensY;
-
+					moveAliens(batch, i, j, xDistance);
 					
+
 					System.out.println();
 
 				}
-				aliensX += (float) Math.floor((float) spaceInvader.getWidth() / 100 * 2.65f);
+				 
 			}
-			aliensX = aliensXHolder;
-			aliensY -= (float) Math.floor((float) spaceInvader.getHeight() / 100 * 4f);
-			
+			 
 		}
 	}
 
-	protected void moveAliens(SpriteBatch batch) {
+	protected void moveAliens(SpriteBatch batch, int i, int j, float distance) {
 
-		for (int i = 0; i < aliens.length; i++) {
-			for (int j = 0; j < aliens[0].length; j++) {
-				// check if the alien is alive
-				if (isAlienAlive(i, j)) {
-					batch.draw(aliens[i][j].getAlien(), aliensX, aliensY, alienWidth, alienHeight);
-					// keep the X and Y coordinates for each alien
-					// would probably use it to detect collision
-					aliensCoordinatesX[i][j] = aliensX;
-					aliensCoordinatesY[i][j] = aliensY;
-					// System.out.println("y"+i+j+" "+aliensY);
-				}
-				aliensX += 45;
-			}
-			aliensX = aliensXHolder;
-			aliensY -= 50;
-		}
+		aliensCoordinatesX[i][j] += distance;
+
 	}
 
 	protected boolean isAlienAlive(int i, int j) {
@@ -96,28 +82,69 @@ public class Aliens {
 		return isHit;
 
 	}
+protected void showX() {
+	for (int i = 0; i < aliens.length; i++) {
+		for (int j = 0; j < aliens[0].length; j++) {
+			System.out.print(aliensCoordinatesX[i][j]+" ");
+		
+		}
+		System.out.println();
+		}
+}
+	protected void testShow(SpriteBatch batch) {
 
-	protected void createNewAliens() {
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
-				aliens[i][j] = new Aliens();
-				/*
-				 * set the default value of the alien to 1 if changed to a
-				 * different number (e.g. 0) the alien won't be displayed on the
-				 * screen.
-				 */
-				aliensValue[i][j] = 1;
-				// test to see if working
+				// check if the alien is alive
+				if (isAlienAlive(i, j)) {
+					batch.draw(aliens[i][j].getAlien(), aliensCoordinatesX[i][j],  aliensCoordinatesY[i][j] , alienWidth,
+							alienHeight);
+					
+
+					System.out.println();
+
+				}
+				
 			}
+			
+
 		}
+	}
+
+	protected void createNewAliens() {
+		
+
+		 aliensX = (int) Math.floor((float) spaceInvader.getWidth() / 100);
+		 aliensXHolder = aliensX;
+		 aliensY = (int) Math.floor((float) spaceInvader.getHeight() / 10 *
+		 7);
+		float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 100 * 2.65f);
+		float yDistance = (float) Math.floor((float) spaceInvader.getHeight() / 100 * 4f);
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[0].length; j++) {
+				
+				aliens[i][j] = new Aliens();
+				aliensValue[i][j] = 1;
+					aliensCoordinatesX[i][j] = aliensX;
+					aliensCoordinatesY[i][j] = aliensY;
+
+					System.out.println();
+					aliensX += xDistance;
+				}
+				 
+				 aliensX = aliensXHolder;
+				 aliensY -= yDistance;
+			}
+			
+
+		
+	
+		
+		
 	}
 
 	protected void killAlien(int x, int y) {
 		aliensValue[x][y] = 0;
-	}
-
-	public void update(float delta) {
-
 	}
 
 	public Vector2 getAliensPosition() {

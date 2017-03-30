@@ -30,7 +30,7 @@ public class Components implements Screen {
 		alien.createNewAliens();
 		wall = new Wall();
 		background = new Background();
-		superShot=true;
+		superShot = true;
 	}
 
 	@Override
@@ -47,11 +47,12 @@ public class Components implements Screen {
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
-		//System.out.println(superShot);
+		// System.out.println(superShot);
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
-
-		alien.showAliens(this.batch);
+		//alien.testShow(this.batch);
+		//alien.showX();
+		 alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
@@ -64,10 +65,10 @@ public class Components implements Screen {
 	private void superShot() {
 		if (this.superShot) {
 			System.out.println("da");
-			if(laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)){
+			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
 				this.superShot = false;
 			}
-			
+
 		}
 	}
 
