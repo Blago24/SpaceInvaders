@@ -4,38 +4,59 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.vratsasoftware.spaceinvaders.components.Components;
 
 import States.GameStateManager;
 
 public class SpaceInvaders extends Game {
+	
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 	static double width = screenSize.getWidth();
-	public static double getWidth() {
+
+	public double getWidth() {
 		return width;
 	}
 
-	static double height = screenSize.getHeight();
+	// ?
+	public static double height = screenSize.getHeight();
 
-	public static double getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
 	public static final String GAME_NAME = "Space invaders";
-	public static final int SCREEN_WIDTH = (int) width/10*5;
-	public static final int SCREEN_HEIGHT = (int) height/10*8;
+	public static final int SCREEN_WIDTH = 600;
+	public static final int SCREEN_HEIGHT = 800;
+	private static final float ASPECT_RATIO = (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT;
+
+	protected Camera camera;
+	protected Rectangle viewport;
+	private SpriteBatch sb;
+
 	private GameStateManager gsm;
 	public SpriteBatch batch;
 
 	@Override
 	public void create() {
 		setScreen(new Components());
+		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
 	@Override
 	public void render() {
 		super.render();
+		
+		camera.update();
+
+		// set viewport
+		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
 	}
 
 	@Override
@@ -49,5 +70,22 @@ public class SpaceInvaders extends Game {
 
 	public void resize(int width, int height) {
 		super.resize(width, height);
+		float aspectRatio = (float) width / (float) height;
+		float scale = 1f;
+		Vector2 crop = new Vector2(0f, 0f);
+		if (aspectRatio > ASPECT_RATIO) {
+			scale = (float) height / (float) SCREEN_HEIGHT;
+			crop.x = (width - SCREEN_WIDTH * scale) / 2f;
+		} else if (aspectRatio < ASPECT_RATIO) {
+			scale = (float) width / (float) SCREEN_WIDTH;
+			crop.y = (height - SCREEN_HEIGHT * scale) / 2f;
+		} else {
+			scale = (float) width / (float) SCREEN_WIDTH;
+		}
+
+		float w = (float) SCREEN_WIDTH * scale;
+		float h = (float) SCREEN_HEIGHT * scale;
+		viewport = new Rectangle(crop.x, crop.y, w, h);
+
 	}
 }

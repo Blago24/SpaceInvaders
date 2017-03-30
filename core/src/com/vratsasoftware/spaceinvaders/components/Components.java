@@ -3,7 +3,6 @@ package com.vratsasoftware.spaceinvaders.components;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,9 +33,14 @@ public class Components implements Screen {
 
 	@Override
 	public void render(float delta) {
-		//System.out.println(delta);
+		// System.out.println(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		update(this.batch); 
+		
+	}
+
+	private void update(SpriteBatch batch2) {
 		batch.begin();
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
@@ -50,16 +54,17 @@ public class Components implements Screen {
 		ship.update(Gdx.graphics.getDeltaTime());
 		// System.out.println("laszeras " + laser.getLaserY());
 		batch.end();
+		
 	}
 
-	protected float checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
+	protected int checkTheLaserCoordinatesY(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
 		if (lasersShot.size() > 0) {
 			return lasersShot.get(x).getLaserY();
 		}
 		return 0;
 	}
 
-	protected float checkTheLaserCoordinatesX(ArrayList<Laser> lasersShot, SpriteBatch batch,int x) {
+	protected int checkTheLaserCoordinatesX(ArrayList<Laser> lasersShot, SpriteBatch batch, int x) {
 		if (lasersShot.size() > 0) {
 			return lasersShot.get(x).getLaserX();
 		}
@@ -68,34 +73,36 @@ public class Components implements Screen {
 	}
 
 	private boolean checkForCollision() {
-		float laserX = 0;
-		float laserY = 0;
-//System.out.println(lasersShot.size());
+		int laserX = 0;
+		int laserY = 0;
+		// System.out.println(lasersShot.size());
 		for (int x = 0; x < lasersShot.size(); x++) {
-//System.out.println(x);
-			laserX = checkTheLaserCoordinatesX(lasersShot, batch,x);
-			laserY = checkTheLaserCoordinatesY(lasersShot, batch , x );
-//System.out.println(x+" "+laserY 	);
+			// System.out.println(x);
+			laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
+			laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
+			// System.out.println(x+" "+laserY );
 			for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
-				System.out.println(i);
 				for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
-					float alienX = alien.getAliensCoordinatesX(i, j);
-					float alienY = alien.getAliensCoordinatesY(i, j);
-System.out.println("a-"+alienY+" y-"+laserY);
-					if ((laserY == (alienY - alien.getAlien().getHeight() + 120)) && (laserX >= alienX - 20)
-							&& (laserX <= (alienX + 20)) && alien.isAlienAlive(i, j)) {
-						System.out.println("lY" + laserY + "aY" + alienY);
-						System.out.println("hitva");
-						alien.killAlien(i, j);
-						if (lasersShot.size() == 1) {
-							lasersShot.clear();
-						} else {
-							lasersShot.remove(x);
+					System.out.printf("Alien at coordinates [%d][%d] = [%d] \n", i, j,
+							alien.getAliensCoordinatesY(i, j));
+					System.out.println("Laser coordinates Y: " + laserY);
+					int alienX = alien.getAliensCoordinatesX(i, j);
+					int alienY = alien.getAliensCoordinatesY(i, j);
+
+					
+					for (int alienSize = 0; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
+						if ((laserY >= (alienY - alienSize) && (laserX >= alienX) && (laserX <= (alienX + 20))
+								&& alien.isAlienAlive(i, j))) {
+							alien.killAlien(i, j);
+							if (lasersShot.size() == 1) {
+								lasersShot.clear();
+							} else {
+								lasersShot.remove(x);
+							}
 						}
 						break;
 					}
-
 				}
 			}
 		}

@@ -10,36 +10,31 @@ import com.badlogic.gdx.math.Vector2;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
 public class Laser {
- SpaceInvaders spaceInvader = new SpaceInvaders();
-	private final float LASER_MOVEMENT_SPEED = (float) Math.floor((float)spaceInvader.getHeight()/100);
+	SpaceInvaders spaceInvader = new SpaceInvaders();
+	private final int LASER_MOVEMENT_SPEED = (int) Math.floor((int) spaceInvader.getHeight() / 100);
 
 	private Vector2 position;
 	private Texture laser;
-	private Aliens alien = new Aliens();
-	
-	private float laserX;
-	private float laserY;
 
-	
+	private int laserX;
+	private int laserY;
 
-	public Laser(float currentPosition) {
+	public Laser(int currentPosition) {
 		this.laserX = currentPosition;
-		
+
 		position = new Vector2(laserX, laserY);
 		laser = new Texture("images//laser.png");
-		
+
 	}
 
 	public void update(float delta) {
 		this.laserY += LASER_MOVEMENT_SPEED;
-		//System.out.println("laserY=" + this.laserY);
 	}
-
 
 	protected void shootNewLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 		if (laserShot()) {
 			currentShipXPosition = ship.getPlayerX();
-			lasersShot.add(new Laser(currentShipXPosition));
+			lasersShot.add(new Laser((int) currentShipXPosition));
 
 		}
 	}
@@ -51,7 +46,7 @@ public class Laser {
 			for (Laser laser : lasersShot) {
 
 				batch.draw(laser.getLaser(), laser.getLaserX() + 20, laser.getLaserY() + 60, 5, 20);
-				
+
 				if (lasersShot.get(index).getLaserY() > Gdx.graphics.getHeight()) {
 					// The height is more than the window height
 					resizeTheArrayList(lasersShot);
@@ -96,35 +91,16 @@ public class Laser {
 		return laser;
 	}
 
-	public float getLaserX() {
+	public int getLaserX() {
 		return this.laserX;
 	}
 
-	public float getLaserY() {
+	public int getLaserY() {
 		return this.laserY;
 	}
 
 	// killAlien() {
 	// alien.killAlien[0][2];
 	// }
-
-	public void checkForCollision(float alienX, float alienY) {
-
-		for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
-			for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
-				if ((alien.getAliensCoordinatesX(i, j) == (this.laserX))) {
-					
-				}
-
-			}
-		}
-
-		// compares X and Y of the laser
-		// to the Aliens X and Y at [i][j]
-		// return true if collided;
-
-	}
-
-	
 
 }

@@ -1,5 +1,7 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import java.awt.Toolkit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,16 +10,16 @@ import com.badlogic.gdx.math.Vector2;
 public class Ship {
 
 	private final float SHIP_MOVEMENT_SPEED = 5.0f;
-	private final int LEFT_SCREEN_X_BOUND = 5;
-	private final int RIGHT_SCREEN_X_BOUND = 535;
+	private final int RIGHT_SCREEN_X_BOUND = Gdx.graphics.getWidth() - 60;
+	private final int LEFT_SCREEN_X_BOUND = 10;
 
 	private Vector2 position;
 	private Texture ship;
 
 	//initialize initial values so that the ship would be centered; 
 	
-	private float playerX = Gdx.graphics.getWidth() / 2 - 30;
-	private float playerY = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - 15);
+	private int playerX = Gdx.graphics.getWidth() / 2 - 30;
+	private int playerY = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - 15);
 
 	public Ship() {
 		position = new Vector2(playerX, playerY);
@@ -74,11 +76,11 @@ public class Ship {
 		return this.ship;
 	}
 
-	public float getPlayerX() {
+	public int getPlayerX() {
 		return playerX;
 	}
 
-	public float getPlayerY() {
+	public int getPlayerY() {
 		return playerY;
 	}
 }
