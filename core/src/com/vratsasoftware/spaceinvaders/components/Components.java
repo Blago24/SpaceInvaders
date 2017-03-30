@@ -18,6 +18,15 @@ public class Components implements Screen {
 	Wall wall;
 	Background background;
 	boolean superShot;
+	boolean areAliensGoingRight = true;
+
+	public boolean areAliensGoingRight() {
+		return areAliensGoingRight;
+	}
+
+	public void setAreAliensGoingRight(boolean areAliensGoingRight) {
+		this.areAliensGoingRight = areAliensGoingRight;
+	}
 
 	@Override
 	public void show() {
@@ -28,9 +37,11 @@ public class Components implements Screen {
 		lasersShot = new ArrayList<Laser>();
 		alien = new Aliens();
 		alien.createNewAliens();
+
 		wall = new Wall();
 		background = new Background();
 		superShot = true;
+		areAliensGoingRight = true;
 	}
 
 	@Override
@@ -48,11 +59,11 @@ public class Components implements Screen {
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		// System.out.println(superShot);
-		superShot();
+		 superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
-		//alien.testShow(this.batch);
-		//alien.showX();
-		 alien.showAliens(this.batch);
+		// alien.testShow(this.batch);
+		// alien.showX();
+		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
@@ -92,37 +103,41 @@ public class Components implements Screen {
 		int laserY = 0;
 		// System.out.println(lasersShot.size());
 		boolean killed = false;
+		if (lasersShot.size() > 0) {
+			for (int x = 0; x < lasersShot.size(); x++) {
+				// System.out.println(x);
+				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
+				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
+				// System.out.println(x+" "+laserY );
+				for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
+					for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
-		for (int x = 0; x < lasersShot.size(); x++) {
-			// System.out.println(x);
-			laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
-			laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
-			// System.out.println(x+" "+laserY );
-			for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
-				for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
+						// System.out.printf("Alien at coordinates [%d][%d] =
+						// [%d]
+						// \n", i, j,
+						// alien.getAliensCoordinatesY(i, j));
+						// System.out.println("Laser coordinates Y: " + laserY);
+						int alienX = alien.getAliensCoordinatesX(i, j);
+						int alienY = alien.getAliensCoordinatesY(i, j);
 
-					// System.out.printf("Alien at coordinates [%d][%d] = [%d]
-					// \n", i, j,
-					// alien.getAliensCoordinatesY(i, j));
-					// System.out.println("Laser coordinates Y: " + laserY);
-					int alienX = alien.getAliensCoordinatesX(i, j);
-					int alienY = alien.getAliensCoordinatesY(i, j);
-
-					for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
-						if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 30) && (laserX <= (alienX + 30))
-								&& alien.isAlienAlive(i, j))) {
-							alien.killAlien(i, j);
-							killed = true;
-							if (lasersShot.size() == 1) {
-								lasersShot.clear();
-							} else {
-								lasersShot.remove(x);
+						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
+							if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 30) && (laserX <= (alienX + 30))
+									&& alien.isAlienAlive(i, j))) {
+								alien.killAlien(i, j);
+								killed = true;
+								if (lasersShot.size() == 1) {
+									lasersShot.clear();
+								} else {
+									//checkForCollision();
+									lasersShot.remove(x);
+									 
+								}
 							}
 						}
-					}
-					if (killed) {
-						killed = false;
-						break;
+						if (killed) {
+							killed = false;
+							break;
+						}
 					}
 				}
 			}
