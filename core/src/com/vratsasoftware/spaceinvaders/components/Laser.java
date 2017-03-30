@@ -15,13 +15,21 @@ public class Laser {
 
 	private Vector2 position;
 	private Texture laser;
+	static long startTime;
 
 	private int laserX;
 	private int laserY;
 
 	public Laser(int currentPosition) {
 		this.laserX = currentPosition;
+		
+		position = new Vector2(laserX, laserY);
+		laser = new Texture("images//laser.png");
 
+	}
+	public Laser(int currentPosition,int y) {
+		this.laserX = currentPosition;
+		this.laserY=y;
 		position = new Vector2(laserX, laserY);
 		laser = new Texture("images//laser.png");
 
@@ -33,10 +41,40 @@ public class Laser {
 
 	protected void shootNewLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 		if (laserShot()) {
-			currentShipXPosition = ship.getPlayerX();
-			lasersShot.add(new Laser((int) currentShipXPosition));
+			if (lasersShot.size()<3) {
+				
+				currentShipXPosition = ship.getPlayerX();
+				lasersShot.add(new Laser((int) currentShipXPosition));
 
+			}
 		}
+		
+	}
+	protected boolean shootSuperLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
+		
+		if (superlaserShot()) {
+			
+				currentShipXPosition = ship.getPlayerX();
+				int yPosition=LASER_MOVEMENT_SPEED;
+				for (int i = 0; i < 5; i++) {
+					lasersShot.add(new Laser((int) currentShipXPosition,yPosition));
+					yPosition+=10;
+					
+				}
+
+			return true;
+		}
+		return false;
+	}
+
+	private boolean checkTheTimer() {
+		long newTime=System.nanoTime();
+		System.out.println("s="+startTime);
+		System.out.println("n="+newTime);
+		if(newTime-startTime>1000){
+			return true;
+		}
+		return false;
 	}
 
 	protected void displayLasersShot(ArrayList<Laser> lasersShot, SpriteBatch batch) {
@@ -77,6 +115,16 @@ public class Laser {
 	private boolean laserShot() {
 
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			startTime = System.nanoTime();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	protected boolean superlaserShot() {
+
+		if (Gdx.input.isKeyJustPressed(Keys.DPAD_DOWN)) {
+		//	startTime = System.nanoTime();
 			return true;
 		} else {
 			return false;

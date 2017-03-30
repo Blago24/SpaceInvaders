@@ -17,6 +17,7 @@ public class Components implements Screen {
 	Aliens alien;
 	Wall wall;
 	Background background;
+	boolean superShot;
 
 	@Override
 	public void show() {
@@ -29,6 +30,7 @@ public class Components implements Screen {
 		alien.createNewAliens();
 		wall = new Wall();
 		background = new Background();
+		superShot=true;
 	}
 
 	@Override
@@ -45,6 +47,14 @@ public class Components implements Screen {
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
+		//System.out.println(superShot);
+		if (this.superShot) {
+			System.out.println("da");
+			if(laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)){
+				this.superShot = false;
+			}
+			
+		}
 		laser.displayLasersShot(this.lasersShot, this.batch);
 
 		alien.showAliens(this.batch);
@@ -77,7 +87,7 @@ public class Components implements Screen {
 		int laserY = 0;
 		// System.out.println(lasersShot.size());
 		boolean killed = false;
-		
+
 		for (int x = 0; x < lasersShot.size(); x++) {
 			// System.out.println(x);
 			laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
@@ -86,9 +96,10 @@ public class Components implements Screen {
 			for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
 				for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
-					System.out.printf("Alien at coordinates [%d][%d] = [%d] \n", i, j,
-							alien.getAliensCoordinatesY(i, j));
-					System.out.println("Laser coordinates Y: " + laserY);
+					// System.out.printf("Alien at coordinates [%d][%d] = [%d]
+					// \n", i, j,
+					// alien.getAliensCoordinatesY(i, j));
+					// System.out.println("Laser coordinates Y: " + laserY);
 					int alienX = alien.getAliensCoordinatesX(i, j);
 					int alienY = alien.getAliensCoordinatesY(i, j);
 
