@@ -50,33 +50,32 @@ public class Aliens {
 				// check if the alien is alive
 				float leftBound = checkForFirstAlive();
 				float rightBound = checkForLastAlive();
-				showX();
-				System.out.println("RB" + rightBound);
-				System.out.println("LB"+leftBound);
-				System.out.println("SW" + SpaceInvaders.SCREEN_WIDTH);
+
 				if (isAlienAlive(i, j)) {
 					batch.draw(aliens[i][j].getAlien(), aliensCoordinatesX[i][j], aliensCoordinatesY[i][j], alienWidth,
 							alienHeight);
 					// keep the X and Y coordinates for each alien
 					// would probably use it to detect collision
-					
+
 					if (component.areAliensGoingRight) {
-						if (rightBound <= SpaceInvaders.SCREEN_WIDTH - 1) {
+						if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien.getWidth() / 4) {
+							// tuk e problema
+							System.out.println("Right bound: " + rightBound);
 							moveAliens(batch, i, j, xDistance);
-						}else {
+							// Zakruglqva na chetno chislo
+							// Bezkraen cikul - fixed 
+
+						} else {
 							component.setAreAliensGoingRight(false);
 						}
 					} else {
-						if (leftBound >= 1) {
-							System.out.println("KUDE");
+						if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
 							moveAliens(batch, i, j, -xDistance);
-						}else {
+						} else {
 							component.setAreAliensGoingRight(true);
 						}
-						//moveAliens(batch, i, j, -xDistance);
+						// moveAliens(batch, i, j, -xDistance);
 					}
-
-					System.out.println();
 
 				}
 
@@ -84,25 +83,28 @@ public class Aliens {
 		}
 
 	}
-  
+
 	private int checkForFirstAlive() {
-	
 		for (int i = 0; i < aliensCoordinatesX[0].length; i++) {
-			System.out.println("I NA first"+i);
-			System.out.println("LENGTH"+aliensCoordinatesX[0].length);
-			if (isAlienAlive(0,i)) {
-				return aliensCoordinatesX[0][i];
+			for (int j = 0; j < aliens.length; j++) {
+				if (aliensValue[j][i] == 1) {
+					if (isAlienAlive(0, i)) {
+						return aliensCoordinatesX[0][i];
+					}
+				}
 			}
 		}
 		return 0;
 	}
 
 	private int checkForLastAlive() {
-
-		for (int i = aliensCoordinatesX[0].length- 1; i >= 0; i--) {
-			System.out.println("I NA LAST"+i); 
-			if (isAlienAlive(0,i)) {
-				return aliensCoordinatesX[0][i];
+		for (int i = aliensCoordinatesX[0].length - 1; i >= 0; i--) {
+			for (int j = 0; j < aliens.length; j++) {
+				if (aliensValue[j][i] == 1) {
+					if (isAlienAlive(0, i)) {
+						return aliensCoordinatesX[0][i];
+					}
+				}
 			}
 		}
 		return 0;
@@ -120,9 +122,7 @@ public class Aliens {
 
 	public boolean isHit() {
 		boolean isHit = false;
-
 		return isHit;
-
 	}
 
 	protected void showX() {
@@ -162,13 +162,10 @@ public class Aliens {
 		float yDistance = (float) Math.floor((float) spaceInvader.getHeight() / 100 * 4f);
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
-
 				aliens[i][j] = new Aliens();
 				aliensValue[i][j] = 1;
 				aliensCoordinatesX[i][j] = aliensX;
 				aliensCoordinatesY[i][j] = aliensY;
-
-				System.out.println();
 				aliensX += xDistance;
 			}
 
@@ -236,21 +233,6 @@ public class Aliens {
 
 		}
 		return 1;
-	}
-
-	protected void showArray() {
-		System.out.println("______________________________");
-		for (int i = 0; i < aliensCoordinatesX.length; i++) {
-			for (int j = 0; j < aliensCoordinatesX[0].length; j++) {
-				if (i == 1 && j == 1) {
-					System.out.println(aliensCoordinatesX[i][j]);
-				}
-
-			}
-
-		}
-
-		System.out.println("______________________________");
 	}
 
 	public int[][] getAliensCoordinatesY() {

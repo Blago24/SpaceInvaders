@@ -59,7 +59,7 @@ public class Components implements Screen {
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		// System.out.println(superShot);
-		 superShot();
+		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		// alien.testShow(this.batch);
 		// alien.showX();
@@ -69,6 +69,7 @@ public class Components implements Screen {
 		checkForCollision();
 		ship.update(Gdx.graphics.getDeltaTime());
 		// System.out.println("laszeras " + laser.getLaserY());
+		System.out.println("Delta: " + Gdx.graphics.getDeltaTime());
 		batch.end();
 
 	}
@@ -105,7 +106,7 @@ public class Components implements Screen {
 		boolean killed = false;
 		if (lasersShot.size() > 0) {
 			for (int x = 0; x < lasersShot.size(); x++) {
-				// System.out.println(x);
+				System.out.println("X: " + x);
 				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
 				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
 				// System.out.println(x+" "+laserY );
@@ -121,19 +122,25 @@ public class Components implements Screen {
 						int alienY = alien.getAliensCoordinatesY(i, j);
 
 						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
-							if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 30) && (laserX <= (alienX + 30))
+							if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 15) && (laserX <= (alienX + 15))
 									&& alien.isAlienAlive(i, j))) {
 								alien.killAlien(i, j);
 								killed = true;
 								if (lasersShot.size() == 1) {
 									lasersShot.clear();
 								} else {
-									//checkForCollision();
-									lasersShot.remove(x);
-									 
+									// checkForCollision();
+									for (int k = 0; k < lasersShot.size(); k++) {
+										lasersShot.remove(k);
+									}
+
 								}
 							}
 						}
+						//checkForCollision - Recursion
+						//1st Call - 0, size;
+						//2nd Call - 0, size - 1; 
+						//
 						if (killed) {
 							killed = false;
 							break;

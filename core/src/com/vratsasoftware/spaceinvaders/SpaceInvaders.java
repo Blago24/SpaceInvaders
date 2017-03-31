@@ -32,8 +32,8 @@ public class SpaceInvaders extends Game {
 	}
 
 	public static final String GAME_NAME = "Space invaders";
-	public static final int SCREEN_WIDTH = 600;
-	public static final int SCREEN_HEIGHT = 800;
+	public static final int SCREEN_WIDTH = 800;
+	public static final int SCREEN_HEIGHT = 1000;
 	private static final float ASPECT_RATIO = (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT;
 
 	protected Camera camera;
