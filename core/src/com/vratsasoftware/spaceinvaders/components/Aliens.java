@@ -57,31 +57,43 @@ public class Aliens {
 					// keep the X and Y coordinates for each alien
 					// would probably use it to detect collision
 
-					if (component.areAliensGoingRight) {
-						if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien.getWidth() / 4) {
-							// tuk e problema
-							System.out.println("Right bound: " + rightBound);
-							moveAliens(batch, i, j, xDistance);
-							// Zakruglqva na chetno chislo
-							// Bezkraen cikul - fixed 
-
-						} else {
-							component.setAreAliensGoingRight(false);
-						}
-					} else {
-						if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
-							moveAliens(batch, i, j, -xDistance);
-						} else {
-							component.setAreAliensGoingRight(true);
-						}
-						// moveAliens(batch, i, j, -xDistance);
-					}
+					moveAliens(batch, xDistance, i, j, leftBound, rightBound);
 
 				}
 
 			}
 		}
 
+	}
+
+	private void moveAliens(SpriteBatch batch, float xDistance, int i, int j, float leftBound, float rightBound) {
+		if (component.areAliensGoingRight) {
+			moveAliensRight(batch, xDistance, i, j, rightBound);
+		} else {
+			moveAliensLeft(batch, xDistance, i, j, leftBound);
+		}
+	}
+
+	private void moveAliensLeft(SpriteBatch batch, float xDistance, int i, int j, float leftBound) {
+		if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
+			moveAliens(batch, i, j, -xDistance);
+		} else {
+			component.setAreAliensGoingRight(true);
+		}
+		// moveAliens(batch, i, j, -xDistance);
+	}
+
+	private void moveAliensRight(SpriteBatch batch, float xDistance, int i, int j, float rightBound) {
+		if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien.getWidth() / 4) {
+			// tuk e problema
+			System.out.println("Right bound: " + rightBound);
+			moveAliens(batch, i, j, xDistance);
+			// Zakruglqva na chetno chislo
+			// Bezkraen cikul - fixed 
+
+		} else {
+			component.setAreAliensGoingRight(false);
+		}
 	}
 
 	private int checkForFirstAlive() {
