@@ -1,6 +1,7 @@
 package com.vratsasoftware.spaceinvaders.components;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,61 +10,38 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ComponentsScreen implements Screen {
 
-	float currentShipXPosition;
 	Ship ship;
 	Laser laser;
 	SpriteBatch batch;
-	public ArrayList<Laser> lasersShot;
 	Aliens alien;
 	Wall wall;
 	Background background;
+	Boss boss;
+
+	public ArrayList<Laser> lasersShot;
+	float currentShipXPosition;
 	boolean superShot;
 	boolean areAliensGoingRight = true;
-	int rightCol;
-	int leftCol;
-
-	public boolean areAliensGoingRight() {
-		return areAliensGoingRight;
-	}
-
-	public void setAreAliensGoingRight(boolean areAliensGoingRight) {
-		this.areAliensGoingRight = areAliensGoingRight;
-	}
+	long currentTime = 0;
+	boolean bossSpawned = false;
 
 	@Override
 	public void show() {
 		ship = new Ship();
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
-		System.out.println(currentShipXPosition);
 		lasersShot = new ArrayList<Laser>();
 		alien = new Aliens();
 		alien.createNewAliens();
-
 		wall = new Wall();
 		background = new Background();
 		superShot = true;
+		boss = new Boss();
 		areAliensGoingRight = true;
-		rightCol = 10;
-		leftCol = 0;
+		currentTime = System.currentTimeMillis();
 	}
 
-	public int getRightCol() {
-		return rightCol;
-	}
-
-	public void setRightCol(int rightCol) {
-		this.rightCol = rightCol;
-	}
-
-	public int getLeftCol() {
-		return leftCol;
-	}
-
-	public void setLeftCol(int leftCol) {
-		this.leftCol = leftCol;
-	}
-
+	//create a timer to launch a new boss every ~30s. 
 	@Override
 	public void render(float delta) {
 		// System.out.println(delta);
@@ -73,7 +51,7 @@ public class ComponentsScreen implements Screen {
 
 	}
 
-	private void update(SpriteBatch batch2) {
+	private void update(SpriteBatch batch) {
 		batch.begin();
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
@@ -81,8 +59,20 @@ public class ComponentsScreen implements Screen {
 		// System.out.println(superShot);
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
+		int seconds = (int) (currentTime / 1000) % 60 ;
+		System.out.println("Seconds "  + seconds);
+//		if (seconds == 28) {
+//			boss = new Boss();
+//			bossSpawned = true;
+//		}
+//		if (bossSpawned) {
+//			boss.update(Gdx.graphics.getDeltaTime(), this.batch);
+//			currentTime = 0;
+//		}
 		// alien.testShow(this.batch);
 		// alien.showX();
+
+		boss.update(Gdx.graphics.getDeltaTime(), this.batch);
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
@@ -119,42 +109,29 @@ public class ComponentsScreen implements Screen {
 	private boolean checkForCollision() {
 		int laserX = 0;
 		int laserY = 0;
-		// System.out.println(lasersShot.size());
+
 		boolean killed = false;
 		if (lasersShot.size() > 0) {
 			for (int x = 0; x < lasersShot.size(); x++) {
-			//	System.out.println("X: " + x);
+
 				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
 				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
-				// System.out.println(x+" "+laserY );
-				int index = 0;
+
 				for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
 					for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
-
-						// System.out.printf("Alien at coordinates [%d][%d] =
-						// [%d]
-						// \n", i, j,
-						// alien.getAliensCoordinatesY(i, j));
-						// System.out.println("Laser coordinates Y: " + laserY);
 						int alienX = alien.getAliensCoordinatesX(i, j);
 						int alienY = alien.getAliensCoordinatesY(i, j);
-						if (i == 0) {
-							index = 10;
-						} else {
-							index = 30;
-						}
+
 						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 10; alienSize++) {
 							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize))
-									&& (laserX >= alienX - index) && (laserX <= (alienX + index))
+									&& (laserX >= alienX - 30) && (laserX <= (alienX + 30))
 									&& alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
 								killed = true;
 								if (lasersShot.size() == 1) {
 									lasersShot.clear();
 								} else {
-
 									lasersShot.remove(x);
-
 								}
 							}
 						}
@@ -168,6 +145,14 @@ public class ComponentsScreen implements Screen {
 		}
 		return false;
 
+	}
+
+	public boolean areAliensGoingRight() {
+		return areAliensGoingRight;
+	}
+
+	public void setAreAliensGoingRight(boolean areAliensGoingRight) {
+		this.areAliensGoingRight = areAliensGoingRight;
 	}
 
 	@Override
@@ -198,8 +183,9 @@ public class ComponentsScreen implements Screen {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-	public int test(){
+
+	public int test() {
 		System.out.println("P[as");
-		return 6 ;
+		return 6;
 	}
 }
