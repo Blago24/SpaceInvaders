@@ -11,7 +11,7 @@ import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
 public class Laser {
 	SpaceInvaders spaceInvader = new SpaceInvaders();
-	private final int LASER_MOVEMENT_SPEED = (int) Math.floor((int) spaceInvader.getHeight() / 100);
+	private final int LASER_MOVEMENT_SPEED = (int) Math.floor((int) spaceInvader.getHeight() / 88);
 
 	private Vector2 position;
 	private Texture laser;

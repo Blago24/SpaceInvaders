@@ -14,7 +14,7 @@ public class Wall {
 	private int wallX;
 	private int lives;
 
-	Components comp = new Components();
+	ComponentsScreen comp = new ComponentsScreen();
 	Texture wall;
 	private boolean isWallHit = false;
 

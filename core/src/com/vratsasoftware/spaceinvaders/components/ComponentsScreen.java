@@ -7,7 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Components implements Screen {
+public class ComponentsScreen implements Screen {
 
 	float currentShipXPosition;
 	Ship ship;
@@ -68,17 +68,14 @@ public class Components implements Screen {
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
 		ship.update(Gdx.graphics.getDeltaTime());
-		// System.out.println("laszeras " + laser.getLaserY());
-		System.out.println("Delta: " + Gdx.graphics.getDeltaTime());
 		batch.end();
 
 	}
 
 	private void superShot() {
 		if (this.superShot) {
-			System.out.println("da");
 			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
-				this.superShot = false;
+				//this.superShot = false;
 			}
 
 		}
@@ -110,6 +107,7 @@ public class Components implements Screen {
 				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
 				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
 				// System.out.println(x+" "+laserY );
+				int index = 0;
 				for (int i = 0; i < alien.aliensCoordinatesX.length; i++) {
 					for (int j = 0; j < alien.aliensCoordinatesX[0].length; j++) {
 
@@ -120,27 +118,25 @@ public class Components implements Screen {
 						// System.out.println("Laser coordinates Y: " + laserY);
 						int alienX = alien.getAliensCoordinatesX(i, j);
 						int alienY = alien.getAliensCoordinatesY(i, j);
-
-						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 2; alienSize++) {
-							if ((laserY >= (alienY - alienSize) && (laserX >= alienX - 15) && (laserX <= (alienX + 15))
-									&& alien.isAlienAlive(i, j))) {
+						if(i == 0) { 
+							index = 10;
+						} else { 
+							index = 30;
+						}
+						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 10; alienSize++) {
+							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize) ) && (laserX >= alienX - index)
+									&& (laserX <= (alienX + index)) && alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
 								killed = true;
 								if (lasersShot.size() == 1) {
 									lasersShot.clear();
 								} else {
-									// checkForCollision();
-									for (int k = 0; k < lasersShot.size(); k++) {
-										lasersShot.remove(k);
-									}
+									
+									lasersShot.remove(x);
 
 								}
 							}
 						}
-						//checkForCollision - Recursion
-						//1st Call - 0, size;
-						//2nd Call - 0, size - 1; 
-						//
 						if (killed) {
 							killed = false;
 							break;

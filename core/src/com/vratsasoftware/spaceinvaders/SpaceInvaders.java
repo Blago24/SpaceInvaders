@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.vratsasoftware.spaceinvaders.components.Components;
+import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 
 import States.GameStateManager;
 
@@ -38,15 +38,16 @@ public class SpaceInvaders extends Game {
 
 	protected Camera camera;
 	protected Rectangle viewport;
-	private SpriteBatch sb;
 
 	private GameStateManager gsm;
 	public SpriteBatch batch;
 
 	@Override
 	public void create() {
-		setScreen(new Components());
+		setScreen(new ComponentsScreen());
 		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
+		gsm = new GameStateManager();
+		
 	}
 
 	@Override
@@ -54,7 +55,8 @@ public class SpaceInvaders extends Game {
 		super.render();
 		
 		camera.update();
-
+//		gsm.update(Gdx.graphics.getDeltaTime());
+//		gsm.render(batch);
 		// set viewport
 		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
 	}

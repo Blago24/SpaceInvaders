@@ -30,7 +30,7 @@ public class Aliens {
 	private int alienHeight = (int) ((int) SpaceInvaders.SCREEN_HEIGHT * 0.0475f);
 
 	SpaceInvaders spaceInvader = new SpaceInvaders();
-	Components component = new Components();
+	ComponentsScreen component = new ComponentsScreen();
 
 	public Aliens() {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -45,19 +45,23 @@ public class Aliens {
 
 		float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 1000 * 2f);
 		float yDistance = (float) Math.floor((float) spaceInvader.getHeight() / 100 * 4f);
+		int indexWidth = alienWidth;
+
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
 				// check if the alien is alive
 				float leftBound = checkForFirstAlive();
 				float rightBound = checkForLastAlive();
 
+				if (i == 0) {
+					indexWidth = alienWidth - 15;
+				} else {
+					indexWidth = alienWidth;
+				}
 				if (isAlienAlive(i, j)) {
-					batch.draw(aliens[i][j].getAlien(), aliensCoordinatesX[i][j], aliensCoordinatesY[i][j], alienWidth,
+					batch.draw(aliens[i][j].getAlien(), aliensCoordinatesX[i][j], aliensCoordinatesY[i][j], indexWidth,
 							alienHeight);
-					// keep the X and Y coordinates for each alien
-					// would probably use it to detect collision
-
-					moveAliens(batch, xDistance, i, j, leftBound, rightBound);
+					aliensMovement(batch, xDistance, i, j, leftBound, rightBound);
 
 				}
 
@@ -66,7 +70,7 @@ public class Aliens {
 
 	}
 
-	private void moveAliens(SpriteBatch batch, float xDistance, int i, int j, float leftBound, float rightBound) {
+	private void aliensMovement(SpriteBatch batch, float xDistance, int i, int j, float leftBound, float rightBound) {
 		if (component.areAliensGoingRight) {
 			moveAliensRight(batch, xDistance, i, j, rightBound);
 		} else {
@@ -77,6 +81,7 @@ public class Aliens {
 	private void moveAliensLeft(SpriteBatch batch, float xDistance, int i, int j, float leftBound) {
 		if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
 			moveAliens(batch, i, j, -xDistance);
+
 		} else {
 			component.setAreAliensGoingRight(true);
 		}
@@ -85,11 +90,7 @@ public class Aliens {
 
 	private void moveAliensRight(SpriteBatch batch, float xDistance, int i, int j, float rightBound) {
 		if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien.getWidth() / 4) {
-			// tuk e problema
-			System.out.println("Right bound: " + rightBound);
 			moveAliens(batch, i, j, xDistance);
-			// Zakruglqva na chetno chislo
-			// Bezkraen cikul - fixed 
 
 		} else {
 			component.setAreAliensGoingRight(false);
@@ -97,11 +98,19 @@ public class Aliens {
 	}
 
 	private int checkForFirstAlive() {
+		int index = 0;
+
 		for (int i = 0; i < aliensCoordinatesX[0].length; i++) {
+
 			for (int j = 0; j < aliens.length; j++) {
-				if (aliensValue[j][i] == 1) {
+				if (aliensValue[index][i] == 1) {
 					if (isAlienAlive(0, i)) {
-						return aliensCoordinatesX[0][i];
+						if (aliensCoordinatesX[index][i] == 0) {
+							index++;
+							return 600;
+						} else {
+							return aliensCoordinatesX[index][i];
+						}
 					}
 				}
 			}
@@ -110,11 +119,19 @@ public class Aliens {
 	}
 
 	private int checkForLastAlive() {
-		for (int i = aliensCoordinatesX[0].length - 1; i >= 0; i--) {
-			for (int j = 0; j < aliens.length; j++) {
-				if (aliensValue[j][i] == 1) {
-					if (isAlienAlive(0, i)) {
-						return aliensCoordinatesX[0][i];
+		int index = aliensCoordinatesX[0].length - 1;
+		System.out.println(index);
+		for (int i = 0; i < aliensCoordinatesX.length; i++) {
+			for (int j = index; j > 0; j--) {
+				if (aliensValue[i][index] == 1) {
+					System.out.println("kur");
+					if (aliensCoordinatesX[i][index] == 0) {
+						System.out.println("ban");
+						return aliensCoordinatesX[i][--index];
+						// index--;
+
+					} else {
+						return aliensCoordinatesX[i][index];
 					}
 				}
 			}
@@ -195,10 +212,6 @@ public class Aliens {
 		return aliensPosition;
 	}
 
-	public void setAliensPosition(Vector2 aliensPosition) {
-		this.aliensPosition = aliensPosition;
-	}
-
 	public Aliens[][] getAliens() {
 		return aliens;
 	}
@@ -215,14 +228,6 @@ public class Aliens {
 		return alienY;
 	}
 
-	public void setAlienX(float alienX) {
-		this.alienX = alienX;
-	}
-
-	public void setAlienY(float alienY) {
-		this.alienY = alienY;
-	}
-
 	public int getAliensCoordinatesX(int x, int y) {
 		for (int i = 0; i < this.aliensCoordinatesX.length; i++) {
 			for (int j = 0; j < this.aliensCoordinatesX[0].length; j++) {
@@ -230,7 +235,6 @@ public class Aliens {
 					return this.aliensCoordinatesX[i][j];
 				}
 			}
-
 		}
 		return 1;
 	}
