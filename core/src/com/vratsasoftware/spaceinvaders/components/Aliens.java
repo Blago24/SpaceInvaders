@@ -98,44 +98,45 @@ public class Aliens {
 	}
 
 	private int checkForFirstAlive() {
-		int index = 0;
-
-		for (int i = 0; i < aliensCoordinatesX[0].length; i++) {
-
-			for (int j = 0; j < aliens.length; j++) {
-				if (aliensValue[index][i] == 1) {
-					if (isAlienAlive(0, i)) {
-						if (aliensCoordinatesX[index][i] == 0) {
-							index++;
-							return 600;
-						} else {
-							return aliensCoordinatesX[index][i];
-						}
-					}
+		//showAliensValues();
+		int index = component.getLeftCol();
+System.out.println("left"+index);
+		int countForDeadAliens=0;
+			for (int i = 0; i< aliensCoordinatesX.length; i++) {
+				if(aliensValue[i][index]==1){
+					return aliensCoordinatesX[i][index];
+				}else{
+					countForDeadAliens++;
 				}
 			}
-		}
+			if(countForDeadAliens==5){
+				component.setLeftCol(index+1);
+			//	checkForFirstAlive();
+			}
+		
 		return 0;
 	}
 
 	private int checkForLastAlive() {
-		int index = aliensCoordinatesX[0].length - 1;
-		System.out.println(index);
-		for (int i = 0; i < aliensCoordinatesX.length; i++) {
-			for (int j = index; j > 0; j--) {
-				if (aliensValue[i][index] == 1) {
-					System.out.println("kur");
-					if (aliensCoordinatesX[i][index] == 0) {
-						System.out.println("ban");
-						return aliensCoordinatesX[i][--index];
-						// index--;
-
-					} else {
-						return aliensCoordinatesX[i][index];
-					}
+		//showAliensValues();
+		int index = component.getRightCol();
+System.out.println("right"+index);
+System.out.println(aliensCoordinatesX.length);
+		int countForDeadAliens=0;
+			for (int i = 0; i< aliensCoordinatesX.length; i++) {
+				if(aliensValue[i][index]==1){
+					
+					return aliensCoordinatesX[i][index];
+				}else{
+					System.out.println("alines"+aliensValue[i][index]);
+					countForDeadAliens++;
 				}
 			}
-		}
+			if(countForDeadAliens==5){
+				component.setRightCol(index-1);
+			//	checkForFirstAlive();
+			}
+		
 		return 0;
 	}
 
@@ -253,6 +254,15 @@ public class Aliens {
 
 	public int[][] getAliensCoordinatesY() {
 		return aliensCoordinatesY;
+	}
+	public void showAliensValues(){
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens.length; j++) {
+				System.out.print(aliens[i][j]);
+				
+			}
+			System.out.println();
+		}
 	}
 
 }

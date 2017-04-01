@@ -19,6 +19,8 @@ public class ComponentsScreen implements Screen {
 	Background background;
 	boolean superShot;
 	boolean areAliensGoingRight = true;
+	int rightCol;
+	int leftCol;
 
 	public boolean areAliensGoingRight() {
 		return areAliensGoingRight;
@@ -42,6 +44,24 @@ public class ComponentsScreen implements Screen {
 		background = new Background();
 		superShot = true;
 		areAliensGoingRight = true;
+		rightCol = 10;
+		leftCol = 0;
+	}
+
+	public int getRightCol() {
+		return rightCol;
+	}
+
+	public void setRightCol(int rightCol) {
+		this.rightCol = rightCol;
+	}
+
+	public int getLeftCol() {
+		return leftCol;
+	}
+
+	public void setLeftCol(int leftCol) {
+		this.leftCol = leftCol;
 	}
 
 	@Override
@@ -75,7 +95,7 @@ public class ComponentsScreen implements Screen {
 	private void superShot() {
 		if (this.superShot) {
 			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
-				//this.superShot = false;
+				// this.superShot = false;
 			}
 
 		}
@@ -103,7 +123,7 @@ public class ComponentsScreen implements Screen {
 		boolean killed = false;
 		if (lasersShot.size() > 0) {
 			for (int x = 0; x < lasersShot.size(); x++) {
-				System.out.println("X: " + x);
+			//	System.out.println("X: " + x);
 				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
 				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
 				// System.out.println(x+" "+laserY );
@@ -118,20 +138,21 @@ public class ComponentsScreen implements Screen {
 						// System.out.println("Laser coordinates Y: " + laserY);
 						int alienX = alien.getAliensCoordinatesX(i, j);
 						int alienY = alien.getAliensCoordinatesY(i, j);
-						if(i == 0) { 
+						if (i == 0) {
 							index = 10;
-						} else { 
+						} else {
 							index = 30;
 						}
 						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 10; alienSize++) {
-							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize) ) && (laserX >= alienX - index)
-									&& (laserX <= (alienX + index)) && alien.isAlienAlive(i, j)) {
+							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize))
+									&& (laserX >= alienX - index) && (laserX <= (alienX + index))
+									&& alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
 								killed = true;
 								if (lasersShot.size() == 1) {
 									lasersShot.clear();
 								} else {
-									
+
 									lasersShot.remove(x);
 
 								}
@@ -176,5 +197,9 @@ public class ComponentsScreen implements Screen {
 
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+	public int test(){
+		System.out.println("P[as");
+		return 6 ;
 	}
 }
