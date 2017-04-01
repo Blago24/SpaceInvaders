@@ -1,5 +1,6 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
@@ -25,8 +26,8 @@ public class Wall {
 	}
 
 	public void display(SpriteBatch batch) {
-		batch.draw(wall, SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 40), WALL_Y, WALL_WIDTH, WALL_HEIGHT);
-		batch.draw(wall,  SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 200), WALL_Y, WALL_WIDTH, WALL_HEIGHT);
+		batch.draw(wall, SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH -  60), WALL_Y, WALL_WIDTH, WALL_HEIGHT);
+		batch.draw(wall,  (Gdx.graphics.getWidth() / 2 - wall.getWidth() / 2), WALL_Y, WALL_WIDTH, WALL_HEIGHT);
 		batch.draw(wall,  SpaceInvaders.SCREEN_WIDTH - (wall.getWidth() + 25), WALL_Y, WALL_WIDTH, WALL_HEIGHT);
 	}
 }
