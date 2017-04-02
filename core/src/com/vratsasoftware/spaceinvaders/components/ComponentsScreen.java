@@ -22,7 +22,7 @@ public class ComponentsScreen implements Screen {
 	float currentShipXPosition;
 	boolean superShot;
 	boolean areAliensGoingRight = true;
-	long currentTime = 0;
+	long startTimer;
 	boolean bossSpawned = false;
 
 	@Override
@@ -38,10 +38,10 @@ public class ComponentsScreen implements Screen {
 		superShot = true;
 		boss = new Boss();
 		areAliensGoingRight = true;
-		currentTime = System.currentTimeMillis();
+		startTimer = System.currentTimeMillis();
 	}
 
-	//create a timer to launch a new boss every ~30s. 
+	// create a timer to launch a new boss every ~30s.
 	@Override
 	public void render(float delta) {
 		// System.out.println(delta);
@@ -55,28 +55,28 @@ public class ComponentsScreen implements Screen {
 		batch.begin();
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
-		if(alien.checkForWin()){
+		if (alien.checkForWin()) {
 			System.exit(0);
-			//break;
+			// break;
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		// System.out.println(superShot);
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
-		int seconds = (int) (currentTime / 1000) % 60 ;
-		System.out.println("Seconds "  + seconds);
-//		if (seconds == 28) {
-//			boss = new Boss();
-//			bossSpawned = true;
-//		}
-//		if (bossSpawned) {
-//			boss.update(Gdx.graphics.getDeltaTime(), this.batch);
-//			currentTime = 0;
-//		}
+		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
+		// if (seconds == 28) {
+		// boss = new Boss();
+		// bossSpawned = true;
+		// }
+		// if (bossSpawned) {
+		// boss.update(Gdx.graphics.getDeltaTime(), this.batch);
+		// currentTime = 0;
+		// }
 		// alien.testShow(this.batch);
 		// alien.showX();
 
-		boss.update(Gdx.graphics.getDeltaTime(), this.batch);
+		// boss.update(Gdx.graphics.getDeltaTime(), this.batch);
+		// //boss.bringBackToStartingPosition();
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
@@ -86,7 +86,33 @@ public class ComponentsScreen implements Screen {
 
 	}
 
-	
+	private void timerForTheBoss(SpriteBatch batch, float timer) {
+
+		
+		int start = (int) (startTimer / 1000) % 60 ;
+		
+		int end=(int) (System.currentTimeMillis()/ 1000) % 60;
+		System.out.println("start"+start);
+		System.out.println("end"+end);
+		//boss.update(timer,batch);
+		if(end>start){
+			if(end-start==5){
+				boss=new Boss();
+				startTimer=System.currentTimeMillis();
+			}
+			
+		}else{
+			if((60-start)+end==20){
+				boss=new Boss();
+				startTimer=System.currentTimeMillis();
+			}
+		}
+			if(boss!=null){
+				boss.update(timer,batch);
+		}
+		
+		
+	}
 
 	private void superShot() {
 		if (this.superShot) {
