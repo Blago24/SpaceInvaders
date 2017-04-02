@@ -55,6 +55,10 @@ public class ComponentsScreen implements Screen {
 		batch.begin();
 		background.showBackground(batch);
 		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
+		if(alien.checkForWin()){
+			System.exit(0);
+			//break;
+		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		// System.out.println(superShot);
 		superShot();
@@ -81,6 +85,8 @@ public class ComponentsScreen implements Screen {
 		batch.end();
 
 	}
+
+	
 
 	private void superShot() {
 		if (this.superShot) {

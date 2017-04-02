@@ -243,6 +243,20 @@ public class Aliens {
 			System.out.println();
 		}
 	}
+	protected boolean checkForWin(){
+		int countAliveAliens=0;
+		for (int i = 0; i < aliensValue.length; i++) {
+			for (int j = 0; j < aliensValue[0].length; j++) {
+				if(isAlienAlive(i, j)){
+					countAliveAliens++;
+				}
+			}
+		}
+		if(countAliveAliens==0){
+			return true;
+		}
+		return false;
+	}
 
 	protected void killAlien(int x, int y) {
 		aliensValue[x][y] = 0;
