@@ -64,19 +64,7 @@ public class ComponentsScreen implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-		// if (seconds == 28) {
-		// boss = new Boss();
-		// bossSpawned = true;
-		// }
-		// if (bossSpawned) {
-		// boss.update(Gdx.graphics.getDeltaTime(), this.batch);
-		// currentTime = 0;
-		// }
-		// alien.testShow(this.batch);
-		// alien.showX();
-
-		// boss.update(Gdx.graphics.getDeltaTime(), this.batch);
-		// //boss.bringBackToStartingPosition();
+	
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
@@ -96,7 +84,7 @@ public class ComponentsScreen implements Screen {
 		System.out.println("end"+end);
 		//boss.update(timer,batch);
 		if(end>start){
-			if(end-start==5){
+			if(end-start==20){
 				boss=new Boss();
 				startTimer=System.currentTimeMillis();
 			}
