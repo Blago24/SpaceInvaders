@@ -64,42 +64,87 @@ public class ComponentsScreen implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-	
+		isBossOutOfBounds();
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
+		checkForCollisionWithTheBoss();
+		if(boss!=null){
+			System.out.println( boss.getBossX());
+		}
+		 
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
 	}
 
+	protected void isBossOutOfBounds() {
+		if (boss != null) {
+			if (boss.getBossX() < -100) {
+				boss = null;
+			}
+		}
+	}
+
+	private void checkForCollisionWithTheBoss() {
+		int laserX = 0;
+		int laserY = 0;
+
+		boolean killed = false;
+		if (lasersShot.size() > 0) {
+			for (int x = 0; x < lasersShot.size(); x++) {
+
+				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
+				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
+				int bossX = boss.getBossX();
+				int bossY = boss.getBossY();
+
+				for (int bossSize = 1; bossSize <= boss.getBoss().getHeight() / 100 + 10; bossSize++) {
+					if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 70) && (laserX <= (bossX + 60))) {
+						boss.setBossValue(0);
+
+						killed = true;
+						if (lasersShot.size() == 1) {
+							lasersShot.clear();
+						} else {
+							lasersShot.remove(x);
+						}
+					}
+				}
+				if (killed) {
+					killed = false;
+					break;
+				}
+			}
+		}
+
+	}
+
 	private void timerForTheBoss(SpriteBatch batch, float timer) {
 
-		
-		int start = (int) (startTimer / 1000) % 60 ;
-		
-		int end=(int) (System.currentTimeMillis()/ 1000) % 60;
-		System.out.println("start"+start);
-		System.out.println("end"+end);
-		//boss.update(timer,batch);
-		if(end>start){
-			if(end-start==20){
-				boss=new Boss();
-				startTimer=System.currentTimeMillis();
+		int start = (int) (startTimer / 1000) % 60;
+
+		int end = (int) (System.currentTimeMillis() / 1000) % 60;
+		// System.out.println("start" + start);
+		// System.out.println("end" + end);
+		// boss.update(timer,batch);
+		if (end > start) {
+			if (end - start == 5) {
+				boss = new Boss();
+				startTimer = System.currentTimeMillis();
 			}
-			
-		}else{
-			if((60-start)+end==20){
-				boss=new Boss();
-				startTimer=System.currentTimeMillis();
+
+		} else {
+			if ((60 - start) + end == 5) {
+				boss = new Boss();
+				startTimer = System.currentTimeMillis();
 			}
 		}
-			if(boss!=null){
-				boss.update(timer,batch);
+		if (boss != null) {
+			boss.update(timer, batch);
 		}
-		
-		
+
 	}
 
 	private void superShot() {
