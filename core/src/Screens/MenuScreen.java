@@ -6,15 +6,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 
 public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor {
-	
-	
+
 	private final int HEIGHT = Gdx.graphics.getHeight();
 	private final int WIDTH = Gdx.graphics.getWidth();
-	
+
 	private float buttonX;
 	private float buttonY;
 	private boolean displayScreen;
@@ -23,7 +23,8 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	private Texture background;
 	private Texture playButton;
 	private Texture logo;
-
+	
+	private Vector2 logoCoordinates;
 
 	Game game;
 
@@ -33,16 +34,13 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 
 	}
 
-	public void dispose() {
-		this.logo.dispose();
-		this.playButton.dispose();
-	}
-
 	@Override
 	public void show() {
 		this.background = new Texture("images//backgr.png");
 		this.playButton = new Texture("images//play-button.png");
+		this.logo = new Texture("images//vsc-logo.png");
 		this.batch = new SpriteBatch();
+		this.logoCoordinates = new Vector2(0,0);
 		buttonX = (this.WIDTH / 2) - (playButton.getWidth() / 2 - 75);
 		buttonY = this.HEIGHT / 2 - 135;
 		Gdx.input.setInputProcessor(this);
@@ -54,19 +52,42 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		batch.begin();
 		batch.draw(background, -30, 0, this.WIDTH, this.HEIGHT);
 		batch.draw(playButton, buttonX, buttonY, 150, 150);
+		animateLogo(this.batch);
 		if (displayScreen) {
 			batch.dispose();
 		}
 		batch.end();
 	}
 
+	private void animateLogo(SpriteBatch batch2) {
+		
+		
+		batch.draw(logo, logoCoordinates.x, logoCoordinates.y, this.WIDTH, this.HEIGHT);
+		logoCoordinates.y += 2.5;
+	}
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		float pointerX = InputTransform.getCursorToModelX(this.WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(this.HEIGHT, screenY);
-		
-		if (buttonIsClicked(pointerX, pointerY)) {
+
+		if (isButtonPressed(pointerX, pointerY)) {
 			openGameScreen();
+		}
+		return false;
+	}
+
+	private boolean isButtonPressed(float pointerX, float pointerY) {
+		int buttonTopY = 480;
+		int buttonBottomY = 400;
+		int buttonLeftX = 450;
+		int buttonRightX = 520;
+
+		if ((pointerY >= buttonBottomY && pointerY <= buttonTopY)
+				&& (pointerX >= buttonLeftX && pointerX <= buttonRightX)) {
+			if (displayScreen == false) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -75,24 +96,18 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		game.setScreen(new ComponentsScreen(game));
 	}
 
-	private boolean buttonIsClicked(float pointerX, float pointerY) {
-		int buttonTopY = 420;
-		int buttonBottomY = 385;
-		int buttonLeftX = 420;
-		int buttonRightX = 505;
-
-		if ((pointerY >= buttonBottomY && pointerY <= buttonTopY) && (pointerX >= buttonLeftX && pointerX <= buttonRightX)) {
-			if (displayScreen == false) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		displayScreen = true;
 		return false;
+	}
+	
+
+	public void dispose() {
+		this.logo.dispose();
+		this.background.dispose();
+		this.playButton.dispose();
+		
 	}
 
 	@Override
