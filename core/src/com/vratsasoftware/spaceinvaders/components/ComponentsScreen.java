@@ -94,13 +94,19 @@ public class ComponentsScreen implements Screen {
 		int start = (int) (timerForAliensShot / 1000) % 60;
 		int end = (int) (System.currentTimeMillis() / 1000) % 60;
 		if (end > start) {
-			if (end - start == 7) {
+			if (end - start == 2) {
+				xIndexesOfAliensWhichCanShoot.clear();
+				yIndexesOfAliensWhichCanShoot.clear();
+				aliensLasersShot.clear();
 				checkForAliensWhichCanShoot();
 				timerForAliensShot = System.currentTimeMillis();
 			}
 
 		} else {
-			if ((60 - start) + end == 7) {
+			if ((60 - start) + end == 2) {
+				xIndexesOfAliensWhichCanShoot.clear();
+				yIndexesOfAliensWhichCanShoot.clear();
+				aliensLasersShot.clear();
 				checkForAliensWhichCanShoot();
 				timerForAliensShot = System.currentTimeMillis();
 			}
