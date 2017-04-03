@@ -35,7 +35,7 @@ public class Aliens {
 	int rightCol = 10;
 
 	SpaceInvaders spaceInvader = new SpaceInvaders();
-	ComponentsScreen component = new ComponentsScreen();
+	ComponentsScreen component = new ComponentsScreen(null);
 
 	public Aliens() {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];

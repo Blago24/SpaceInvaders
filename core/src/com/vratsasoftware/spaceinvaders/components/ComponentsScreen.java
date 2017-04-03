@@ -2,14 +2,17 @@ package com.vratsasoftware.spaceinvaders.components;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
-public class ComponentsScreen implements Screen {
+import Screens.MenuScreen;
+
+public class ComponentsScreen extends SpaceInvaders implements Screen  {
 
 	Ship ship;
 	Laser laser;
@@ -29,7 +32,12 @@ public class ComponentsScreen implements Screen {
 	long startTimer;
 	long timerForAliensShot;
 	boolean bossSpawned = false;
-
+	SpaceInvaders si = new SpaceInvaders();
+	Game game;
+	public ComponentsScreen(Game game) { 
+			this.game = game;
+			
+	}
 	@Override
 	public void show() {
 		ship = new Ship();
