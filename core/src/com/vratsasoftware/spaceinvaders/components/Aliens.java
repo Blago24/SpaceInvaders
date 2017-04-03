@@ -78,10 +78,14 @@ public class Aliens {
 		if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
 			float distanceToTheEndOfTheScreen = SpaceInvaders.SCREEN_WIDTH - leftBound;
 			moveAliens(batch, i, j, -xDistance, distanceToTheEndOfTheScreen);
-//			System.out.println("1st Alien, 1st Row: " + getAliensCoordinatesX(0, 0));
-//			System.out.println("1st Alien, 2st Row: " + getAliensCoordinatesX(1, 0));
-//			System.out.println("1st Alien, 3st Row: " + getAliensCoordinatesX(2, 0));
-//			System.out.println("1st Alien, 4st Row: " + getAliensCoordinatesX(3, 0));
+			// System.out.println("1st Alien, 1st Row: " +
+			// getAliensCoordinatesX(0, 0));
+			// System.out.println("1st Alien, 2st Row: " +
+			// getAliensCoordinatesX(1, 0));
+			// System.out.println("1st Alien, 3st Row: " +
+			// getAliensCoordinatesX(2, 0));
+			// System.out.println("1st Alien, 4st Row: " +
+			// getAliensCoordinatesX(3, 0));
 		} else {
 			component.setAreAliensGoingRight(true);
 		}
@@ -91,7 +95,7 @@ public class Aliens {
 	private void moveAliensRight(SpriteBatch batch, float xDistance, int i, int j, float rightBound) {
 		if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien.getWidth() / 4) {
 			float distanceToTheEndOfTheScreen = SpaceInvaders.SCREEN_WIDTH - rightBound;
-			//System.out.println("Distance: " + distanceToTheEndOfTheScreen);
+			// System.out.println("Distance: " + distanceToTheEndOfTheScreen);
 			moveAliens(batch, i, j, xDistance, distanceToTheEndOfTheScreen);
 
 		} else {
@@ -108,6 +112,19 @@ public class Aliens {
 			aliensCoordinatesY[i][j] -= amountOfMovementDown;
 		}
 
+	}
+
+	protected void checkForLowestAliensAlive() {
+
+		for (int i = aliensCoordinatesX.length; i > 0; i--) {
+			for (int j = 0; j < aliensCoordinatesX[0].length; j++) {
+				if (aliensValue[i][j] == 1) {
+					component.xIndexesOfAliensWhichCanShoot.add(i);
+					component.yIndexesOfAliensWhichCanShoot.add(j);
+					break;
+				}
+			}
+		}
 	}
 
 	private int checkForFirstAlive() {
@@ -243,16 +260,17 @@ public class Aliens {
 			System.out.println();
 		}
 	}
-	protected boolean checkForWin(){
-		int countAliveAliens=0;
+
+	protected boolean checkForWin() {
+		int countAliveAliens = 0;
 		for (int i = 0; i < aliensValue.length; i++) {
 			for (int j = 0; j < aliensValue[0].length; j++) {
-				if(isAlienAlive(i, j)){
+				if (isAlienAlive(i, j)) {
 					countAliveAliens++;
 				}
 			}
 		}
-		if(countAliveAliens==0){
+		if (countAliveAliens == 0) {
 			return true;
 		}
 		return false;

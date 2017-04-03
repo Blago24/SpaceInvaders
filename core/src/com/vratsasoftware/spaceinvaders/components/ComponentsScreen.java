@@ -19,10 +19,13 @@ public class ComponentsScreen implements Screen {
 	Boss boss;
 
 	public ArrayList<Laser> lasersShot;
+	public ArrayList<Integer> xIndexesOfAliensWhichCanShoot;
+	public ArrayList<Integer> yIndexesOfAliensWhichCanShoot;
 	float currentShipXPosition;
 	boolean superShot;
 	boolean areAliensGoingRight = true;
 	long startTimer;
+	long timerForAliensShot;
 	boolean bossSpawned = false;
 
 	@Override
@@ -31,6 +34,8 @@ public class ComponentsScreen implements Screen {
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
 		lasersShot = new ArrayList<Laser>();
+		xIndexesOfAliensWhichCanShoot = new ArrayList<Integer>();
+		yIndexesOfAliensWhichCanShoot = new ArrayList<Integer>();
 		alien = new Aliens();
 		alien.createNewAliens();
 		wall = new Wall();
@@ -39,9 +44,8 @@ public class ComponentsScreen implements Screen {
 		boss = new Boss();
 		areAliensGoingRight = true;
 		startTimer = System.currentTimeMillis();
+		timerForAliensShot=System.currentTimeMillis();
 	}
-
-	// create a timer to launch a new boss every ~30s.
 	@Override
 	public void render(float delta) {
 		// System.out.println(delta);
@@ -64,6 +68,7 @@ public class ComponentsScreen implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
+		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		isBossOutOfBounds();
 		alien.showAliens(this.batch);
 		wall.display(batch);
@@ -79,6 +84,30 @@ public class ComponentsScreen implements Screen {
 
 	}
 
+	private void timerForAliensShot(SpriteBatch batch2, float deltaTime) {
+		int start = (int) (timerForAliensShot / 1000) % 60;
+		int end = (int) (System.currentTimeMillis() / 1000) % 60;
+		if (end > start) {
+			if (end - start == 5) {
+				checkForAliensWhichCanShoot();
+				timerForAliensShot = System.currentTimeMillis();
+			}
+
+		} else {
+			if ((60 - start) + end == 5) {
+				
+				timerForAliensShot = System.currentTimeMillis();
+			}
+		}
+
+		
+	}
+
+	private void checkForAliensWhichCanShoot() {
+		alien.checkForLowestAliensAlive();
+		
+		
+	}
 	protected void isBossOutOfBounds() {
 		if (boss != null) {
 			if (boss.getBossX() < -100) {
