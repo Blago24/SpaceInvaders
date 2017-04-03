@@ -20,6 +20,7 @@ public class ComponentsScreen implements Screen {
 	Boss boss;
 
 	public ArrayList<Laser> lasersShot;
+	public ArrayList<Laser> aliensLasersShot;
 	public ArrayList<Integer> xIndexesOfAliensWhichCanShoot;
 	public ArrayList<Integer> yIndexesOfAliensWhichCanShoot;
 	float currentShipXPosition;
@@ -35,6 +36,7 @@ public class ComponentsScreen implements Screen {
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
 		lasersShot = new ArrayList<Laser>();
+		aliensLasersShot = new ArrayList<Laser>();
 		xIndexesOfAliensWhichCanShoot = new ArrayList<Integer>();
 		yIndexesOfAliensWhichCanShoot = new ArrayList<Integer>();
 		alien = new Aliens();
@@ -71,7 +73,8 @@ public class ComponentsScreen implements Screen {
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
 
-		// timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
+		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
+		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
 		alien.showAliens(this.batch);
 		wall.display(batch);
@@ -91,14 +94,14 @@ public class ComponentsScreen implements Screen {
 		int start = (int) (timerForAliensShot / 1000) % 60;
 		int end = (int) (System.currentTimeMillis() / 1000) % 60;
 		if (end > start) {
-			if (end - start == 5) {
+			if (end - start == 7) {
 				checkForAliensWhichCanShoot();
 				timerForAliensShot = System.currentTimeMillis();
 			}
 
 		} else {
-			if ((60 - start) + end == 5) {
-
+			if ((60 - start) + end == 7) {
+				checkForAliensWhichCanShoot();
 				timerForAliensShot = System.currentTimeMillis();
 			}
 		}
@@ -106,9 +109,13 @@ public class ComponentsScreen implements Screen {
 	}
 
 	private void checkForAliensWhichCanShoot() {
-		alien.checkForLowestAliensAlive();
+		alien.checkForLowestAliensAlive(xIndexesOfAliensWhichCanShoot , yIndexesOfAliensWhichCanShoot);
 		int rand = randomIndex();
-
+		float currentAlienX=alien.getAliensCoordinatesY(xIndexesOfAliensWhichCanShoot.get(rand),yIndexesOfAliensWhichCanShoot.get(rand));
+		float currentAlienY=alien.getAliensCoordinatesY(xIndexesOfAliensWhichCanShoot.get(rand),yIndexesOfAliensWhichCanShoot.get(rand));
+		laser.aliensNewLaser(aliensLasersShot, currentAlienX, currentAlienY);
+		System.out.println("RAND"+rand);
+		
 	}
 
 	private int randomIndex() {

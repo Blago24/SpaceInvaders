@@ -1,5 +1,7 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -114,13 +116,15 @@ public class Aliens {
 
 	}
 
-	protected void checkForLowestAliensAlive() {
+	protected void checkForLowestAliensAlive(ArrayList<Integer> xIndexesOfAliensWhichCanShoot ,ArrayList<Integer> yIndexesOfAliensWhichCanShoot ) {
 
-		for (int i = aliensCoordinatesX.length; i > 0; i--) {
-			for (int j = 0; j < aliensCoordinatesX[0].length; j++) {
+		for (int i = 0; i < aliensCoordinatesX.length; i++) {
+			for (int j = aliensCoordinatesX[0].length - 1; j > 0; j--) {
 				if (aliensValue[i][j] == 1) {
-					component.xIndexesOfAliensWhichCanShoot.add(i);
-					component.yIndexesOfAliensWhichCanShoot.add(j);
+					
+					xIndexesOfAliensWhichCanShoot.add(i);
+					yIndexesOfAliensWhichCanShoot.add(j);
+					System.out.println("X-" + i + "Y-" + j);
 					break;
 				}
 			}

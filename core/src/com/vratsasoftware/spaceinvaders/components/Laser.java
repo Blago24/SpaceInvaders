@@ -39,7 +39,34 @@ public class Laser {
 	public void update(float delta) {
 		this.laserY += LASER_MOVEMENT_SPEED;
 	}
+	public void updateForAliensLaser(float delta) {
+		this.laserY -= LASER_MOVEMENT_SPEED;
+	}
+	protected void aliensNewLaser(ArrayList<Laser> aliensLasersShot , float currentAlienX ,float currentAlienY){
+		aliensLasersShot.add(new Laser((int) currentAlienX,(int) currentAlienY));
 
+		
+	}
+	protected void displayAliensLasersShot(ArrayList<Laser> aliensLasersShot, SpriteBatch batch) {
+		int index = 0;
+		// we have to make this checks only if we have launched laser/s
+		if (aliensLasersShot.size() > 0) {
+			for (Laser alienLaser : aliensLasersShot) {
+
+				batch.draw(alienLaser.getLaser(), alienLaser.getLaserX() + 20, alienLaser.getLaserY() + 60, 5, 20);
+
+				if (aliensLasersShot.get(index).getLaserY() > Gdx.graphics.getHeight()) {
+					// The height is more than the window height
+					resizeTheArrayList(aliensLasersShot);
+					break;
+
+				}
+				index++;
+				alienLaser.updateForAliensLaser(Gdx.graphics.getDeltaTime() + 20);
+			}
+		}
+
+	}
 	protected void shootNewLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 		if (laserShot()) {
 			if (lasersShot.size() < 3) {
