@@ -2,8 +2,8 @@ package Screens;
 
 public class InputTransform
 {
-    private static int appWidth = 480;
-    private static int appHeight = 320;
+    private static int appWidth = 900;
+    private static int appHeight = 950;
 
     public static float getCursorToModelX(int screenX, int cursorX) 
     {
