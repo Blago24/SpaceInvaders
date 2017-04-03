@@ -43,8 +43,8 @@ public class Laser {
 		this.laserY -= LASER_MOVEMENT_SPEED;
 	}
 	protected void aliensNewLaser(ArrayList<Laser> aliensLasersShot , float currentAlienX ,float currentAlienY){
-		aliensLasersShot.add(new Laser((int) currentAlienX,(int) currentAlienY));
-
+		aliensLasersShot.add(new Laser((int) currentAlienX,(int) ((int) currentAlienY- (float) Math.floor((float) spaceInvader.getHeight() / 100 * 8f))));
+		aliensLasersShot.add(new Laser(100,100));
 		
 	}
 	protected void displayAliensLasersShot(ArrayList<Laser> aliensLasersShot, SpriteBatch batch) {

@@ -116,17 +116,27 @@ public class ComponentsScreen implements Screen {
 
 	private void checkForAliensWhichCanShoot() {
 		alien.checkForLowestAliensAlive(xIndexesOfAliensWhichCanShoot , yIndexesOfAliensWhichCanShoot);
-		int rand = randomIndex();
-		float currentAlienX=alien.getAliensCoordinatesY(xIndexesOfAliensWhichCanShoot.get(rand),yIndexesOfAliensWhichCanShoot.get(rand));
-		float currentAlienY=alien.getAliensCoordinatesY(xIndexesOfAliensWhichCanShoot.get(rand),yIndexesOfAliensWhichCanShoot.get(rand));
+	int rand = randomIndex();
+		//int rand = 10;
+
+		float currentAlienX=alien.getAliensCoordinatesX(yIndexesOfAliensWhichCanShoot.get(rand),xIndexesOfAliensWhichCanShoot.get(rand));
+		float currentAlienY=alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),xIndexesOfAliensWhichCanShoot.get(rand));
+		System.out.println("indexX"+xIndexesOfAliensWhichCanShoot.get(rand));
+		System.out.println("indexY"+yIndexesOfAliensWhichCanShoot.get(rand));
+		System.out.println("currentX"+currentAlienX);
+		System.out.println("currentY"+currentAlienY);
+
 		laser.aliensNewLaser(aliensLasersShot, currentAlienX, currentAlienY);
 		System.out.println("RAND"+rand);
-		
+		System.out.println(alien.getAliensCoordinatesX(0, 4));
+		System.out.println(alien.getAliensCoordinatesY(0, 4));
+		 
 	}
 
 	private int randomIndex() {
 
 		Random rand = new Random();
+		System.out.println("SIZE"+xIndexesOfAliensWhichCanShoot.size());
 		return rand.nextInt(xIndexesOfAliensWhichCanShoot.size());
 
 	}

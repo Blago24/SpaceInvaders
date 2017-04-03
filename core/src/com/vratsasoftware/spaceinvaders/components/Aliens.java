@@ -117,14 +117,20 @@ public class Aliens {
 	}
 
 	protected void checkForLowestAliensAlive(ArrayList<Integer> xIndexesOfAliensWhichCanShoot ,ArrayList<Integer> yIndexesOfAliensWhichCanShoot ) {
+//System.out.println("X+++++"+aliensCoordinatesX[0].length);
 
-		for (int i = 0; i < aliensCoordinatesX.length; i++) {
-			for (int j = aliensCoordinatesX[0].length - 1; j > 0; j--) {
-				if (aliensValue[i][j] == 1) {
+			
+				
+		for (int i = 0; i < aliensCoordinatesX[0].length; i++) {
+			for (int j = aliensCoordinatesX.length - 1; j >=0; j--) {
+		
+
+				if (aliensValue[j][i] == 1) {
 					
 					xIndexesOfAliensWhichCanShoot.add(i);
 					yIndexesOfAliensWhichCanShoot.add(j);
 					System.out.println("X-" + i + "Y-" + j);
+					
 					break;
 				}
 			}
@@ -232,6 +238,7 @@ public class Aliens {
 		for (int i = 0; i < this.aliensCoordinatesX.length; i++) {
 			for (int j = 0; j < this.aliensCoordinatesX[0].length; j++) {
 				if ((x == i) && (y == j)) {
+					System.out.println("X-"+x+"Y-"+y+"    "+this.aliensCoordinatesX[i][j]);
 					return this.aliensCoordinatesX[i][j];
 				}
 			}
