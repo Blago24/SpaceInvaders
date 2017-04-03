@@ -1,6 +1,7 @@
 package com.vratsasoftware.spaceinvaders.components;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.Gdx;
@@ -44,8 +45,9 @@ public class ComponentsScreen implements Screen {
 		boss = new Boss();
 		areAliensGoingRight = true;
 		startTimer = System.currentTimeMillis();
-		timerForAliensShot=System.currentTimeMillis();
+		timerForAliensShot = System.currentTimeMillis();
 	}
+
 	@Override
 	public void render(float delta) {
 		// System.out.println(delta);
@@ -68,17 +70,18 @@ public class ComponentsScreen implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
+
+		// timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		isBossOutOfBounds();
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
 		checkForCollisionWithTheBoss();
-		if(boss!=null){
-			System.out.println( boss.getBossX());
+		if (boss != null) {
+			System.out.println(boss.getBossX());
 		}
-		 
+
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
@@ -95,19 +98,26 @@ public class ComponentsScreen implements Screen {
 
 		} else {
 			if ((60 - start) + end == 5) {
-				
+
 				timerForAliensShot = System.currentTimeMillis();
 			}
 		}
 
-		
 	}
 
 	private void checkForAliensWhichCanShoot() {
 		alien.checkForLowestAliensAlive();
-		
-		
+		int rand = randomIndex();
+
 	}
+
+	private int randomIndex() {
+
+		Random rand = new Random();
+		return rand.nextInt(xIndexesOfAliensWhichCanShoot.size());
+
+	}
+
 	protected void isBossOutOfBounds() {
 		if (boss != null) {
 			if (boss.getBossX() < -100) {
@@ -121,29 +131,31 @@ public class ComponentsScreen implements Screen {
 		int laserY = 0;
 
 		boolean killed = false;
-		if (lasersShot.size() > 0) {
-			for (int x = 0; x < lasersShot.size(); x++) {
+		if (boss != null) {
+			if (lasersShot.size() > 0) {
+				for (int x = 0; x < lasersShot.size(); x++) {
 
-				laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
-				laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
-				int bossX = boss.getBossX();
-				int bossY = boss.getBossY();
+					laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
+					laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
+					int bossX = boss.getBossX();
+					int bossY = boss.getBossY();
 
-				for (int bossSize = 1; bossSize <= boss.getBoss().getHeight() / 100 + 10; bossSize++) {
-					if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 70) && (laserX <= (bossX + 60))) {
-						boss.setBossValue(0);
+					for (int bossSize = 1; bossSize <= boss.getBoss().getHeight() / 100 + 10; bossSize++) {
+						if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 50) && (laserX <= (bossX + 60))) {
+							boss.setBossValue(0);
 
-						killed = true;
-						if (lasersShot.size() == 1) {
-							lasersShot.clear();
-						} else {
-							lasersShot.remove(x);
+							killed = true;
+							if (lasersShot.size() == 1) {
+								lasersShot.clear();
+							} else {
+								lasersShot.remove(x);
+							}
 						}
 					}
-				}
-				if (killed) {
-					killed = false;
-					break;
+					if (killed) {
+						killed = false;
+						break;
+					}
 				}
 			}
 		}
@@ -179,7 +191,7 @@ public class ComponentsScreen implements Screen {
 	private void superShot() {
 		if (this.superShot) {
 			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
-				// this.superShot = false;
+				//this.superShot = false;
 			}
 
 		}
