@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Ship {
@@ -30,7 +31,13 @@ public class Ship {
 		keepShipInBounds();
 		moveShip();
 	}
-
+	protected void shipFlashing(SpriteBatch batch){
+		
+	}
+	protected void drawShip(SpriteBatch batch){
+		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 50, 50);
+		
+	}
 	private void moveShip() {
 
 		if (checkForDirection() == 1) {

@@ -53,8 +53,8 @@ public class Laser {
 			for (Laser alienLaser : aliensLasersShot) {
 
 				batch.draw(alienLaser.getLaser(), alienLaser.getLaserX() + 20, alienLaser.getLaserY() + 60, 5, 20);
-
-				if (aliensLasersShot.get(index).getLaserY() > Gdx.graphics.getHeight()) {
+System.out.println("AL"+alienLaser.getLaserY());
+				if (aliensLasersShot.get(index).getLaserY() < -100) {
 					// The height is more than the window height
 					resizeTheArrayList(aliensLasersShot);
 					break;

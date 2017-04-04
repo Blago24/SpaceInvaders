@@ -12,7 +12,7 @@ import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
 import Screens.MenuScreen;
 
-public class ComponentsScreen extends SpaceInvaders implements Screen  {
+public class ComponentsScreen extends SpaceInvaders implements Screen {
 
 	Ship ship;
 	Laser laser;
@@ -34,10 +34,12 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 	boolean bossSpawned = false;
 	SpaceInvaders si = new SpaceInvaders();
 	Game game;
-	public ComponentsScreen(Game game) { 
-			this.game = game;
-			
+
+	public ComponentsScreen(Game game) {
+		this.game = game;
+
 	}
+
 	@Override
 	public void show() {
 		ship = new Ship();
@@ -70,7 +72,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 	private void update(SpriteBatch batch) {
 		batch.begin();
 		background.showBackground(batch);
-		batch.draw(ship.getShipTexture(), ship.getPlayerX(), ship.getPlayerY(), 50, 50);
 		if (alien.checkForWin()) {
 			System.exit(0);
 			// break;
@@ -80,7 +81,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-
+		ship.drawShip(batch);
 		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
@@ -90,9 +91,9 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 		checkForCollision();
 		checkForCollisionWithTheBoss();
 		if (boss != null) {
-			System.out.println(boss.getBossX());
+			// System.out.println(boss.getBossX());
 		}
-
+		checkForCollisionWithAliensShot();
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
@@ -123,28 +124,32 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 	}
 
 	private void checkForAliensWhichCanShoot() {
-		alien.checkForLowestAliensAlive(xIndexesOfAliensWhichCanShoot , yIndexesOfAliensWhichCanShoot);
-	int rand = randomIndex();
-		//int rand = 10;
+		alien.checkForLowestAliensAlive(xIndexesOfAliensWhichCanShoot, yIndexesOfAliensWhichCanShoot);
+		int rand = randomIndex();
+		// int rand = 10;
 
-		float currentAlienX=alien.getAliensCoordinatesX(yIndexesOfAliensWhichCanShoot.get(rand),xIndexesOfAliensWhichCanShoot.get(rand));
-		float currentAlienY=alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),xIndexesOfAliensWhichCanShoot.get(rand));
-		System.out.println("indexX"+xIndexesOfAliensWhichCanShoot.get(rand));
-		System.out.println("indexY"+yIndexesOfAliensWhichCanShoot.get(rand));
-		System.out.println("currentX"+currentAlienX);
-		System.out.println("currentY"+currentAlienY);
+		float currentAlienX = alien.getAliensCoordinatesX(yIndexesOfAliensWhichCanShoot.get(rand),
+				xIndexesOfAliensWhichCanShoot.get(rand));
+		float currentAlienY = alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),
+				xIndexesOfAliensWhichCanShoot.get(rand));
+		// System.out.println("indexX" +
+		// xIndexesOfAliensWhichCanShoot.get(rand));
+		// System.out.println("indexY" +
+		// yIndexesOfAliensWhichCanShoot.get(rand));
+		// System.out.println("currentX" + currentAlienX);
+		// System.out.println("currentY" + currentAlienY);
 
 		laser.aliensNewLaser(aliensLasersShot, currentAlienX, currentAlienY);
-		System.out.println("RAND"+rand);
-		System.out.println(alien.getAliensCoordinatesX(0, 4));
-		System.out.println(alien.getAliensCoordinatesY(0, 4));
-		 
+		// System.out.println("RAND" + rand);
+		// System.out.println(alien.getAliensCoordinatesX(0, 4));
+		// System.out.println(alien.getAliensCoordinatesY(0, 4));
+
 	}
 
 	private int randomIndex() {
 
 		Random rand = new Random();
-		System.out.println("SIZE"+xIndexesOfAliensWhichCanShoot.size());
+		// System.out.println("SIZE" + xIndexesOfAliensWhichCanShoot.size());
 		return rand.nextInt(xIndexesOfAliensWhichCanShoot.size());
 
 	}
@@ -155,6 +160,48 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 				boss = null;
 			}
 		}
+	}
+
+	protected void isAlienShotOutOfBound() {
+
+	}
+
+	private void checkForCollisionWithAliensShot() {
+		int aliensLaserX = 0;
+		int aliensLaserY = 0;
+
+		boolean killed = false;
+
+		if (aliensLasersShot.size() > 0) {
+			for (int x = 0; x < aliensLasersShot.size(); x++) {
+
+				aliensLaserX = checkTheLaserCoordinatesX(aliensLasersShot, batch, x);
+				aliensLaserY = checkTheLaserCoordinatesY(aliensLasersShot, batch, x);
+				int shipX = ship.getPlayerX();
+				int shipY = ship.getPlayerY();
+				System.out.println("SHIPX"+shipX);
+				System.out.println("SHIPY"+shipY);
+				for (int shipSize = 1; shipSize <= ship.getShipTexture().getHeight() / 100 + 10; shipSize++) {
+					if ((aliensLaserY == (shipY - shipSize)) && (aliensLaserX >= shipX - 50)
+							&& (aliensLaserX <= (shipX + 60))) {
+						
+						System.out.println("afajggagafagfggfkfgakfgakfgakfgagakgafkagfgak");
+						
+						killed = true;
+						if (aliensLasersShot.size() == 1) {
+							aliensLasersShot.clear();
+						} else {
+							aliensLasersShot.remove(x);
+						}
+					}
+				}
+				if (killed) {
+					killed = false;
+					break;
+				}
+			}
+		}
+
 	}
 
 	private void checkForCollisionWithTheBoss() {
@@ -172,7 +219,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 					int bossY = boss.getBossY();
 
 					for (int bossSize = 1; bossSize <= boss.getBoss().getHeight() / 100 + 10; bossSize++) {
-						if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 50) && (laserX <= (bossX + 60))) {
+						if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 20) && (laserX <= (bossX + 90))) {
 							boss.setBossValue(0);
 
 							killed = true;
@@ -222,7 +269,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen  {
 	private void superShot() {
 		if (this.superShot) {
 			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
-				//this.superShot = false;
+				// this.superShot = false;
 			}
 
 		}
