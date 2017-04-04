@@ -132,10 +132,10 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	}
 
 	private boolean isPlayButtonPressed(float pointerX, float pointerY) {
-		int buttonTopY = 480;
-		int buttonBottomY = 400;
-		int buttonLeftX = 450;
-		int buttonRightX = 520;
+		int buttonTopY = 520;
+		int buttonBottomY = 350;
+		int buttonLeftX = 400;
+		int buttonRightX = 530;
 
 		if ((pointerY >= buttonBottomY && pointerY <= buttonTopY)
 				&& (pointerX >= buttonLeftX && pointerX <= buttonRightX)) {
