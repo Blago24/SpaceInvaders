@@ -102,7 +102,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 				return true;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	private void openGameScreen() {

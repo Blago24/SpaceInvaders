@@ -16,6 +16,8 @@ public class Ship {
 
 	private Vector2 position;
 	private Texture ship;
+	private Texture live;
+	private int lives;
 
 	//initialize initial values so that the ship would be centered; 
 	
@@ -25,8 +27,18 @@ public class Ship {
 	public Ship() {
 		position = new Vector2(playerX, playerY);
 		ship = new Texture("images//spaceship.jpg");
+		live =new Texture("images//pixel_heart.png");
+		lives=3;
 	}
-
+	public void lowerTheLives(){
+		setLives(getLives()-1);
+	}
+	public int getLives() {
+		return lives;
+	}
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
 	public void update(float delta) {
 		keepShipInBounds();
 		moveShip();
@@ -36,6 +48,23 @@ public class Ship {
 	}
 	protected void drawShip(SpriteBatch batch){
 		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 50, 50);
+		
+	}
+	protected boolean chechIfLose(){
+		if(getLives()==0){
+			return true;
+		}
+		return false;
+	}	
+	protected void drawLives(SpriteBatch batch){
+		if(getLives()>0){
+			int distance = 0;
+			for (int i = 0; i < getLives(); i++) {
+				batch.draw(getLiveTexture(), Gdx.graphics.getWidth()-200-distance,  Gdx.graphics.getHeight()-50, 50, 50);
+				distance-=50;
+			}
+		}
+		
 		
 	}
 	private void moveShip() {
@@ -90,4 +119,8 @@ public class Ship {
 	public int getPlayerY() {
 		return playerY;
 	}
+	public Texture getLiveTexture() {
+		return live;
+	}
+	
 }

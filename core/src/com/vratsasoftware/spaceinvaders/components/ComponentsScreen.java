@@ -74,7 +74,9 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		background.showBackground(batch);
 		if (alien.checkForWin()) {
 			System.exit(0);
-
+		}
+		if(ship.chechIfLose()){
+			System.exit(0);
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		superShot();
@@ -96,7 +98,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 			// System.out.println(boss.getBossX());
 		}
 		checkForCollisionWithAliensShot();
-
+		ship.drawLives(batch);
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
@@ -136,19 +138,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		float currentAlienY = alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),
 				xIndexesOfAliensWhichCanShoot.get(rand));
 
-		// System.out.println("indexX" +
-		// xIndexesOfAliensWhichCanShoot.get(rand));
-		// System.out.println("indexY" +
-		// yIndexesOfAliensWhichCanShoot.get(rand));
-		// System.out.println("currentX" + currentAlienX);
-		// System.out.println("currentY" + currentAlienY);
-
 		laser.aliensNewLaser(aliensLasersShot, currentAlienX, currentAlienY);
-		// System.out.println("RAND" + rand);
-		// System.out.println(alien.getAliensCoordinatesX(0, 4));
-		// System.out.println(alien.getAliensCoordinatesY(0, 4));
-
-
+	
 	}
 
 	private int randomIndex() {
@@ -186,10 +177,10 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 				int shipY = ship.getPlayerY();
 				System.out.println("SHIPX"+shipX);
 				System.out.println("SHIPY"+shipY);
-				for (int shipSize = 1; shipSize <= ship.getShipTexture().getHeight() / 100 + 10; shipSize++) {
+				for (int shipSize = 1; shipSize <= ship.getShipTexture().getHeight() / 100+10; shipSize++) {
 					if ((aliensLaserY == (shipY - shipSize)) && (aliensLaserX >= shipX - 50)
-							&& (aliensLaserX <= (shipX + 60))) {
-						
+							&& (aliensLaserX <= (shipX + 50))) {
+						ship.lowerTheLives();
 						System.out.println("afajggagafagfggfkfgakfgakfgakfgagakgafkagfgak");
 						
 						killed = true;
