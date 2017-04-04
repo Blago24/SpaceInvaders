@@ -74,14 +74,15 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		background.showBackground(batch);
 		if (alien.checkForWin()) {
 			System.exit(0);
-			// break;
+
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
-		// System.out.println(superShot);
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
+
 		ship.drawShip(batch);
+
 		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
@@ -91,9 +92,11 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		checkForCollision();
 		checkForCollisionWithTheBoss();
 		if (boss != null) {
+
 			// System.out.println(boss.getBossX());
 		}
 		checkForCollisionWithAliensShot();
+
 		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
@@ -132,6 +135,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 				xIndexesOfAliensWhichCanShoot.get(rand));
 		float currentAlienY = alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),
 				xIndexesOfAliensWhichCanShoot.get(rand));
+
 		// System.out.println("indexX" +
 		// xIndexesOfAliensWhichCanShoot.get(rand));
 		// System.out.println("indexY" +
@@ -144,12 +148,13 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		// System.out.println(alien.getAliensCoordinatesX(0, 4));
 		// System.out.println(alien.getAliensCoordinatesY(0, 4));
 
+
 	}
 
 	private int randomIndex() {
 
 		Random rand = new Random();
-		// System.out.println("SIZE" + xIndexesOfAliensWhichCanShoot.size());
+
 		return rand.nextInt(xIndexesOfAliensWhichCanShoot.size());
 
 	}
@@ -231,6 +236,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 						}
 					}
 					if (killed) {
+
 						killed = false;
 						break;
 					}
