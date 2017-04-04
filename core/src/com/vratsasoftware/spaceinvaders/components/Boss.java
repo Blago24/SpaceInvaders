@@ -33,7 +33,7 @@ public class Boss {
 		bossSound.play();
 
 	}
-
+	
 	public void update(float delta, SpriteBatch batch) {
 		if (isBossAlive()) {
 			batch.draw(boss, bossX, bossY, bossHeight, bossWidth);

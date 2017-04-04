@@ -217,7 +217,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 					int bossY = boss.getBossY();
 
 					for (int bossSize = 1; bossSize <= boss.getBoss().getHeight() / 100 + 10; bossSize++) {
-						if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 20) && (laserX <= (bossX + 90))) {
+						if ((laserY == (bossY - bossSize)) && (laserX >= bossX - 20) && (laserX <= (bossX + 90))&& boss.isBossAlive()) {
 							boss.setBossValue(0);
 							playerPoints += 100;
 							killed = true;
