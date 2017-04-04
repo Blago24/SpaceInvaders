@@ -89,11 +89,10 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	}
 
 	private boolean moveBackground(SpriteBatch batch) {
-
+		//TODO fix the movement of the background;
 		if (firstBgY > 888) {
 			return true;
 		} else {
-
 			return false;
 		}
 
