@@ -12,7 +12,8 @@ public class GameScreen implements Screen {
 	public SpaceInvaders game; 
 	Texture texture;
 	private Ship ship;
-	 
+	SpaceInvaders si = new SpaceInvaders();
+	
 	public GameScreen(SpaceInvaders game) {
 		this.game = game;
 		texture = new Texture("images//spaceship.jpg");

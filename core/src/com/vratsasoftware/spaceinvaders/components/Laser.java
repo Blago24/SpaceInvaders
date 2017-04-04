@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,11 +21,13 @@ public class Laser {
 	private int laserX;
 	private int laserY;
 
+	private Sound shootSound;
+
 	public Laser(int currentPosition) {
 		this.laserX = currentPosition;
-
 		position = new Vector2(laserX, laserY);
 		laser = new Texture("images//laser.png");
+		shootSound = Gdx.audio.newSound(Gdx.files.local("assets//shoot.ogg"));
 
 	}
 
@@ -39,26 +42,27 @@ public class Laser {
 	public void update(float delta) {
 		this.laserY += LASER_MOVEMENT_SPEED;
 	}
+
 	public void updateForAliensLaser(float delta) {
 		this.laserY -= LASER_MOVEMENT_SPEED;
 	}
-	protected void aliensNewLaser(ArrayList<Laser> aliensLasersShot , float currentAlienX ,float currentAlienY){
-		aliensLasersShot.add(new Laser((int) currentAlienX,(int) ((int) currentAlienY- (float) Math.floor((float) spaceInvader.getHeight() / 100 * 8f))));
-		
+
+	protected void aliensNewLaser(ArrayList<Laser> aliensLasersShot, float currentAlienX, float currentAlienY) {
+		aliensLasersShot.add(new Laser((int) currentAlienX,
+				(int) ((int) currentAlienY - (float) Math.floor((float) spaceInvader.getHeight() / 100 * 8f))));
+
 	}
+
 	protected void displayAliensLasersShot(ArrayList<Laser> aliensLasersShot, SpriteBatch batch) {
 		int index = 0;
 		// we have to make this checks only if we have launched laser/s
 		if (aliensLasersShot.size() > 0) {
 			for (Laser alienLaser : aliensLasersShot) {
-
 				batch.draw(alienLaser.getLaser(), alienLaser.getLaserX() + 20, alienLaser.getLaserY() + 60, 5, 20);
-
 				if (aliensLasersShot.get(index).getLaserY() > Gdx.graphics.getHeight()) {
 					// The height is more than the window height
 					resizeTheArrayList(aliensLasersShot);
 					break;
-
 				}
 				index++;
 				alienLaser.updateForAliensLaser(Gdx.graphics.getDeltaTime() + 20);
@@ -66,12 +70,13 @@ public class Laser {
 		}
 
 	}
+
 	protected void shootNewLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 		if (laserShot()) {
 			if (lasersShot.size() < 3) {
-
 				currentShipXPosition = ship.getPlayerX();
 				lasersShot.add(new Laser((int) currentShipXPosition));
+				shootSound.play();
 
 			}
 		}
@@ -81,7 +86,7 @@ public class Laser {
 	protected boolean shootSuperLaser(ArrayList<Laser> lasersShot, float currentShipXPosition, Ship ship) {
 
 		if (superlaserShot()) {
-			
+
 			currentShipXPosition = ship.getPlayerX();
 			int yPosition = LASER_MOVEMENT_SPEED;
 			for (int i = 0; i < 5; i++) {

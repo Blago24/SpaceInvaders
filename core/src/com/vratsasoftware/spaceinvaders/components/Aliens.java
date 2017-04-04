@@ -3,6 +3,7 @@ package com.vratsasoftware.spaceinvaders.components;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -26,6 +27,9 @@ public class Aliens {
 
 	private Vector2 aliensPosition;
 	private Texture alien;
+	
+	private Sound alienKilledSound;
+	
 	private int[][] aliensValue;
 
 	private int alienWidth = (int) ((int) SpaceInvaders.SCREEN_WIDTH * 0.065f);
@@ -41,7 +45,7 @@ public class Aliens {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
 		aliensValue = new int[ALIENS_ROWS][ALIENS_PER_ROW];
 		alien = new Texture("images//alien.png");
-
+		alienKilledSound = Gdx.audio.newSound(Gdx.files.local("assets//invaderkilled.ogg"));
 	}
 
 	// TODO Try adding an animation to the alien
@@ -49,7 +53,6 @@ public class Aliens {
 	protected void showAliens(SpriteBatch batch) {
 
 		float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 1000 * 1.2f);
-
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[0].length; j++) {
 				// check if the alien is alive
@@ -288,6 +291,8 @@ public class Aliens {
 	}
 
 	protected void killAlien(int x, int y) {
+		
+		alienKilledSound.play();
 		aliensValue[x][y] = 0;
 	}
 

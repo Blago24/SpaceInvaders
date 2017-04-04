@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -17,12 +19,19 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 
 	private float buttonX;
 	private float buttonY;
+	
+	private float highscoreX;
+	private float highscoreY; 
+	
 	private boolean displayScreen;
 
 	private SpriteBatch batch;
 	private Texture background;
 	private Texture playButton;
 	private Texture logo;
+	private Texture highscore;
+	
+	private Music menuMusic;
 	
 	private Vector2 logoCoordinates;
 
@@ -31,7 +40,6 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	public MenuScreen(Game game) {
 		this.game = game;
 		this.displayScreen = false;
-
 	}
 
 	@Override
@@ -39,10 +47,16 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		this.background = new Texture("images//backgr.png");
 		this.playButton = new Texture("images//play-button.png");
 		this.logo = new Texture("images//vsc-logo.png");
+		this.highscore = new Texture("images//highscore.png");
 		this.batch = new SpriteBatch();
 		this.logoCoordinates = new Vector2(0,0);
 		buttonX = (this.WIDTH / 2) - (playButton.getWidth() / 2 - 75);
 		buttonY = this.HEIGHT / 2 - 135;
+		highscoreX = ((this.WIDTH / 2) - (highscore.getWidth() / 2 - 205));
+		highscoreY = this.HEIGHT / 2 - 100;
+		menuMusic = Gdx.audio.newMusic(Gdx.files.local("assets//backgroundMusic.ogg"));
+		menuMusic.setLooping(true);
+		menuMusic.play();
 		Gdx.input.setInputProcessor(this);
 		render(Gdx.graphics.getDeltaTime());
 	}
@@ -52,6 +66,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		batch.begin();
 		batch.draw(background, -30, 0, this.WIDTH, this.HEIGHT);
 		batch.draw(playButton, buttonX, buttonY, 150, 150);
+		batch.draw(highscore, highscoreX, highscoreY, 75, 75);
 		animateLogo(this.batch);
 		if (displayScreen) {
 			batch.dispose();
@@ -60,10 +75,8 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	}
 
 	private void animateLogo(SpriteBatch batch2) {
-		
-		
 		batch.draw(logo, logoCoordinates.x, logoCoordinates.y, this.WIDTH, this.HEIGHT);
-		logoCoordinates.y += 2.5;
+		logoCoordinates.y += 5; //2.5;
 	}
 
 	@Override
