@@ -102,15 +102,7 @@ System.out.println("AL"+alienLaser.getLaserY());
 		return false;
 	}
 
-	private boolean checkTheTimer() {
-		long newTime = System.nanoTime();
-		System.out.println("s=" + startTime);
-		System.out.println("n=" + newTime);
-		if (newTime - startTime > 1000) {
-			return true;
-		}
-		return false;
-	}
+	
 
 	protected void displayLasersShot(ArrayList<Laser> lasersShot, SpriteBatch batch) {
 		int index = 0;
@@ -182,9 +174,5 @@ System.out.println("AL"+alienLaser.getLaserY());
 	public int getLaserY() {
 		return this.laserY;
 	}
-
-	// killAlien() {
-	// alien.killAlien[0][2];
-	// }
 
 }
