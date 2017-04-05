@@ -1,5 +1,6 @@
 package Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
@@ -36,11 +36,15 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private int secondBgY;
 
 	private SpriteBatch batch;
+	Game game; 
+	public HighscoreScreen(Game game) {
+		this.game = game;
+	}
 
 	@Override
 	public void show() {
 
-		this.backButton = new Texture("images//back-button.png");
+		this.backButton = new Texture("images//backButton.png");
 		this.background = new Texture("images//highScoreBackground.png");
 		this.backgroundTwo = new Texture("images//highScoreBackground.png");
 		FileHandle fh = new FileHandle("assets//adrip1.fnt");
@@ -55,6 +59,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.firstBgY = 0;
 		this.secondBgX = SpaceInvaders.SCREEN_WIDTH - this.background.getWidth() / 2 - 20;
 		this.secondBgY = firstBgY - SpaceInvaders.SCREEN_HEIGHT;
+		Gdx.input.setInputProcessor(this);
 		
 
 	}
@@ -71,7 +76,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 			firstBgY--;
 			secondBgY--;
 		} else {
-			System.out.println(firstBgY);
+//			System.out.println(firstBgY);
 			firstBgY++;
 			secondBgY++;
 		}
@@ -79,7 +84,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		
 		batch.draw(backgroundTwo, secondBgX, secondBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		batch.draw(background, firstBgX, firstBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-		batch.draw(backButton, 59, 50, 50, 50);
+		batch.draw(backButton, 0, -100, 500, 20);
 		gameOverFont.draw(batch, text, SpaceInvaders.SCREEN_WIDTH/2 - 300, SpaceInvaders.SCREEN_HEIGHT - 250);
 		// working;
 		// TODO Implement the high score results;
@@ -103,6 +108,16 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
+		int backButtonTopY = 160;
+		int backButtonBottomY = 10;
+		int backButtonRightX = 240;
+		int backButtonLeftX = 10;
+		
+		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
+				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
+			game.setScreen(new MenuScreen(game));
+			this.dispose();
+		}
 		return false;
 	}
 

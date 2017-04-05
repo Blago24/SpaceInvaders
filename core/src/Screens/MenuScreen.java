@@ -97,7 +97,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	}
 
 	private void openHighscoreScreen() {
-		game.setScreen(new HighscoreScreen());
+		game.setScreen(new HighscoreScreen(game));
 	}
 
 	private boolean isHighScorePressed(float pointerX, float pointerY) {
@@ -150,7 +150,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		displayScreen = true;
+		
 		return false;
 	}
 
