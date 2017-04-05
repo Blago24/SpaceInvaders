@@ -22,6 +22,8 @@ import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 public class GameOverScreen implements Screen, InputProcessor {
 
 	private Texture replayButton;
+	private Texture pic; 
+	
 	private SpriteBatch batch;
 	private FreeTypeFontGenerator generator;
 	private BitmapFont gameOver;
@@ -69,12 +71,33 @@ public class GameOverScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		gameOver.draw(batch, "Game over!", 235, 700);
-		result.draw(batch, "Your result : " + this.score, 80, 550);
+		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : ", 80, 550);
+		
 		batch.draw(replayButton, 350, 150, 100, 100);
 		batch.end();
 	}
 
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
+		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
+		int replayButtonTopY= 270;
+		int replayButtonBottomY = 130;
+		int replayButtonRightX = 530;
+		int replayButtonLeftX = 340;
+		
+		System.out.println("PointerX: " + pointerX);
+		System.out.println("PointerY: " + pointerY);
+		System.out.println();
+
+		if ((pointerY >= replayButtonBottomY && pointerY <= replayButtonTopY)
+				&& (pointerX >= replayButtonLeftX && pointerX <= replayButtonRightX)) {
+			game.setScreen(new ComponentsScreen(game));
+			Gdx.input.setInputProcessor(null);
+		}
+		return false;
+	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -124,21 +147,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
-		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
-
-		System.out.println("PointerX: " + pointerX);
-		System.out.println("PointerY: " + pointerY);
-		System.out.println();
-
-//		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
-//				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
-//			
-//		}
-		return false;
-	}
+	
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
