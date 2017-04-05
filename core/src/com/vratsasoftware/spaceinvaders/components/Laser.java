@@ -77,7 +77,7 @@ public class Laser {
 		if (laserShot()) {
 			if (lasersShot.size() < 3) {
 				currentShipXPosition = ship.getPlayerX();
-				lasersShot.add(new Laser((int) currentShipXPosition));
+				lasersShot.add(new Laser((int) currentShipXPosition+25));
 				shootSound.play();
 
 			}

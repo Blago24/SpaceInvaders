@@ -1,5 +1,9 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,6 +14,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
+import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 import Screens.GameOverScreen;
 
@@ -55,6 +60,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		alien = new Aliens();
 		alien.createNewAliens();
 		wall = new Wall();
+		wall.createWalls();
 		background = new Background();
 		superShot = true;
 		boss = new Boss();
@@ -64,6 +70,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		playerPoints = 0;
 		points = new BitmapFont();
 		points.getData().setScale(4f);
+
 	}
 
 	@Override
@@ -80,6 +87,21 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		background.showBackground(batch);
 		if (alien.checkForWin()) {
 			game.setScreen(new GameOverScreen(game));
+			// CreateFile createFile = new CreateFile();
+			// createFile.createTheFile();
+			// s
+			System.out.println("WON");
+			PrintWriter writer = null;
+			try {
+				System.out.println("Won2");
+				writer = new PrintWriter("leaderBoard.txt", "UTF-8");
+				writer.println("The first line");
+				writer.println("The second line");
+				writer.close();
+			} catch (IOException e) {
+				System.out.println("ERROS");
+				// do something
+			}
 		}
 		if (ship.chechIfLose()) {
 			game.setScreen(new GameOverScreen(game));
@@ -88,16 +110,17 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-		ship.update(Gdx.graphics.getDeltaTime(),batch);
+		ship.update(Gdx.graphics.getDeltaTime(), batch);
 		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
+		checkForCollisionWithTheWalls();
 		alien.showAliens(this.batch);
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
 		checkForCollisionWithTheBoss();
-		System.out.println("POINTS=" + playerPoints);
+		// System.out.println("POINTS=" + playerPoints);
 		points.draw(batch, playerPoints + " ", 50, Gdx.graphics.getHeight() - 25);
 		if (boss != null) {
 
@@ -175,8 +198,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 				aliensLaserY = checkTheLaserCoordinatesY(aliensLasersShot, batch, x);
 				int shipX = ship.getPlayerX();
 				int shipY = ship.getPlayerY();
-				System.out.println("SHIPX" + shipX);
-				System.out.println("SHIPY" + shipY);
+				// System.out.println("SHIPX" + shipX);
+				// System.out.println("SHIPY" + shipY);
 				for (int shipSize = 1; shipSize <= ship.getShipTexture().getHeight() / 100 + 10; shipSize++) {
 					if ((aliensLaserY == (shipY - shipSize)) && (aliensLaserX >= shipX - 50)
 							&& (aliensLaserX <= (shipX + 50))) {
@@ -301,8 +324,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 						int alienX = alien.getAliensCoordinatesX(i, j);
 						int alienY = alien.getAliensCoordinatesY(i, j);
 
-						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 10; alienSize++) {
-							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize))
+						for (int alienSize = 5; alienSize <= alien.getAlienSizes().getHeight() / 10; alienSize++) {
+							if ((laserY == (alienY - alien.getAlienSizes().getHeight() + 100 + alienSize))
 									&& (laserX >= alienX - 30) && (laserX <= (alienX + 30))
 									&& alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
@@ -324,6 +347,90 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 			}
 		}
 		return false;
+
+	}
+
+	private void checkForCollisionWithTheWalls() {
+		int aliensLaserX = 0;
+		int aliensLaserY = 0;
+		int laserX = 0;
+		int laserY = 0;
+		boolean killed = false;
+		int wallY = wall.getWALL_Y();
+		for (int i = 0; i < wall.walls.length; i++) {
+
+			if (aliensLasersShot.size() > 0) {
+				for (int x = 0; x < aliensLasersShot.size(); x++) {
+
+					aliensLaserX = checkTheLaserCoordinatesX(aliensLasersShot, batch, x);
+					aliensLaserY = checkTheLaserCoordinatesY(aliensLasersShot, batch, x);
+					int wallX = (int) wall.getWallX(i);
+
+					System.out.println("wallX" + wallX);
+					System.out.println("jitsss" + wall.checkHowManyTimesWallIsHit(i));
+
+					// System.out.println("SHIPY" + wallY);
+					for (int wallSize = 1; wallSize <= wall.getWallNoHit().getHeight() / 100 + 10; wallSize++) {
+						if (aliensLaserY == (wallY + wallSize) && (aliensLaserX >= wallX - 70)
+								&& (aliensLaserX <= (wallX + 70)) && !wall.isWallDestroyed(i)) {
+							// TODO wall.isWallDestroyed(0) have to be different
+							wall.increaseTheNumberOfHits(i);
+							System.out.println("jitsss" + i + wall.checkHowManyTimesWallIsHit(i));
+							if (wall.checkHowManyTimesWallIsHit(i) > 6) {
+								wall.destroyWall(i);
+								break;
+							}
+							killed = true;
+							if (aliensLasersShot.size() == 1) {
+								aliensLasersShot.clear();
+							} else {
+								aliensLasersShot.remove(x);
+							}
+						}
+					}
+					if (killed) {
+						killed = false;
+						break;
+					}
+				}
+			}
+			if (lasersShot.size() > 0) {
+				for (int x = 0; x < lasersShot.size(); x++) {
+					int wallX = (int) wall.getWallX(i);
+
+					laserX = checkTheLaserCoordinatesX(lasersShot, batch, x);
+					laserY = checkTheLaserCoordinatesY(lasersShot, batch, x);
+					System.out.println("l" + laserY);
+					System.out.println("w" + wallY);
+					System.out.println("HEI" + wall.getWallNoHit().getHeight() / 100);
+					for (int wallSize = 1; wallSize <= wall.getWallNoHit().getHeight() / 100 + 10; wallSize++) {
+						System.out.println("laserY" + laserY + "  wall" + ((wallY + wallSize)));
+						System.out.println("X" + laserX);
+						if ((laserY == (wallY + wallSize)) && (laserX >= wallX - 70) && (laserX <= (wallX + 70))
+								&& !wall.isWallDestroyed(i)) {
+
+							wall.increaseTheNumberOfHits(i);
+							System.out.println("jitsss" + i + wall.checkHowManyTimesWallIsHit(i));
+							if (wall.checkHowManyTimesWallIsHit(i) > 6) {
+								wall.destroyWall(i);
+								break;
+							}
+							System.out.println("HITTTT");
+							killed = true;
+							if (lasersShot.size() == 1) {
+								lasersShot.clear();
+							} else {
+								lasersShot.remove(x);
+							}
+						}
+					}
+					if (killed) {
+						killed = false;
+						break;
+					}
+				}
+			}
+		}
 
 	}
 
