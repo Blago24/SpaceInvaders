@@ -88,9 +88,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
 		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-
-		ship.drawShip(batch);
-
+		ship.update(Gdx.graphics.getDeltaTime(),batch);
 		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
@@ -107,7 +105,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		}
 		checkForCollisionWithAliensShot();
 		ship.drawLives(batch);
-		ship.update(Gdx.graphics.getDeltaTime());
 		batch.end();
 
 	}

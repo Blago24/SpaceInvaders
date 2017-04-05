@@ -16,6 +16,14 @@ public class Ship {
 
 	private Vector2 position;
 	private Texture ship;
+	private Texture shipLeft;
+	public Texture getShipLeft() {
+		return shipLeft;
+	}
+	public Texture getShipRight() {
+		return shipRight;
+	}
+	private Texture shipRight;
 	private Texture live;
 	private int lives;
 
@@ -26,7 +34,9 @@ public class Ship {
 
 	public Ship() {
 		position = new Vector2(playerX, playerY);
-		ship = new Texture("images//spaceship.jpg");
+		ship = new Texture("images//spaceShip.png");
+		shipLeft= new Texture("images//spaceShip-left.png");
+		shipRight= new Texture("images//spaceShip-right.png");
 		live =new Texture("images//pixel_heart.png");
 		lives=3;
 	}
@@ -39,9 +49,14 @@ public class Ship {
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
-	public void update(float delta) {
+	
+	public void update(float delta,SpriteBatch batch) {
+		
 		keepShipInBounds();
-		moveShip();
+		if(!moveShip(batch)){
+		drawShip(batch);
+		}
+		
 	}
 	protected void shipFlashing(SpriteBatch batch){
 		
@@ -67,13 +82,19 @@ public class Ship {
 		
 		
 	}
-	private void moveShip() {
+	private boolean moveShip(SpriteBatch batch) {
 
 		if (checkForDirection() == 1) {
+			batch.draw(getShipLeft(), getPlayerX(), getPlayerY(), 50, 50);
+
 			moveLeft();
+			return true;
 		} else if (checkForDirection() == -1) {
+			batch.draw(getShipRight(), getPlayerX(), getPlayerY(), 50, 50);
 			moveRight();
+			return true;
 		}
+		return false;
 	}
 
 	private int checkForDirection() {
