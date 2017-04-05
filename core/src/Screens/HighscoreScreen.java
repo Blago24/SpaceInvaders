@@ -23,7 +23,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 
 	private FreeTypeFontGenerator generator;
 	private BitmapFont gameOverFont;
-	
 
 	private Texture backButton;
 	private Texture background;
@@ -36,7 +35,8 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private int secondBgY;
 
 	private SpriteBatch batch;
-	Game game; 
+	Game game;
+
 	public HighscoreScreen(Game game) {
 		this.game = game;
 	}
@@ -44,14 +44,13 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 
-		this.backButton = new Texture("images//backButton.png");
+		this.backButton = new Texture("images//backBtn.png");
 		this.background = new Texture("images//highScoreBackground.png");
 		this.backgroundTwo = new Texture("images//highScoreBackground.png");
-		FileHandle fh = new FileHandle("assets//adrip1.fnt");
-		this.generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf")); 
+		this.generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-	    parameter.size = 96;
-	    parameter.color = Color.CORAL;
+		parameter.size = 96;
+		parameter.color = Color.CORAL;
 		gameOverFont = generator.generateFont(parameter);
 		generator.dispose();
 		this.batch = new SpriteBatch();
@@ -60,7 +59,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.secondBgX = SpaceInvaders.SCREEN_WIDTH - this.background.getWidth() / 2 - 20;
 		this.secondBgY = firstBgY - SpaceInvaders.SCREEN_HEIGHT;
 		Gdx.input.setInputProcessor(this);
-		
 
 	}
 
@@ -71,21 +69,21 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		moveBackground(this.batch);
-		
+
 		if (moveBackground(this.batch)) {
 			firstBgY--;
 			secondBgY--;
 		} else {
-//			System.out.println(firstBgY);
+			// System.out.println(firstBgY);
 			firstBgY++;
 			secondBgY++;
 		}
-		
-		
+
 		batch.draw(backgroundTwo, secondBgX, secondBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		batch.draw(background, firstBgX, firstBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-		batch.draw(backButton, 0, -100, 500, 20);
-		gameOverFont.draw(batch, text, SpaceInvaders.SCREEN_WIDTH/2 - 300, SpaceInvaders.SCREEN_HEIGHT - 250);
+		
+		gameOverFont.draw(batch, text, SpaceInvaders.SCREEN_WIDTH / 2 - 300, SpaceInvaders.SCREEN_HEIGHT - 250);
+		batch.draw(backButton, 30, -80, 300, 300);
 		// working;
 		// TODO Implement the high score results;
 		// Would probably need to use a hash map
@@ -94,7 +92,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	}
 
 	private boolean moveBackground(SpriteBatch batch) {
-		//TODO fix the movement of the background;
+		// TODO fix the movement of the background;
 		if (firstBgY > 888) {
 			return true;
 		} else {
@@ -112,7 +110,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		int backButtonBottomY = 10;
 		int backButtonRightX = 240;
 		int backButtonLeftX = 10;
-		
+
 		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
 				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
 			game.setScreen(new MenuScreen(game));

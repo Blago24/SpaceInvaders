@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 
-import Screens.MenuScreen;
+import Screens.GameOverScreen;
 
 public class ComponentsScreen extends SpaceInvaders implements Screen {
 
@@ -45,7 +45,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 
 	@Override
 	public void show() {
-		ship = new Ship();
+		ship = new Ship(game);
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
 		lasersShot = new ArrayList<Laser>();
@@ -79,10 +79,10 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		batch.begin();
 		background.showBackground(batch);
 		if (alien.checkForWin()) {
-			System.exit(0);
+			game.setScreen(new GameOverScreen(game));
 		}
 		if (ship.chechIfLose()) {
-			System.exit(0);
+			game.setScreen(new GameOverScreen(game));
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		superShot();

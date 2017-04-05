@@ -4,14 +4,12 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.vratsasoftware.spaceinvaders.components.Aliens;
-import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 
 import Screens.MenuScreen;
 import States.GameStateManager;
@@ -55,6 +53,7 @@ public class SpaceInvaders extends Game {
 	public void create() {
 
 		setScreen(new MenuScreen(this));
+//		setScreen(new MenuScreen(this));
 		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
 		gsm = new GameStateManager();
 

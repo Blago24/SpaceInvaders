@@ -89,8 +89,10 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		//
 		if (isButtonPressed(pointerX, pointerY)) {
 			openGameScreen();
+			Gdx.input.setInputProcessor(null);
 		} else if (highscorePress(pointerX, pointerY)) {
 			openHighscoreScreen();
+			Gdx.input.setInputProcessor(null);
 		}
 
 		return false;
@@ -141,7 +143,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 				&& (pointerX >= buttonLeftX && pointerX <= buttonRightX)) {
 			return true;
 		}
-		return true;
+		return false;
 	}
 
 	private void openGameScreen() {

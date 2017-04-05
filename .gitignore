@@ -113,3 +113,9 @@ gradle-app.setting
 .DS_Store
 Thumbs.db
 SpaceInvaders.rar
+core/score.txt
+core/src/com/vratsasoftware/spaceinvaders/files/Files/lastPlayerScore.txt
+core/src/images/gameOver.png
+core/src/images/replayButton.png
+desktop/lastPlayerScore.txt
+SpaceInvaders2дас.rar

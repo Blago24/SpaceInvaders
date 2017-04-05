@@ -60,7 +60,7 @@ public class Laser {
 			for (Laser alienLaser : aliensLasersShot) {
 				batch.draw(alienLaser.getLaser(), alienLaser.getLaserX() + 20, alienLaser.getLaserY() + 60, 5, 20);
 
-System.out.println("AL"+alienLaser.getLaserY());
+				System.out.println("AL" + alienLaser.getLaserY());
 				if (aliensLasersShot.get(index).getLaserY() < -100) {
 
 					resizeTheArrayList(aliensLasersShot);
@@ -101,8 +101,6 @@ System.out.println("AL"+alienLaser.getLaserY());
 		}
 		return false;
 	}
-
-	
 
 	protected void displayLasersShot(ArrayList<Laser> lasersShot, SpriteBatch batch) {
 		int index = 0;
