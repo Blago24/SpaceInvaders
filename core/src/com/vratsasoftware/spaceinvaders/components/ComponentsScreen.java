@@ -73,6 +73,10 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 
 	}
 
+	public int getPlayerPoints() {
+		return playerPoints;
+	}
+
 	@Override
 	public void render(float delta) {
 		// System.out.println(delta);
@@ -86,25 +90,15 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		batch.begin();
 		background.showBackground(batch);
 		if (alien.checkForWin()) {
-			game.setScreen(new GameOverScreen(game));
-			// CreateFile createFile = new CreateFile();
-			// createFile.createTheFile();
-			// s
-			System.out.println("WON");
-			PrintWriter writer = null;
-			try {
-				System.out.println("Won2");
-				writer = new PrintWriter("leaderBoard.txt", "UTF-8");
-				writer.println("The first line");
-				writer.println("The second line");
-				writer.close();
-			} catch (IOException e) {
-				System.out.println("ERROS");
-				// do something
-			}
+			//game.setScreen(new GameOverScreen(game));
+			//alien.createNewAliens();
+			alien.resetAliens();
+			alien.rightCol=10;
+			alien.leftCol=0;
+			alien.resetXandY();
 		}
 		if (ship.chechIfLose()) {
-			game.setScreen(new GameOverScreen(game));
+			game.setScreen(new GameOverScreen(game ,playerPoints));
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		superShot();

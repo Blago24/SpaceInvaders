@@ -28,14 +28,15 @@ public class GameOverScreen implements Screen, InputProcessor {
 	private BitmapFont result;
 	private ComponentsScreen cs;
 
-	private int scoreCount = 0;
+	private int scoreCount;
 	private static String score;
 	String text = "Your result : " + score;
 	String finalResult;
 	Game game;
 
-	public GameOverScreen(Game game) {
+	public GameOverScreen(Game game , int points) {
 		this.game = game;
+		this.scoreCount= points;
 	}
 
 	@Override
@@ -58,9 +59,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 		this.batch = new SpriteBatch();
 	}
 
-	public void setCount(int count) {
-		this.scoreCount = count;
-	}
+	
 
 	@Override
 	public void render(float delta) {

@@ -18,8 +18,8 @@ public class Aliens {
 	public float alienX;
 	public float alienY;
 
-	private int aliensX;
-	private int aliensY;
+	int aliensX;
+	 int aliensY;
 	private int aliensXHolder;
 
 	public int[][] aliensCoordinatesX = new int[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -50,11 +50,11 @@ public class Aliens {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
 		aliensValue = new int[ALIENS_ROWS][ALIENS_PER_ROW];
 		alienSizes = new Texture("images//alien.png");
-		alien1 = new Texture("images//Alien1.png");
-		alien2 = new Texture("images//Alien2.png");
-		alien3 = new Texture("images//Alien3.png");
-		alien4 = new Texture("images//Alien4.png");
-		alien5 = new Texture("images//Alien5.png");
+		alien1 = new Texture("images//oneAlien.png");
+		alien2 = new Texture("images//twoAlien.png");
+		alien3 = new Texture("images//threeAlien.png");
+		alien4 = new Texture("images//fourAlien.png");
+		alien5 = new Texture("images//fiveAlien.png");
 		alienKilledSound = Gdx.audio.newSound(Gdx.files.local("assets//invaderkilled.ogg"));
 	}
 
@@ -63,7 +63,13 @@ public class Aliens {
 	public Texture getAlienSizes() {
 		return alienSizes;
 	}
-
+ protected void resetAliens(){
+	 for (int i = 0; i < aliensValue.length; i++) {
+		for (int j = 0; j < aliensValue[0].length; j++) {
+			aliensValue[i][j]=1;
+			}
+	}
+ }
 	protected void showAliens(SpriteBatch batch) {
 
 		float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 1000 * 1.2f);
@@ -361,6 +367,12 @@ public class Aliens {
 
 	public float getAlienY() {
 		return alienY;
+	}
+
+	public void resetXandY() {
+		aliensX = (int) Math.floor((float) spaceInvader.getWidth() / 100);
+		aliensY = (int) Math.floor((float) spaceInvader.getHeight() / 10 * 7);
+
 	}
 
 }
