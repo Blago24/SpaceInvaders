@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.vratsasoftware.spaceinvaders.components.Aliens;
 
 import Screens.GameOverScreen;
+import Screens.MenuScreen;
 import States.GameStateManager;
 
 public class SpaceInvaders extends Game {
@@ -49,8 +50,9 @@ public class SpaceInvaders extends Game {
 	@Override
 	public void create() {
 
-		// setScreen(new MenuScreen(this));
-		setScreen(new GameOverScreen(this));
+		 setScreen(new MenuScreen(this));
+		// Game.setScreen(new MenuScreen());
+		//setScreen(new GameOverScreen(this));
 		
 
 	}

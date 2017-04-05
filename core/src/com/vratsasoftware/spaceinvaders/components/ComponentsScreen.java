@@ -36,6 +36,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	long timerForAliensShot;
 	boolean bossSpawned = false;
 	int playerPoints;
+	int aliensKilled;
 	BitmapFont points;
 	SpaceInvaders si = new SpaceInvaders();
 	Game game;
@@ -66,6 +67,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		timerForAliensShot = System.currentTimeMillis();
 		playerPoints = 0;
 		points = new BitmapFont();
+		aliensKilled=0;
 		points.getData().setScale(4f);
 	}
 
@@ -94,7 +96,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 			alien.resetXandY();
 		}
 		if (ship.chechIfLose()) {
-			game.setScreen(new GameOverScreen(game ,playerPoints));
+			game.setScreen(new GameOverScreen(game ,playerPoints, aliensKilled));
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		superShot();
@@ -231,6 +233,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 								&& boss.isBossAlive()) {
 							boss.setBossValue(0);
 							playerPoints += 100;
+							aliensKilled++;
 							killed = true;
 							if (lasersShot.size() == 1) {
 								lasersShot.clear();
@@ -320,6 +323,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 									&& alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
 								playerPoints += 20;
+								aliensKilled++;
 								killed = true;
 								if (lasersShot.size() == 1) {
 									lasersShot.clear();

@@ -32,13 +32,21 @@ public class GameOverScreen implements Screen, InputProcessor {
 
 	private int scoreCount;
 	private static String score;
+	private int aliensKilled;
+	private static String aliens;
+
 	String text = "Your result : " + score;
 	String finalResult;
 	Game game;
 
-	public GameOverScreen(Game game , int points) {
+	public GameOverScreen(Game game , int points,int aliensKilled) {
 		this.game = game;
 		this.scoreCount= points;
+		this.aliensKilled=aliensKilled;
+	}
+
+	public GameOverScreen(Game game) {
+		this.game=game;
 	}
 
 	@Override
@@ -56,6 +64,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 		generator.dispose();
 		cs = new ComponentsScreen(game);
 		score = scoreCount + "";
+		aliens=aliensKilled+ "";
 		replayButton = new Texture("images//replayButton.png");
 		Gdx.input.setInputProcessor(this);
 		this.batch = new SpriteBatch();
@@ -70,7 +79,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		gameOver.draw(batch, "Game over!", 235, 700);
-		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : ", 80, 550);
+		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : "+aliens, 80, 550);
 		
 		batch.draw(replayButton, 350, 150, 100, 100);
 		batch.end();
