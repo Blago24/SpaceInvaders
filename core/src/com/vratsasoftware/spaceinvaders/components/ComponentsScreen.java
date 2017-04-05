@@ -1,8 +1,6 @@
 package com.vratsasoftware.spaceinvaders.components;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,7 +12,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
-import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 import Screens.GameOverScreen;
 
@@ -70,7 +67,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		playerPoints = 0;
 		points = new BitmapFont();
 		points.getData().setScale(4f);
-
 	}
 
 	public int getPlayerPoints() {
