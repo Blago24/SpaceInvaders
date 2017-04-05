@@ -325,8 +325,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 						int alienX = alien.getAliensCoordinatesX(i, j);
 						int alienY = alien.getAliensCoordinatesY(i, j);
 
-						for (int alienSize = 5; alienSize <= alien.getAlien().getHeight() / 10; alienSize++) {
-							if ((laserY == (alienY - alien.getAlien().getHeight() + 100 + alienSize))
+						for (int alienSize = 5; alienSize <= alien.getAlienSizes().getHeight() / 10; alienSize++) {
+							if ((laserY == (alienY - alien.getAlienSizes().getHeight() + 100 + alienSize))
 									&& (laserX >= alienX - 30) && (laserX <= (alienX + 30))
 									&& alien.isAlienAlive(i, j)) {
 								alien.killAlien(i, j);
