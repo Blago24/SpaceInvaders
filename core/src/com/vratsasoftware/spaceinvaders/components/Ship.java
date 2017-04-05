@@ -62,7 +62,7 @@ public class Ship {
 		
 	}
 	protected void drawShip(SpriteBatch batch){
-		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 50, 50);
+		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 100, 100);
 		
 	}
 	protected boolean chechIfLose(){
@@ -85,12 +85,12 @@ public class Ship {
 	private boolean moveShip(SpriteBatch batch) {
 
 		if (checkForDirection() == 1) {
-			batch.draw(getShipLeft(), getPlayerX(), getPlayerY(), 50, 50);
+			batch.draw(getShipLeft(), getPlayerX(), getPlayerY(), 100, 100);
 
 			moveLeft();
 			return true;
 		} else if (checkForDirection() == -1) {
-			batch.draw(getShipRight(), getPlayerX(), getPlayerY(), 50, 50);
+			batch.draw(getShipRight(), getPlayerX(), getPlayerY(), 100, 100);
 			moveRight();
 			return true;
 		}

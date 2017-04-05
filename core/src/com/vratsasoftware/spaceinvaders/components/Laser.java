@@ -60,7 +60,7 @@ public class Laser {
 			for (Laser alienLaser : aliensLasersShot) {
 				batch.draw(alienLaser.getLaser(), alienLaser.getLaserX() + 20, alienLaser.getLaserY() + 60, 5, 20);
 
-System.out.println("AL"+alienLaser.getLaserY());
+//System.out.println("AL"+alienLaser.getLaserY());
 				if (aliensLasersShot.get(index).getLaserY() < -100) {
 
 					resizeTheArrayList(aliensLasersShot);
@@ -77,7 +77,7 @@ System.out.println("AL"+alienLaser.getLaserY());
 		if (laserShot()) {
 			if (lasersShot.size() < 3) {
 				currentShipXPosition = ship.getPlayerX();
-				lasersShot.add(new Laser((int) currentShipXPosition));
+				lasersShot.add(new Laser((int) currentShipXPosition+25));
 				shootSound.play();
 
 			}

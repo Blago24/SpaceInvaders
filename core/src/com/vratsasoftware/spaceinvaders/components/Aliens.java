@@ -241,7 +241,7 @@ public class Aliens {
 		for (int i = 0; i < this.aliensCoordinatesX.length; i++) {
 			for (int j = 0; j < this.aliensCoordinatesX[0].length; j++) {
 				if ((x == i) && (y == j)) {
-					System.out.println("X-"+x+"Y-"+y+"    "+this.aliensCoordinatesX[i][j]);
+				//	System.out.println("X-"+x+"Y-"+y+"    "+this.aliensCoordinatesX[i][j]);
 					return this.aliensCoordinatesX[i][j];
 				}
 			}
