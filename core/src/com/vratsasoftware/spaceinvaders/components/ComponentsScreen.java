@@ -40,6 +40,9 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	BitmapFont points;
 	SpaceInvaders si = new SpaceInvaders();
 	Game game;
+	int i;
+	boolean isPlayerAlieve;
+	long timerForExpolosions;
 
 	public ComponentsScreen(Game game) {
 		this.game = game;
@@ -67,7 +70,10 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		timerForAliensShot = System.currentTimeMillis();
 		playerPoints = 0;
 		points = new BitmapFont();
-		aliensKilled=0;
+		aliensKilled = 0;
+		i = 0;
+		isPlayerAlieve = true;
+
 		points.getData().setScale(4f);
 	}
 
@@ -87,23 +93,27 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	private void update(SpriteBatch batch) {
 		batch.begin();
 		background.showBackground(batch);
+
 		if (alien.checkForWin()) {
-			//game.setScreen(new GameOverScreen(game));
-			//alien.createNewAliens();
+			// game.setScreen(new GameOverScreen(game));
+			// alien.createNewAliens();
 			alien.resetAliens();
-			alien.rightCol=10;
-			alien.leftCol=0;
+			alien.rightCol = 10;
+			alien.leftCol = 0;
 			alien.resetXandY();
 		}
-		if (ship.chechIfLose()) {
-			game.setScreen(new GameOverScreen(game ,playerPoints, aliensKilled));
+		checkIfPlayerLose(batch);
+
+		if (isPlayerAlieve) {
+			ship.update(Gdx.graphics.getDeltaTime(), batch);
+
+			timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
+			timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
+			laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
+			superShot();
 		}
-		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
-		superShot();
 		laser.displayLasersShot(this.lasersShot, this.batch);
-		timerForTheBoss(this.batch, Gdx.graphics.getDeltaTime());
-		ship.update(Gdx.graphics.getDeltaTime(), batch);
-		timerForAliensShot(this.batch, Gdx.graphics.getDeltaTime());
+
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
 		checkForCollisionWithTheWalls();
@@ -122,6 +132,39 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		ship.drawLives(batch);
 		batch.end();
 
+	}
+
+	private void checkIfPlayerLose(SpriteBatch batch) {
+		if (ship.chechIfLose()) {
+			isPlayerAlieve = false;
+			if (i == 0) {
+				ship.explosion(batch, -1, Gdx.graphics.getDeltaTime());
+				timerForExpolosions = System.currentTimeMillis();
+				i++;
+			}
+
+			int start = (int) (timerForExpolosions / 1000) % 60;
+			int end = (int) (System.currentTimeMillis() / 1000) % 60;
+			System.out.println("START" + start);
+			System.out.println("END" + end);
+			if (end - start == 1) {
+				i++;
+				timerForExpolosions = System.currentTimeMillis();
+			} else {
+				if ((60 - start) + end == 1 || (60 - start) + end == 0) {
+					i++;
+					timerForExpolosions = System.currentTimeMillis();
+				}
+
+				if (i == 5) {
+					game.setScreen(new GameOverScreen(game, playerPoints, aliensKilled));
+					
+				} else {
+					ship.explosion(batch, i, Gdx.graphics.getDeltaTime());
+				}
+
+			}
+		}
 	}
 
 	private void timerForAliensShot(SpriteBatch batch2, float deltaTime) {
