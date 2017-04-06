@@ -1,10 +1,5 @@
 package Screens;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -18,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
+import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 public class GameOverScreen implements Screen, InputProcessor {
 
@@ -34,6 +30,8 @@ public class GameOverScreen implements Screen, InputProcessor {
 	private static String score;
 	private int aliensKilled;
 	private static String aliens;
+	
+	private String playerName;
 
 	String text = "Your result : " + score;
 	String finalResult;
@@ -68,6 +66,18 @@ public class GameOverScreen implements Screen, InputProcessor {
 		replayButton = new Texture("images//replayButton.png");
 		Gdx.input.setInputProcessor(this);
 		this.batch = new SpriteBatch();
+		UserName us = new UserName();
+		us.run();
+	}
+	
+
+
+	public void pushToGameOverScreen(String playerName) {
+		this.playerName = playerName;
+		writeInFile wf = new writeInFile(scoreCount, playerName);
+		wf.addNewPlayerScore(scoreCount, playerName);
+		System.out.println("Score: " + score);
+		System.out.println("Player name " + playerName);
 	}
 
 	@Override

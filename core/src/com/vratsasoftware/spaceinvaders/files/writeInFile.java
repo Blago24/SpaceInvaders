@@ -2,48 +2,53 @@ package com.vratsasoftware.spaceinvaders.files;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class writeInFile {
 
 	int points;
-	
-	public writeInFile(int points) { 
-		this.points = points;
+	String name;
+
+	public writeInFile(int score, String name) {
+		this.points = score;
+		this.name = name;
 	}
-	
-//	public static void main(String[] args) { 
-//		createNewFile(150);
-//	}
-	public void createNewFile(int points) {
-		
-		addNewPlayerScore(points);
-	}
-	//TODO Make that shit work.
-	//Think of an algorithm to sort the highscores
-	//TODO IT SHIT, you have 1 fucking day left!
-	public void addNewPlayerScore(int points) {
+
+
+	// TODO Make that shit work.
+	// Think of an algorithm to sort the highscores
+	// TODO IT SHIT, you have 1 fucking day left!
+	public static void addNewPlayerScore(int points, String name) {
 		File input = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
 		Scanner inputFile = null;
-		PrintStream outputFile = null;
-		
+		FileWriter outputFile = null;
+
 		try {
 			inputFile = new Scanner(input, "UTF-8");
-			outputFile = new PrintStream(input, "UTF-8");
-			outputFile.print(points + "gosho");
+			outputFile = new FileWriter(input, true);
+			outputFile.append("\n" + name + " : " + points);
 			System.out.println(input.getAbsolutePath());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
 		} catch (UnsupportedEncodingException u) {
 			System.err.println(u.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (null != inputFile) {
 				inputFile.close();
 			}
 			if (null != outputFile) {
-				outputFile.close();
+				try {
+					outputFile.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}

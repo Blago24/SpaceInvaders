@@ -7,6 +7,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.components.Aliens;
 
+import Screens.GameOverScreen;
 import Screens.MenuScreen;
 
 public class SpaceInvaders extends Game {

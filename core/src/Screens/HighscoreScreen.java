@@ -27,12 +27,16 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private Texture backButton;
 	private Texture background;
 	private Texture backgroundTwo;
-	String text = "Highscores \n 1: \n 2: \n 3:";
+	String text;
 	private int firstBgX;
 	private int firstBgY;
 
 	private int secondBgX;
 	private int secondBgY;
+	
+	private int firstPlace;
+	private int secondPlace;
+	private int thirdPlace;
 
 	private SpriteBatch batch;
 	Game game;
@@ -48,6 +52,10 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.background = new Texture("images//highScoreBackground.png");
 		this.backgroundTwo = new Texture("images//highScoreBackground.png");
 		this.generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf"));
+		this.firstPlace = 0;
+		this.secondPlace = 201;
+		this.thirdPlace = 130;
+		this.text = "Highscores \n 1: " + firstPlace + "\n 2: " + secondPlace + "\n 3:" + thirdPlace;
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 96;
 		parameter.color = Color.CORAL;
@@ -60,6 +68,10 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.secondBgY = firstBgY - SpaceInvaders.SCREEN_HEIGHT;
 		Gdx.input.setInputProcessor(this);
 
+	}
+	
+	private void displayHighscores() { 
+		
 	}
 
 	@Override
@@ -108,7 +120,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 
 		int backButtonTopY = 160;
 		int backButtonBottomY = 10;
-		int backButtonRightX = 240;
+		int backButtonRightX = 300;
 		int backButtonLeftX = 10;
 
 		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
