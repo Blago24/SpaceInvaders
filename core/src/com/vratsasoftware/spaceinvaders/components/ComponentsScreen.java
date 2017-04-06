@@ -1,7 +1,5 @@
 package com.vratsasoftware.spaceinvaders.components;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
+import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 import Screens.GameOverScreen;
 
@@ -24,7 +23,9 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	Wall wall;
 	Background background;
 	Boss boss;
-
+	BitmapFont points;
+	SpaceInvaders si = new SpaceInvaders();
+	
 	public ArrayList<Laser> lasersShot;
 	public ArrayList<Laser> aliensLasersShot;
 	public ArrayList<Integer> xIndexesOfAliensWhichCanShoot;
@@ -37,8 +38,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	boolean bossSpawned = false;
 	int playerPoints;
 	int aliensKilled;
-	BitmapFont points;
-	SpaceInvaders si = new SpaceInvaders();
 	Game game;
 
 	public ComponentsScreen(Game game) {
@@ -97,6 +96,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		}
 		if (ship.chechIfLose()) {
 			game.setScreen(new GameOverScreen(game ,playerPoints, aliensKilled));
+			writeInFile file = new writeInFile(playerPoints);
+			file.addNewPlayerScore(playerPoints);
 		}
 		laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 		superShot();

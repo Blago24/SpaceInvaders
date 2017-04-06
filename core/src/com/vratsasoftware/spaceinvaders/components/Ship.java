@@ -1,11 +1,18 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 import Screens.GameOverScreen;
 

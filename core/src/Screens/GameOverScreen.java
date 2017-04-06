@@ -22,8 +22,8 @@ import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 public class GameOverScreen implements Screen, InputProcessor {
 
 	private Texture replayButton;
-	private Texture pic; 
-	
+	private Texture pic;
+
 	private SpriteBatch batch;
 	private FreeTypeFontGenerator generator;
 	private BitmapFont gameOver;
@@ -39,14 +39,14 @@ public class GameOverScreen implements Screen, InputProcessor {
 	String finalResult;
 	Game game;
 
-	public GameOverScreen(Game game , int points,int aliensKilled) {
+	public GameOverScreen(Game game, int points, int aliensKilled) {
 		this.game = game;
-		this.scoreCount= points;
-		this.aliensKilled=aliensKilled;
+		this.scoreCount = points;
+		this.aliensKilled = aliensKilled;
 	}
 
 	public GameOverScreen(Game game) {
-		this.game=game;
+		this.game = game;
 	}
 
 	@Override
@@ -64,13 +64,11 @@ public class GameOverScreen implements Screen, InputProcessor {
 		generator.dispose();
 		cs = new ComponentsScreen(game);
 		score = scoreCount + "";
-		aliens=aliensKilled+ "";
+		aliens = aliensKilled + "";
 		replayButton = new Texture("images//replayButton.png");
 		Gdx.input.setInputProcessor(this);
 		this.batch = new SpriteBatch();
 	}
-
-	
 
 	@Override
 	public void render(float delta) {
@@ -79,8 +77,8 @@ public class GameOverScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		gameOver.draw(batch, "Game over!", 235, 700);
-		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : "+aliens, 80, 550);
-		
+		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : " + aliens, 80, 550);
+
 		batch.draw(replayButton, 350, 150, 100, 100);
 		batch.end();
 	}
@@ -90,11 +88,11 @@ public class GameOverScreen implements Screen, InputProcessor {
 		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
-		int replayButtonTopY= 270;
+		int replayButtonTopY = 270;
 		int replayButtonBottomY = 130;
 		int replayButtonRightX = 530;
 		int replayButtonLeftX = 340;
-		
+
 		System.out.println("PointerX: " + pointerX);
 		System.out.println("PointerY: " + pointerY);
 		System.out.println();
@@ -154,8 +152,6 @@ public class GameOverScreen implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {

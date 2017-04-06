@@ -6,33 +6,26 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class writeInFile {
+public class EnterNewPlayerWindow {
 
-	int points;
-	
-	public writeInFile(int points) { 
+	int points; 
+	public EnterNewPlayerWindow (int points) { 
 		this.points = points;
 	}
-	
-//	public static void main(String[] args) { 
-//		createNewFile(150);
-//	}
-	public void createNewFile(int points) {
+	public  void createNewFile(int points) {
 		
-		addNewPlayerScore(points);
+		addNewPlayerScore(this.points);
 	}
-	//TODO Make that shit work.
-	//Think of an algorithm to sort the highscores
-	//TODO IT SHIT, you have 1 fucking day left!
-	public void addNewPlayerScore(int points) {
-		File input = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
+
+	public  void addNewPlayerScore(int points) {
+		File input = new File("src/score.txt");
 		Scanner inputFile = null;
 		PrintStream outputFile = null;
 		
 		try {
 			inputFile = new Scanner(input, "UTF-8");
 			outputFile = new PrintStream(input, "UTF-8");
-			outputFile.print(points + "gosho");
+			outputFile.println(points);
 			System.out.println(input.getAbsolutePath());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
