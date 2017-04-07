@@ -17,13 +17,13 @@ public class PlayerLost extends ComponentsScreen {
 		
 	}
 	protected void checkIfPlayerLose(SpriteBatch batch) {
-		
+		System.out.println("EXp"+explosionIndex);
 		if (ship.chechIfLose()) {
 			isPlayerAlieve = false;
-			if (explosionIndex == 0) {
+			if (this.explosionIndex == 0) {
 				ship.explosion(batch, -1, Gdx.graphics.getDeltaTime());
 				timerForExpolosions = System.currentTimeMillis();
-				explosionIndex++;
+				this.explosionIndex++;
 			}
 
 			int start = (int) (timerForExpolosions / 1000) % 60;
@@ -31,11 +31,11 @@ public class PlayerLost extends ComponentsScreen {
 			// System.out.println("START" + start);
 			// System.out.println("END" + end);
 			if (end - start == 1) {
-				explosionIndex++;
+				this.explosionIndex++;
 				timerForExpolosions = System.currentTimeMillis();
 			} else {
 				if ((60 - start) + end == 1 || (60 - start) + end == 0) {
-					explosionIndex++;
+					this.explosionIndex++;
 					timerForExpolosions = System.currentTimeMillis();
 				}
 

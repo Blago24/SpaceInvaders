@@ -81,7 +81,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		startTimer = System.currentTimeMillis();
 		timerForAliensShot = System.currentTimeMillis();
 		points = new BitmapFont();
-		explosionIndex = 0;
+		explosionIndex=0;
 		isPlayerAlieve = true;
 
 		points.getData().setScale(4f);
@@ -139,9 +139,9 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkIfPlayerLose(SpriteBatch batch) {
-		PlayerLost playerLost = new PlayerLost(ship, isPlayerAlieve, explosionIndex, timerForExpolosions,batch);
+		PlayerLost playerLost = new PlayerLost(ship, isPlayerAlieve, this.explosionIndex, timerForExpolosions,batch);
 		playerLost.checkIfPlayerLose(batch);
-		playerLost = null;
+		//playerLost = null;
 
 	}
 
@@ -191,7 +191,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkForCollisionWithTheBoss() {
-		CollisionWithBoss collisionWithBoss = new CollisionWithBoss(boss, aliensLasersShot, playerPoints, aliensKilled, batch);
+		CollisionWithBoss collisionWithBoss = new CollisionWithBoss(boss, lasersShot, playerPoints, aliensKilled, batch);
 		collisionWithBoss.checkForCollisionWithTheBoss();
 		collisionWithBoss = null;
 	}
@@ -223,7 +223,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	private void superShot() {
 		if (this.superShot) {
 			if (laser.shootSuperLaser(this.lasersShot, currentShipXPosition, this.ship)) {
-				this.superShot = false;
+				//this.superShot = false;
 			}
 
 		}
@@ -245,7 +245,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkForCollision() {
-		CollisionWithAliens collisionWithAliens = new CollisionWithAliens(alien, lasersShot, this.playerPoints, aliensKilled, batch);
+		CollisionWithAliens collisionWithAliens = new CollisionWithAliens(alien, lasersShot, playerPoints, aliensKilled, batch);
 		collisionWithAliens.checkForCollision();
 		collisionWithAliens = null;
 
