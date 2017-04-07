@@ -32,7 +32,7 @@ public class CollisionWithAliensShot extends ComponentsScreen {
 					if ((aliensLaserY == (shipY - shipSize)) && (aliensLaserX >= shipX - 50)
 							&& (aliensLaserX <= (shipX + 50))) {
 						ship.lowerTheLives();
-						lives--;
+						//lives--;
 						killed = true;
 						if (aliensLasersShot.size() == 1) {
 							aliensLasersShot.clear();

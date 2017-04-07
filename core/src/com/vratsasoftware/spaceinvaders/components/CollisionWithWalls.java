@@ -28,8 +28,8 @@ public class CollisionWithWalls extends ComponentsScreen{
 					aliensLaserY = checkTheLaserCoordinatesY(aliensLasersShot, batch, x);
 					int wallX = (int) wall.getWallX(i);
 
-					System.out.println("wallX" + wallX);
-					System.out.println("jitsss" + wall.checkHowManyTimesWallIsHit(i));
+//					System.out.println("wallX" + wallX);
+//					System.out.println("jitsss" + wall.checkHowManyTimesWallIsHit(i));
 
 					// System.out.println("SHIPY" + wallY);
 					for (int wallSize = 1; wallSize <= wall.getWallNoHit().getHeight() / 100 + 10; wallSize++) {
@@ -37,7 +37,7 @@ public class CollisionWithWalls extends ComponentsScreen{
 								&& (aliensLaserX <= (wallX + 70)) && !wall.isWallDestroyed(i)) {
 							// TODO wall.isWallDestroyed(0) have to be different
 							wall.increaseTheNumberOfHits(i);
-							System.out.println("jitsss" + i + wall.checkHowManyTimesWallIsHit(i));
+							//System.out.println("jitsss" + i + wall.checkHowManyTimesWallIsHit(i));
 							if (wall.checkHowManyTimesWallIsHit(i) > 6) {
 								wall.destroyWall(i);
 								break;

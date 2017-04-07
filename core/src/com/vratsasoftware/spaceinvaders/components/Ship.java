@@ -144,8 +144,8 @@ public class Ship {
 		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 100, 100);
 	}
 
-	protected boolean chechIfLose() {
-		if (getLives() == 0) {
+	protected boolean checkIfLose(int lives) {
+		if (lives == 0) {
 			return true;
 		}
 		return false;
