@@ -1,10 +1,12 @@
 package Screens;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,13 +15,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
+import com.vratsasoftware.spaceinvaders.files.GetHighscores;
 
 public class HighscoreScreen implements Screen, InputProcessor {
 
 	private final int BACKGROUND_WIDTH = SpaceInvaders.SCREEN_WIDTH + 100;
 	private final int BACKGROUND_HEIGHT = SpaceInvaders.SCREEN_HEIGHT;
-	private boolean newHighscore;
-	private char[] newName;
 
 	private FreeTypeFontGenerator generator;
 	private BitmapFont gameOverFont;
@@ -34,15 +35,17 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private int secondBgX;
 	private int secondBgY;
 	
-	private int firstPlace;
-	private int secondPlace;
-	private int thirdPlace;
+	private String firstPlace = "21";
+	private String secondPlace = "12";
+	private String thirdPlace = "13";
 
 	private SpriteBatch batch;
+	private GetHighscores highscores; 
 	Game game;
 
 	public HighscoreScreen(Game game) {
 		this.game = game;
+		
 	}
 
 	@Override
@@ -52,9 +55,19 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.background = new Texture("images//highScoreBackground.png");
 		this.backgroundTwo = new Texture("images//highScoreBackground.png");
 		this.generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf"));
-		this.firstPlace = 0;
-		this.secondPlace = 201;
-		this.thirdPlace = 130;
+		Gdx.input.setInputProcessor(this);
+		try {
+			this.highscores = new GetHighscores();
+			firstPlace = highscores.getFirstScore();
+			secondPlace = highscores.getSecondScore();
+			thirdPlace = highscores.getThirdScore();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.text = "Highscores \n 1: " + firstPlace + "\n 2: " + secondPlace + "\n 3:" + thirdPlace;
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 96;
@@ -66,13 +79,9 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.firstBgY = 0;
 		this.secondBgX = SpaceInvaders.SCREEN_WIDTH - this.background.getWidth() / 2 - 20;
 		this.secondBgY = firstBgY - SpaceInvaders.SCREEN_HEIGHT;
-		Gdx.input.setInputProcessor(this);
 
 	}
 	
-	private void displayHighscores() { 
-		
-	}
 
 	@Override
 	public void render(float delta) {
@@ -83,8 +92,8 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		moveBackground(this.batch);
 
 		if (moveBackground(this.batch)) {
-			firstBgY--;
-			secondBgY--;
+			firstBgY -= 700;
+			secondBgY -= 700;
 		} else {
 			// System.out.println(firstBgY);
 			firstBgY++;
@@ -93,7 +102,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 
 		batch.draw(backgroundTwo, secondBgX, secondBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		batch.draw(background, firstBgX, firstBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-		
 		gameOverFont.draw(batch, text, SpaceInvaders.SCREEN_WIDTH / 2 - 300, SpaceInvaders.SCREEN_HEIGHT - 250);
 		batch.draw(backButton, 30, -80, 300, 300);
 		// working;
@@ -104,7 +112,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	}
 
 	private boolean moveBackground(SpriteBatch batch) {
-		// TODO fix the movement of the background;
+		
 		if (firstBgY > 888) {
 			return true;
 		} else {
@@ -118,17 +126,18 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
-		int backButtonTopY = 160;
+		int backButtonTopY = 200;
 		int backButtonBottomY = 10;
-		int backButtonRightX = 300;
+		int backButtonRightX = 350;
 		int backButtonLeftX = 10;
 
 		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
 				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
 			game.setScreen(new MenuScreen(game));
 			this.dispose();
+			Gdx.input.setInputProcessor(null);
 		}
-		return false;
+		return true;
 	}
 
 	@Override

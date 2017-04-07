@@ -10,18 +10,12 @@ import java.util.Scanner;
 public class writeInFile {
 
 	int points;
-	String name;
 
-	public writeInFile(int score, String name) {
+	public writeInFile(int score) {
 		this.points = score;
-		this.name = name;
 	}
 
-
-	// TODO Make that shit work.
-	// Think of an algorithm to sort the highscores
-	// TODO IT SHIT, you have 1 fucking day left!
-	public static void addNewPlayerScore(int points, String name) {
+	public void addNewPlayerScore(int points) {
 		File input = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
 		Scanner inputFile = null;
 		FileWriter outputFile = null;
@@ -29,14 +23,15 @@ public class writeInFile {
 		try {
 			inputFile = new Scanner(input, "UTF-8");
 			outputFile = new FileWriter(input, true);
-			outputFile.append("\n" + name + " : " + points);
+			outputFile.append("\n" + points);
+			HighscoreFileManager hs = new HighscoreFileManager();
+			hs.sortHighscores();
 			System.out.println(input.getAbsolutePath());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
 		} catch (UnsupportedEncodingException u) {
 			System.err.println(u.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (null != inputFile) {
@@ -46,7 +41,6 @@ public class writeInFile {
 				try {
 					outputFile.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

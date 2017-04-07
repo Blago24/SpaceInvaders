@@ -1,5 +1,10 @@
 package Screens;
 
+import java.io.File;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Scanner;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -13,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
+import com.vratsasoftware.spaceinvaders.files.HighscoreFileManager;
 import com.vratsasoftware.spaceinvaders.files.writeInFile;
 
 public class GameOverScreen implements Screen, InputProcessor {
@@ -30,7 +36,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 	private static String score;
 	private int aliensKilled;
 	private static String aliens;
-	
+
 	private String playerName;
 
 	String text = "Your result : " + score;
@@ -66,18 +72,18 @@ public class GameOverScreen implements Screen, InputProcessor {
 		replayButton = new Texture("images//replayButton.png");
 		Gdx.input.setInputProcessor(this);
 		this.batch = new SpriteBatch();
-		UserName us = new UserName();
-		us.run();
+		pushToGameOverScreen();
 	}
 	
 
-
-	public void pushToGameOverScreen(String playerName) {
-		this.playerName = playerName;
-		writeInFile wf = new writeInFile(scoreCount, playerName);
-		wf.addNewPlayerScore(scoreCount, playerName);
+	public void pushToGameOverScreen() {
+		
+		System.out.println("ACCESSED");
+		writeInFile wf = new writeInFile(scoreCount);
+		wf.addNewPlayerScore(scoreCount);
 		System.out.println("Score: " + score);
-		System.out.println("Player name " + playerName);
+		HighscoreFileManager hfm = new HighscoreFileManager(); 
+		hfm.sortHighscores();
 	}
 
 	@Override
@@ -88,7 +94,6 @@ public class GameOverScreen implements Screen, InputProcessor {
 		batch.begin();
 		gameOver.draw(batch, "Game over!", 235, 700);
 		result.draw(batch, "Your result : " + this.score + "\nAliens Killed : " + aliens, 80, 550);
-
 		batch.draw(replayButton, 350, 150, 100, 100);
 		batch.end();
 	}

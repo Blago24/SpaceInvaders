@@ -50,9 +50,9 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		this.highscoreButton = new Texture("images//highscore.png");
 		this.batch = new SpriteBatch();
 		this.logoCoordinates = new Vector2(0, 0);
-		buttonX = (this.WIDTH / 2) - (playButton.getWidth() / 2 - 75);
+		buttonX = (this.WIDTH / 2) - (playButton.getWidth() / 2 - 30);
 		buttonY = this.HEIGHT / 2 - 135;
-		highscoreX = ((this.WIDTH / 2) - (highscoreButton.getWidth() / 2 - 205));
+		highscoreX = ((this.WIDTH / 2) - (highscoreButton.getWidth() / 2 - 160));
 		highscoreY = this.HEIGHT / 2 - 100;
 		menuMusic = Gdx.audio.newMusic(Gdx.files.local("assets//backgroundMusic.ogg"));
 		menuMusic.setLooping(true);
@@ -91,8 +91,6 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 			openGameScreen();
 			Gdx.input.setInputProcessor(null);
 		} else if (highscorePress(pointerX, pointerY)) {
-			UserName us = new UserName();
-			us.run();
 			openHighscoreScreen();
 			Gdx.input.setInputProcessor(null);
 		}
@@ -139,7 +137,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		int buttonTopY = 520;
 		int buttonBottomY = 350;
 		int buttonLeftX = 400;
-		int buttonRightX = 530;
+		int buttonRightX = 500;
 
 		if ((pointerY >= buttonBottomY && pointerY <= buttonTopY)
 				&& (pointerX >= buttonLeftX && pointerX <= buttonRightX)) {

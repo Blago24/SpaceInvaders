@@ -148,7 +148,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 
 				if (i == 5) {
 					game.setScreen(new GameOverScreen(game, playerPoints, aliensKilled));
-
 				} else {
 					ship.explosion(batch, i, Gdx.graphics.getDeltaTime());
 				}
