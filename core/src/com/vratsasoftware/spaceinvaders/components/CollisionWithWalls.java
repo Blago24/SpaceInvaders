@@ -1,8 +1,18 @@
 package com.vratsasoftware.spaceinvaders.components;
 
-public class CollisionWithWalls extends ComponentsScreen{
+import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class CollisionWithWalls extends ComponentsScreen{
+	public CollisionWithWalls(Wall wall ,ArrayList<Laser> aliensLasersShot  ,ArrayList<Laser> lasersShot,SpriteBatch batch){
+		this.wall=wall;
+		this.aliensLasersShot=aliensLasersShot;
+		this.lasersShot=lasersShot;
+		this.batch=batch;
+	}
 	protected void checkForCollisionWithTheWalls() {
+		
 		int aliensLaserX = 0;
 		int aliensLaserY = 0;
 		int laserX = 0;

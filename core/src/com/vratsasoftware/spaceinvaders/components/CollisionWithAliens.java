@@ -1,6 +1,17 @@
 package com.vratsasoftware.spaceinvaders.components;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class CollisionWithAliens extends ComponentsScreen {
+	public CollisionWithAliens(Aliens alien ,ArrayList<Laser> lasersShot,int playerPoints, int aliensKilled , SpriteBatch batch){
+		this.alien=alien;
+		this.lasersShot=lasersShot;
+		this.playerPoints=playerPoints;
+		this.aliensKilled=aliensKilled;
+		this.batch=batch;
+	}
 	protected void checkForCollision() {
 		int laserX = 0;
 		int laserY = 0;
