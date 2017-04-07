@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class writeInFile {
+public class AddNewScore {
 
 	int points;
 
-	public writeInFile(int score) {
+	public AddNewScore(int score) {
 		this.points = score;
 	}
 

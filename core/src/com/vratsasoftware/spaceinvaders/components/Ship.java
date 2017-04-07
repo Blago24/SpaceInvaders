@@ -12,9 +12,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.vratsasoftware.spaceinvaders.files.writeInFile;
-
-import Screens.GameOverScreen;
+import com.vratsasoftware.spaceinvaders.files.AddNewScore;
+import com.vratsasoftware.spaceinvaders.screens.GameOverScreen;
 
 public class Ship {
 
@@ -32,13 +31,6 @@ public class Ship {
 	private Texture bomb5;
 	private Texture bomb6;
 
-	public Texture getShipLeft() {
-		return shipLeft;
-	}
-
-	public Texture getShipRight() {
-		return shipRight;
-	}
 
 	private Texture shipRight;
 	private Texture live;
@@ -144,8 +136,8 @@ public class Ship {
 		batch.draw(getShipTexture(), getPlayerX(), getPlayerY(), 100, 100);
 	}
 
-	protected boolean checkIfLose(int lives) {
-		if (lives == 0) {
+	protected boolean chechIfLose() {
+		if (getLives() == 0) {
 			return true;
 		}
 		return false;
@@ -200,6 +192,14 @@ public class Ship {
 		if (this.playerX >= RIGHT_SCREEN_X_BOUND) {
 			this.playerX = RIGHT_SCREEN_X_BOUND;
 		}
+	}
+
+	public Texture getShipLeft() {
+		return shipLeft;
+	}
+
+	public Texture getShipRight() {
+		return shipRight;
 	}
 
 	private void moveLeft() {

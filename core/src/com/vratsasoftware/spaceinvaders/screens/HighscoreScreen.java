@@ -1,4 +1,4 @@
-package Screens;
+package com.vratsasoftware.spaceinvaders.screens;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -92,7 +92,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 			firstBgY -= 700;
 			secondBgY -= 700;
 		} else {
-			// System.out.println(firstBgY);
 			firstBgY++;
 			secondBgY++;
 		}
@@ -120,14 +119,11 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
-		System.out.println(pointerX);
-		System.out.println(pointerY);
 		int backButtonTopY = 200;
 		int backButtonBottomY = 10;
 		int backButtonRightX = 350;
 		int backButtonLeftX = 10;
-		System.out.println(backButtonTopY);
-		System.out.println(backButtonRightX);
+		
 		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
 				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
 			game.setScreen(new MenuScreen(game));

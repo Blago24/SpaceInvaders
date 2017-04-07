@@ -1,4 +1,4 @@
-package Screens;
+package com.vratsasoftware.spaceinvaders.screens;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -19,7 +19,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.vratsasoftware.spaceinvaders.SpaceInvaders;
 import com.vratsasoftware.spaceinvaders.components.ComponentsScreen;
 import com.vratsasoftware.spaceinvaders.files.HighscoreFileManager;
-import com.vratsasoftware.spaceinvaders.files.writeInFile;
+import com.vratsasoftware.spaceinvaders.files.AddNewScore;
 
 public class GameOverScreen implements Screen, InputProcessor {
 
@@ -56,6 +56,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 
+		this.batch = new SpriteBatch();
 		generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf"));
 		FreeTypeFontParameter headerParameter = new FreeTypeFontParameter();
 		headerParameter.size = 96;
@@ -66,28 +67,24 @@ public class GameOverScreen implements Screen, InputProcessor {
 		textParameter.color = Color.CHARTREUSE;
 		result = generator.generateFont(textParameter);
 		generator.dispose();
-		cs = new ComponentsScreen(game, 0, 0, 1,3);
+		cs = new ComponentsScreen(game, 0, 0, 1, 3);
 		score = scoreCount + "";
 		aliens = aliensKilled + "";
 		replayButton = new Texture("images//replayButton.png");
 		Gdx.input.setInputProcessor(this);
-		this.batch = new SpriteBatch();
 		pushToGameOverScreen();
 	}
 
 	public void pushToGameOverScreen() {
 
-		System.out.println("ACCESSED");
-		writeInFile wf = new writeInFile(scoreCount);
+		AddNewScore wf = new AddNewScore(scoreCount);
 		wf.addNewPlayerScore(scoreCount);
-		System.out.println("Score: " + score);
 		HighscoreFileManager hfm = new HighscoreFileManager();
 		hfm.sortHighscores();
 	}
 
 	@Override
 	public void render(float delta) {
-
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -107,13 +104,9 @@ public class GameOverScreen implements Screen, InputProcessor {
 		int replayButtonRightX = 530;
 		int replayButtonLeftX = 340;
 
-		System.out.println("PointerX: " + pointerX);
-		System.out.println("PointerY: " + pointerY);
-		System.out.println();
-
 		if ((pointerY >= replayButtonBottomY && pointerY <= replayButtonTopY)
 				&& (pointerX >= replayButtonLeftX && pointerX <= replayButtonRightX)) {
-			game.setScreen(new ComponentsScreen(game, 0, 0, 1,3));
+			game.setScreen(new ComponentsScreen(game, 0, 0, 1, 3));
 			Gdx.input.setInputProcessor(null);
 		}
 		return false;

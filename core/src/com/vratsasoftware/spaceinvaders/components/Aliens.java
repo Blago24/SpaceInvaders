@@ -36,7 +36,6 @@ public class Aliens {
 	private Sound alienKilledSound;
 
 	private int[][] aliensValue;
-
 	private int alienWidth = (int) ((int) SpaceInvaders.SCREEN_WIDTH * 0.065f);
 	private int alienHeight = (int) ((int) SpaceInvaders.SCREEN_HEIGHT * 0.0475f);
 
@@ -57,8 +56,6 @@ public class Aliens {
 		alien5 = new Texture("images//fiveAlien.png");
 		alienKilledSound = Gdx.audio.newSound(Gdx.files.local("assets//invaderkilled.ogg"));
 	}
-
-	// TODO Try adding an animation to the alien
 
 	public Texture getAlienSizes() {
 		return alienSizes;
@@ -105,33 +102,21 @@ public class Aliens {
 		if (leftBound >= SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 10)) {
 			float distanceToTheEndOfTheScreen = SpaceInvaders.SCREEN_WIDTH - leftBound;
 			moveAliens(batch, i, j, -xDistance, distanceToTheEndOfTheScreen);
-			// System.out.println("1st Alien, 1st Row: " +
-			// getAliensCoordinatesX(0, 0));
-			// System.out.println("1st Alien, 2st Row: " +
-			// getAliensCoordinatesX(1, 0));
-			// System.out.println("1st Alien, 3st Row: " +
-			// getAliensCoordinatesX(2, 0));
-			// System.out.println("1st Alien, 4st Row: " +
-			// getAliensCoordinatesX(3, 0));
 		} else {
 			component.setAreAliensGoingRight(true);
 		}
-		// moveAliens(batch, i, j, -xDistance);
 	}
 
 	private void moveAliensRight(SpriteBatch batch, float xDistance, int i, int j, float rightBound) {
 		if (rightBound <= SpaceInvaders.SCREEN_WIDTH - alien1.getWidth() / 4) {
 			float distanceToTheEndOfTheScreen = SpaceInvaders.SCREEN_WIDTH - rightBound;
-			// System.out.println("Distance: " + distanceToTheEndOfTheScreen);
 			moveAliens(batch, i, j, xDistance, distanceToTheEndOfTheScreen);
-
 		} else {
 			component.setAreAliensGoingRight(false);
 		}
 	}
 
 	protected void moveAliens(SpriteBatch batch, int i, int j, float distance, float distanceToTheEndOfTheScreen) {
-
 		int amountOfMovementDown = (int) 7.5f;
 		aliensCoordinatesX[i][j] += distance;
 		if ((distanceToTheEndOfTheScreen >= 49 && distanceToTheEndOfTheScreen <= 51)
@@ -143,17 +128,11 @@ public class Aliens {
 
 	protected void checkForLowestAliensAlive(ArrayList<Integer> xIndexesOfAliensWhichCanShoot,
 			ArrayList<Integer> yIndexesOfAliensWhichCanShoot) {
-		// System.out.println("X+++++"+aliensCoordinatesX[0].length);
-
 		for (int i = 0; i < aliensCoordinatesX[0].length; i++) {
 			for (int j = aliensCoordinatesX.length - 1; j >= 0; j--) {
-
 				if (aliensValue[j][i] == 1) {
-
 					xIndexesOfAliensWhichCanShoot.add(i);
 					yIndexesOfAliensWhichCanShoot.add(j);
-					System.out.println("X-" + i + "Y-" + j);
-
 					break;
 				}
 			}
@@ -161,7 +140,6 @@ public class Aliens {
 	}
 
 	private int checkForFirstAlive() {
-		// showAliensValues();
 		int index = leftCol;
 		int countForDeadAliens = 0;
 		for (int i = 0; i < aliensCoordinatesX.length; i++) {
@@ -173,19 +151,15 @@ public class Aliens {
 		}
 		if (countForDeadAliens == 5) {
 			leftCol = (index + 1);
-			// checkForFirstAlive();
 		}
-
 		return 0;
 	}
 
 	private int checkForLastAlive() {
-		// showAliensValues();
 		int index = rightCol;
 		int countForDeadAliens = 0;
 		for (int i = 0; i < aliensCoordinatesX.length; i++) {
 			if (aliensValue[i][index] == 1) {
-
 				return aliensCoordinatesX[i][index];
 			} else {
 				countForDeadAliens++;
@@ -194,7 +168,6 @@ public class Aliens {
 		if (countForDeadAliens == 5) {
 			rightCol = (index - 1);
 		}
-
 		return 0;
 	}
 
@@ -205,34 +178,6 @@ public class Aliens {
 	public boolean isHit() {
 		boolean isHit = false;
 		return isHit;
-	}
-
-	protected void showX() {
-		for (int i = 0; i < aliens.length; i++) {
-			for (int j = 0; j < aliens[0].length; j++) {
-				System.out.print(aliensCoordinatesX[i][j] + " ");
-
-			}
-			System.out.println();
-		}
-	}
-
-	protected void testShow(SpriteBatch batch) {
-
-		for (int i = 0; i < aliens.length; i++) {
-			for (int j = 0; j < aliens[0].length; j++) {
-				// check if the alien is alive
-				if (isAlienAlive(i, j)) {
-					batch.draw(aliens[i][j].getAlien(i), aliensCoordinatesX[i][j], aliensCoordinatesY[i][j], alienWidth,
-							alienHeight);
-
-					System.out.println();
-
-				}
-
-			}
-
-		}
 	}
 
 	protected void createNewAliens() {
@@ -261,8 +206,6 @@ public class Aliens {
 		for (int i = 0; i < this.aliensCoordinatesX.length; i++) {
 			for (int j = 0; j < this.aliensCoordinatesX[0].length; j++) {
 				if ((x == i) && (y == j)) {
-					// System.out.println("X-"+x+"Y-"+y+"
-					// "+this.aliensCoordinatesX[i][j]);
 					return this.aliensCoordinatesX[i][j];
 				}
 			}
@@ -282,19 +225,6 @@ public class Aliens {
 		return 1;
 	}
 
-	public int[][] getAliensCoordinatesY() {
-		return aliensCoordinatesY;
-	}
-
-	public void showAliensValues() {
-		for (int i = 0; i < aliens.length; i++) {
-			for (int j = 0; j < aliens.length; j++) {
-				System.out.print(aliens[i][j]);
-
-			}
-			System.out.println();
-		}
-	}
 
 	protected boolean checkForWin() {
 		int countAliveAliens = 0;
@@ -311,8 +241,12 @@ public class Aliens {
 		return false;
 	}
 
-	protected void killAlien(int x, int y) {
 
+	public int[][] getAliensCoordinatesY() {
+		return aliensCoordinatesY;
+	}
+	
+	protected void killAlien(int x, int y) {
 		alienKilledSound.play();
 		aliensValue[x][y] = 0;
 	}
@@ -370,12 +304,4 @@ public class Aliens {
 	public float getAlienY() {
 		return alienY;
 	}
-
-	public void resetXandY() {
-		aliensX = (int) Math.floor((float) spaceInvader.getWidth() / 100);
-		aliensY = (int) Math.floor((float) spaceInvader.getHeight() / 10 * 7);
-
-	}
-
-
 }

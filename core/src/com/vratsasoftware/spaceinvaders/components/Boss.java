@@ -10,7 +10,6 @@ public class Boss {
 	private int bossSpeed;
 	private Texture boss;
 	private int bossValue;
-
 	private int bossInitialX = Gdx.graphics.getWidth() + 50;
 	private int bossX;
 	private int bossY;
@@ -31,16 +30,13 @@ public class Boss {
 		this.bossSound = Gdx.audio.newSound(Gdx.files.local("assets//ufo_lowpitch.ogg"));
 		this.bossDeath = Gdx.audio.newSound(Gdx.files.local("assets//ufo_highpitch.ogg"));
 		bossSound.play();
-
 	}
 	
 	public void update(float delta, SpriteBatch batch) {
 		if (isBossAlive()) {
 			batch.draw(boss, bossX, bossY, bossHeight, bossWidth);
-
 		}
 		bossX -= bossSpeed;
-
 	}
 
 	public int getBossValue() {
@@ -64,40 +60,21 @@ public class Boss {
 		return boss;
 	}
 
-	public void setBoss(Texture boss) {
-		this.boss = boss;
-	}
-
 	public int getBossX() {
 		return bossX;
-	}
-
-	public void setBossX(int bossX) {
-		this.bossX = bossX;
 	}
 
 	public int getBossY() {
 		return bossY;
 	}
 
-	public void setBossY(int bossY) {
-		this.bossY = bossY;
-	}
-
 	public int getBossWidth() {
 		return bossWidth;
-	}
-
-	public void setBossWidth(int bossWidth) {
-		this.bossWidth = bossWidth;
 	}
 
 	public int getBossHeight() {
 		return bossHeight;
 	}
 
-	public void setBossHeight(int bossHeight) {
-		this.bossHeight = bossHeight;
-	}
 
 }

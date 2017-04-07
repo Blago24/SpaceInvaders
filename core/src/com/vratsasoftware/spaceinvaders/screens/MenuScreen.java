@@ -1,4 +1,4 @@
-package Screens;
+package com.vratsasoftware.spaceinvaders.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -76,7 +76,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 
 	private void animateLogo(SpriteBatch batch2) {
 		batch.draw(logo, logoCoordinates.x, logoCoordinates.y, this.WIDTH, this.HEIGHT);
-		logoCoordinates.y += 10; // 2.5;
+		logoCoordinates.y += 2.5;
 	}
 
 	@Override
@@ -84,9 +84,6 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 		float pointerX = InputTransform.getCursorToModelX(this.WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(this.HEIGHT, screenY);
 
-		System.out.println("Highscore: " + pointerX);
-		System.out.println("Y " + pointerY);
-		//
 		if (isButtonPressed(pointerX, pointerY)) {
 			openGameScreen();
 			Gdx.input.setInputProcessor(null);

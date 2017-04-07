@@ -10,27 +10,30 @@ public class Wall {
 	private final int WALL_WIDTH = 100;
 	private final int WALL_HEIGHT = 50;
 	private final int WALL_AMOUNT = 3;
-
 	private final int WALL_Y = 150;
+
+
+	private int[] values;
+	private int[] numberOfHitsIntoWall;
 	
 	private float[] wallX;
-	private int[] values;
 	public Wall[] walls;
-	private int[]  numberOfHitsIntoWall;
-	ComponentsScreen comp = new ComponentsScreen();
-	Texture wallNoHit;
-	Texture wallOneHit;
-	Texture wallTwoHits;
-	Texture wallThreeHits;
-	Texture wallFourHits;
-	Texture wallFiveHits;
-	Texture wallSixHits;
+	
+	private Texture wallNoHit;
+	private Texture wallOneHit;
+	private Texture wallTwoHits;
+	private Texture wallThreeHits;
+	private Texture wallFourHits;
+	private	Texture wallFiveHits;
+	private Texture wallSixHits;
 
+	ComponentsScreen comp = new ComponentsScreen();
+	
 	public Wall() {
 		walls = new Wall[3];
 		values = new int[3];
 		wallX = new float[3];
-		numberOfHitsIntoWall=new int[3];
+		numberOfHitsIntoWall = new int[3];
 
 		this.wallNoHit = new Texture("images//bunker.png");
 		this.wallOneHit = new Texture("images//bunker1.png");
@@ -45,7 +48,6 @@ public class Wall {
 	public void createWalls() {
 		float position = 100;
 		for (int i = 0; i < walls.length; i++) {
-		System.out.println("POSITION"+position);
 			switch (i) {
 			case 0:
 				position = SpaceInvaders.SCREEN_WIDTH - (SpaceInvaders.SCREEN_WIDTH - 60);
@@ -60,34 +62,36 @@ public class Wall {
 			}
 			wallX[i] = position;
 			values[i] = 1;
-			numberOfHitsIntoWall[i]=0;
-			
+			numberOfHitsIntoWall[i] = 0;
+
 		}
 	}
 
 	public void display(SpriteBatch batch) {
-		
+
 		for (int i = 0; i < values.length; i++) {
-			if(!isWallDestroyed(i)){
-				int indexHit=checkHowManyTimesWallIsHit(i);
+			if (!isWallDestroyed(i)) {
+				int indexHit = checkHowManyTimesWallIsHit(i);
 				Texture wall = getTexture(indexHit);
-				batch.draw(wall, wallX[i], WALL_Y, WALL_WIDTH,
-						WALL_HEIGHT);
+				batch.draw(wall, wallX[i], WALL_Y, WALL_WIDTH, WALL_HEIGHT);
 			}
-			
+
 		}
-	
-		
+
 	}
+
 	public int getWALL_Y() {
 		return WALL_Y;
 	}
-	protected float getWallX(int i){
+
+	protected float getWallX(int i) {
 		return wallX[i];
 	}
-	protected void increaseTheNumberOfHits(int i){
+
+	protected void increaseTheNumberOfHits(int i) {
 		numberOfHitsIntoWall[i]++;
 	}
+
 	protected int checkHowManyTimesWallIsHit(int i) {
 		return numberOfHitsIntoWall[i];
 	}
@@ -120,8 +124,8 @@ public class Wall {
 	}
 
 	public void destroyWall(int index) {
-		values[index]=0;
-		//setValue(index);
+		values[index] = 0;
+		// setValue(index);
 	}
 
 	public boolean isWallDestroyed(int index) {
@@ -138,6 +142,7 @@ public class Wall {
 	public void setValue(int value) {
 		this.values = values;
 	}
+
 	public Texture getWallNoHit() {
 		return wallNoHit;
 	}
