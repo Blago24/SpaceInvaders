@@ -66,7 +66,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 		textParameter.color = Color.CHARTREUSE;
 		result = generator.generateFont(textParameter);
 		generator.dispose();
-		cs = new ComponentsScreen(game, 0, 0, 1);
+		cs = new ComponentsScreen(game, 0, 0, 1,3);
 		score = scoreCount + "";
 		aliens = aliensKilled + "";
 		replayButton = new Texture("images//replayButton.png");
@@ -113,7 +113,7 @@ public class GameOverScreen implements Screen, InputProcessor {
 
 		if ((pointerY >= replayButtonBottomY && pointerY <= replayButtonTopY)
 				&& (pointerX >= replayButtonLeftX && pointerX <= replayButtonRightX)) {
-			game.setScreen(new ComponentsScreen(game, 0, 0, 1));
+			game.setScreen(new ComponentsScreen(game, 0, 0, 1,3));
 			Gdx.input.setInputProcessor(null);
 		}
 		return false;

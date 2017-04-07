@@ -43,25 +43,27 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	boolean isPlayerAlieve;
 	long timerForExpolosions;
 	int level;
+	int lives;
 
-	public ComponentsScreen(Game game, int points, int aliensKilled, int level) {
+	public ComponentsScreen(Game game, int points, int aliensKilled, int level, int lives) {
 		// Get the current lives of the player
 		this.game = game;
 		this.playerPoints = points;
-		//System.out.println("pp " + this.playerPoints);
+		// System.out.println("pp " + this.playerPoints);
 		this.aliensKilled = aliensKilled;
-		this.level=level;
-		//System.out.println("ak " + this.aliensKilled);
+		this.level = level;
+		this.lives = lives;
+		// System.out.println("ak " + this.aliensKilled);
 
 	}
-	public ComponentsScreen() {
-		
 
+	public ComponentsScreen() {
 	}
 
 	@Override
 	public void show() {
-		ship = new Ship(game);
+
+		ship = new Ship(game, lives);
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
 		lasersShot = new ArrayList<Laser>();
@@ -81,6 +83,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		points = new BitmapFont();
 		explosionIndex = 0;
 		isPlayerAlieve = true;
+
 		points.getData().setScale(4f);
 	}
 
@@ -126,16 +129,13 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		points.draw(batch, playerPoints + " ", 50, Gdx.graphics.getHeight() - 25);
 		checkForCollisionWithAliensShot();
 		ship.drawLives(batch);
-		System.out.println("LEVELCHETO "+level);
+		System.out.println("LEVELCHETO " + level);
 		batch.end();
 
 	}
 
 	private void resetGameIfAliensAreKilled() {
-		System.out.println("hahahahahahhahahahahahha"+level);
-		game.setScreen(new ComponentsScreen(game, playerPoints, aliensKilled,this.level));
-		System.out.println(playerPoints + " ofjas");
-		System.out.println(aliensKilled + "dasdas");
+		game.setScreen(new ComponentsScreen(game, playerPoints, aliensKilled, this.level, this.lives));
 	}
 
 	private void checkIfPlayerLose(SpriteBatch batch) {
@@ -197,7 +197,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	private void checkForAliensWhichCanShoot() {
 		alien.checkForLowestAliensAlive(xIndexesOfAliensWhichCanShoot, yIndexesOfAliensWhichCanShoot);
 		for (int i = 0; i < level; i++) {
-System.out.println("LEVEl"+level);
+			System.out.println("LEVEl" + level);
 			int rand = randomIndex();
 
 			float currentAlienX = alien.getAliensCoordinatesX(yIndexesOfAliensWhichCanShoot.get(rand),
@@ -245,7 +245,7 @@ System.out.println("LEVEl"+level);
 					if ((aliensLaserY == (shipY - shipSize)) && (aliensLaserX >= shipX - 50)
 							&& (aliensLaserX <= (shipX + 50))) {
 						ship.lowerTheLives();
-
+						lives--;
 						killed = true;
 						if (aliensLasersShot.size() == 1) {
 							aliensLasersShot.clear();

@@ -49,7 +49,7 @@ public class Ship {
 	private int playerX = Gdx.graphics.getWidth() / 2 - 30;
 	private int playerY = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - 15);
 
-	public Ship(Game game) {
+	public Ship(Game game,int lives) {
 		position = new Vector2(playerX, playerY);
 		ship = new Texture("images//spaceShip.png");
 		shipLeft = new Texture("images//spaceShip-left.png");
@@ -61,7 +61,7 @@ public class Ship {
 		bomb5 = new Texture("images//Bomb5.png");
 		bomb6 = new Texture("images//Bomb6.png");
 		live = new Texture("images//pixel_heart.png");
-		lives = 3;
+		this.lives = lives;
 	}
 
 	public void explosion(SpriteBatch batch, int i, float f) {
@@ -124,7 +124,7 @@ public class Ship {
 	}
 
 	public int getLives() {
-		return lives;
+		return this.lives;
 	}
 
 	public void setLives(int lives) {
