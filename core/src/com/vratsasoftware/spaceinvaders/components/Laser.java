@@ -89,10 +89,10 @@ public class Laser {
 
 		if (superlaserShot()) {
 
-			currentShipXPosition = ship.getPlayerX();
+			
 			int yPosition = LASER_MOVEMENT_SPEED;
 			for (int i = 0; i < 5; i++) {
-				lasersShot.add(new Laser((int) currentShipXPosition, yPosition));
+				lasersShot.add(new Laser((int) currentShipXPosition+25, yPosition));
 				yPosition += 10;
 
 			}

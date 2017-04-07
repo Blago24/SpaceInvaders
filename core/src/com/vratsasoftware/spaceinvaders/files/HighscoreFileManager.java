@@ -20,11 +20,8 @@ public class HighscoreFileManager {
 	}
 
 	public void sortHighscores() {
-		
-		//File input = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
-		//File output = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
-		File input = new File("C:\\Git\\SIWorkspace\\SpaceInvaders\\core\\src\\score.txt");
-		File output = new File("C:\\Git\\SIWorkspace\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
+		File input = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
+		File output = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
 		PrintStream addResults;
 		Scanner inputReader = null;
 		GetHighscores gh;
@@ -80,9 +77,7 @@ public class HighscoreFileManager {
 	}
 	
 	private int getAmountOfLinesInTheScoresFile() throws IOException {
-		//File text = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
-		File text = new File("C:\\Git\\SIWorkspace\\SpaceInvaders\\core\\src\\score.txt");
-		
+		File text = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\score.txt");
 		InputStream is = new BufferedInputStream(new FileInputStream(text));
 		try {
 			byte[] c = new byte[1024];

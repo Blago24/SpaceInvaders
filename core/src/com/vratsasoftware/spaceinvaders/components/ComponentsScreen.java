@@ -63,7 +63,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	@Override
 	public void show() {
 
-		ship = new Ship(game, lives);
+		ship = new Ship(game,lives);
 		batch = new SpriteBatch();
 		laser = new Laser(ship.getPlayerX());
 		lasersShot = new ArrayList<Laser>();
@@ -104,6 +104,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		batch.begin();
 		background.showBackground(batch);
 		checkIfPlayerLose(batch);
+		laser.displayLasersShot(this.lasersShot, this.batch);
 
 		if (isPlayerAlieve) {
 			ship.update(Gdx.graphics.getDeltaTime(), batch);
@@ -113,7 +114,6 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 			laser.shootNewLaser(this.lasersShot, currentShipXPosition, this.ship);
 			superShot();
 		}
-		laser.displayLasersShot(this.lasersShot, this.batch);
 		laser.displayAliensLasersShot(aliensLasersShot, batch);
 		isBossOutOfBounds();
 		checkForCollisionWithTheWalls();
