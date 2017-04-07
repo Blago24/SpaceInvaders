@@ -17,7 +17,7 @@ public class Wall {
 	private int[] values;
 	public Wall[] walls;
 	private int[]  numberOfHitsIntoWall;
-	ComponentsScreen comp = new ComponentsScreen(null, 0 ,0);
+	ComponentsScreen comp = new ComponentsScreen();
 	Texture wallNoHit;
 	Texture wallOneHit;
 	Texture wallTwoHits;

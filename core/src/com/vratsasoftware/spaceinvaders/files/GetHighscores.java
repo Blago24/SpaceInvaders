@@ -28,7 +28,9 @@ public class GetHighscores {
 		int lineNeeded = numberOfLines - 2;
 		int currentLine = 0;
 		String line = null;
-		File text = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
+		//File text = new File("C:\\Users\\velis\\Documents\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
+		File text = new File("C:\\Git\\SIWorkspace\\SpaceInvaders\\core\\src\\SortedHighScores.txt");
+		
 		Scanner scanner = new Scanner(new BufferedReader(new FileReader(text)));
 
 		while (processCompleted == false) {
