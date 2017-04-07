@@ -43,8 +43,14 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	boolean isPlayerAlieve;
 	long timerForExpolosions;
 
-	public ComponentsScreen(Game game) {
+	public ComponentsScreen(Game game, int points, int aliensKilled) {
+		//Get the current lives of the player
 		this.game = game;
+		this.playerPoints = points;
+		System.out.println("pp " + this.playerPoints);
+		this.aliensKilled = aliensKilled;
+		System.out.println("ak " + this.aliensKilled);
+		
 
 	}
 
@@ -67,9 +73,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		areAliensGoingRight = true;
 		startTimer = System.currentTimeMillis();
 		timerForAliensShot = System.currentTimeMillis();
-		playerPoints = 0;
 		points = new BitmapFont();
-		aliensKilled = 0;
 		i = 0;
 		isPlayerAlieve = true;
 
@@ -116,12 +120,22 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 		wall.display(batch);
 		currentShipXPosition = ship.getPlayerX();
 		checkForCollision();
+		if (alien.checkForWin()) {
+			resetGameIfAliensAreKilled();
+		}
 		checkForCollisionWithTheBoss();
 		points.draw(batch, playerPoints + " ", 50, Gdx.graphics.getHeight() - 25);
 		checkForCollisionWithAliensShot();
 		ship.drawLives(batch);
 		batch.end();
 
+	}
+	
+
+	private void resetGameIfAliensAreKilled() { 
+		game.setScreen(new ComponentsScreen(game, playerPoints, aliensKilled));
+		System.out.println(playerPoints + " ofjas");
+		System.out.println(aliensKilled + "dasdas");
 	}
 
 	private void checkIfPlayerLose(SpriteBatch batch) {
@@ -135,8 +149,8 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 
 			int start = (int) (timerForExpolosions / 1000) % 60;
 			int end = (int) (System.currentTimeMillis() / 1000) % 60;
-			System.out.println("START" + start);
-			System.out.println("END" + end);
+//			System.out.println("START" + start);
+//			System.out.println("END" + end);
 			if (end - start == 1) {
 				i++;
 				timerForExpolosions = System.currentTimeMillis();

@@ -146,7 +146,7 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 	}
 
 	private void openGameScreen() {
-		game.setScreen(new ComponentsScreen(game));
+		game.setScreen(new ComponentsScreen(game, 0, 0));
 	}
 
 	@Override

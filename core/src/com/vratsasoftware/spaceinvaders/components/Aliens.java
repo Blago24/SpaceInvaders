@@ -19,7 +19,7 @@ public class Aliens {
 	public float alienY;
 
 	int aliensX;
-	 int aliensY;
+	int aliensY;
 	private int aliensXHolder;
 
 	public int[][] aliensCoordinatesX = new int[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -44,7 +44,7 @@ public class Aliens {
 	int rightCol = 10;
 
 	SpaceInvaders spaceInvader = new SpaceInvaders();
-	ComponentsScreen component = new ComponentsScreen(null);
+	ComponentsScreen component = new ComponentsScreen(null, 0, 0);
 
 	public Aliens() {
 		aliens = new Aliens[ALIENS_ROWS][ALIENS_PER_ROW];
@@ -63,13 +63,15 @@ public class Aliens {
 	public Texture getAlienSizes() {
 		return alienSizes;
 	}
- protected void resetAliens(){
-	 for (int i = 0; i < aliensValue.length; i++) {
-		for (int j = 0; j < aliensValue[0].length; j++) {
-			aliensValue[i][j]=1;
+
+	protected void resetAliens() {
+		for (int i = 0; i < aliensValue.length; i++) {
+			for (int j = 0; j < aliensValue[0].length; j++) {
+				aliensValue[i][j] = 1;
 			}
+		}
 	}
- }
+
 	protected void showAliens(SpriteBatch batch) {
 
 		float xDistance = (float) Math.floor((float) spaceInvader.getWidth() / 1000 * 1.2f);
@@ -338,7 +340,7 @@ public class Aliens {
 
 		}
 		return alien1;
-		
+
 	}
 
 	public Texture getAlienOne() {
@@ -374,5 +376,6 @@ public class Aliens {
 		aliensY = (int) Math.floor((float) spaceInvader.getHeight() / 10 * 7);
 
 	}
+
 
 }
