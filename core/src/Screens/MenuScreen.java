@@ -92,7 +92,6 @@ public class MenuScreen extends SpaceInvaders implements Screen, InputProcessor 
 			Gdx.input.setInputProcessor(null);
 		} else if (highscorePress(pointerX, pointerY)) {
 			openHighscoreScreen();
-			Gdx.input.setInputProcessor(null);
 		}
 
 		return false;

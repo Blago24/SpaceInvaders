@@ -28,7 +28,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private Texture backButton;
 	private Texture background;
 	private Texture backgroundTwo;
-	String text;
 	private int firstBgX;
 	private int firstBgY;
 
@@ -38,7 +37,8 @@ public class HighscoreScreen implements Screen, InputProcessor {
 	private String firstPlace = "21";
 	private String secondPlace = "12";
 	private String thirdPlace = "13";
-
+	private String text;
+	
 	private SpriteBatch batch;
 	private GetHighscores highscores; 
 	Game game;
@@ -55,17 +55,14 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.background = new Texture("images//highScoreBackground.png");
 		this.backgroundTwo = new Texture("images//highScoreBackground.png");
 		this.generator = new FreeTypeFontGenerator(Gdx.files.local("assets//adrip1.ttf"));
-		Gdx.input.setInputProcessor(this);
 		try {
 			this.highscores = new GetHighscores();
 			firstPlace = highscores.getFirstScore();
 			secondPlace = highscores.getSecondScore();
 			thirdPlace = highscores.getThirdScore();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.text = "Highscores \n 1: " + firstPlace + "\n 2: " + secondPlace + "\n 3:" + thirdPlace;
@@ -79,7 +76,7 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		this.firstBgY = 0;
 		this.secondBgX = SpaceInvaders.SCREEN_WIDTH - this.background.getWidth() / 2 - 20;
 		this.secondBgY = firstBgY - SpaceInvaders.SCREEN_HEIGHT;
-
+		Gdx.input.setInputProcessor(this);
 	}
 	
 
@@ -104,9 +101,6 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		batch.draw(background, firstBgX, firstBgY, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		gameOverFont.draw(batch, text, SpaceInvaders.SCREEN_WIDTH / 2 - 300, SpaceInvaders.SCREEN_HEIGHT - 250);
 		batch.draw(backButton, 30, -80, 300, 300);
-		// working;
-		// TODO Implement the high score results;
-		// Would probably need to use a hash map
 		batch.end();
 
 	}
@@ -126,16 +120,18 @@ public class HighscoreScreen implements Screen, InputProcessor {
 		float pointerX = InputTransform.getCursorToModelX(SpaceInvaders.SCREEN_WIDTH, screenX);
 		float pointerY = InputTransform.getCursorToModelY(SpaceInvaders.SCREEN_HEIGHT, screenY);
 
+		System.out.println(pointerX);
+		System.out.println(pointerY);
 		int backButtonTopY = 200;
 		int backButtonBottomY = 10;
 		int backButtonRightX = 350;
 		int backButtonLeftX = 10;
-
+		System.out.println(backButtonTopY);
+		System.out.println(backButtonRightX);
 		if ((pointerY >= backButtonBottomY && pointerY <= backButtonTopY)
 				&& (pointerX >= backButtonLeftX && pointerX <= backButtonRightX)) {
 			game.setScreen(new MenuScreen(game));
 			this.dispose();
-			Gdx.input.setInputProcessor(null);
 		}
 		return true;
 	}
