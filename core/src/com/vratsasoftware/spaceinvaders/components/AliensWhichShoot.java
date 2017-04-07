@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class AliensWhichShoot extends ComponentsScreen {
-	public AliensWhichShoot(Aliens alien,Laser laser ,ArrayList<Integer> xIndexesOfAliensWhichCanShoot, ArrayList<Integer> yIndexesOfAliensWhichCanShoot,int level){
+	public AliensWhichShoot(Aliens alien,Laser laser ,ArrayList<Integer> xIndexesOfAliensWhichCanShoot,ArrayList<Laser>aliensLasersShot, ArrayList<Integer> yIndexesOfAliensWhichCanShoot,int level){
 		this.alien=alien;
 		this.laser=laser;
 		this.xIndexesOfAliensWhichCanShoot=xIndexesOfAliensWhichCanShoot;
 		this.yIndexesOfAliensWhichCanShoot=yIndexesOfAliensWhichCanShoot;
+		this.aliensLasersShot=aliensLasersShot;
 		this.level=level;
 	}
 	protected void checkForAliensWhichCanShoot() {
@@ -21,6 +22,7 @@ public class AliensWhichShoot extends ComponentsScreen {
 					xIndexesOfAliensWhichCanShoot.get(rand));
 			float currentAlienY = alien.getAliensCoordinatesY(yIndexesOfAliensWhichCanShoot.get(rand),
 					xIndexesOfAliensWhichCanShoot.get(rand));
+System.out.println("CX"+currentAlienX);
 
 			laser.aliensNewLaser(aliensLasersShot, currentAlienX, currentAlienY);
 

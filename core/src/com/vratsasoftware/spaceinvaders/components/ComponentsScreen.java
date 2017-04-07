@@ -170,7 +170,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkForAliensWhichCanShoot() {
-		AliensWhichShoot aliensWhichShoot = new AliensWhichShoot(alien, laser, xIndexesOfAliensWhichCanShoot, yIndexesOfAliensWhichCanShoot, level);
+		AliensWhichShoot aliensWhichShoot = new AliensWhichShoot(alien, laser, xIndexesOfAliensWhichCanShoot, aliensLasersShot, yIndexesOfAliensWhichCanShoot, level);
 		aliensWhichShoot.checkForAliensWhichCanShoot();
 		aliensWhichShoot = null;
 
@@ -191,7 +191,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkForCollisionWithTheBoss() {
-		CollisionWithBoss collisionWithBoss = new CollisionWithBoss();
+		CollisionWithBoss collisionWithBoss = new CollisionWithBoss(boss, aliensLasersShot, playerPoints, aliensKilled, batch);
 		collisionWithBoss.checkForCollisionWithTheBoss();
 		collisionWithBoss = null;
 	}
@@ -245,7 +245,7 @@ public class ComponentsScreen extends SpaceInvaders implements Screen {
 	}
 
 	private void checkForCollision() {
-		CollisionWithAliens collisionWithAliens = new CollisionWithAliens(alien, aliensLasersShot, playerPoints, aliensKilled, batch);
+		CollisionWithAliens collisionWithAliens = new CollisionWithAliens(alien, lasersShot, this.playerPoints, aliensKilled, batch);
 		collisionWithAliens.checkForCollision();
 		collisionWithAliens = null;
 
